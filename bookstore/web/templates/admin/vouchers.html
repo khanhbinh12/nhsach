@@ -1,0 +1,55 @@
+{% extends "admin/layout.html" %}
+{% block title %}Mã giảm giá{% endblock %}
+{% block admin_content %}
+<h1>Mã giảm giá</h1>
+<div class="grid-2">
+  <div class="card table-wrap">
+    {% if vouchers %}
+    <table>
+      <thead><tr><th>Mã</th><th>Mức giảm</th><th class="num">Đơn tối thiểu</th><th>Hạn dùng</th><th class="num">Đã dùng</th><th>Trạng thái</th><th></th></tr></thead>
+      <tbody>
+      {% for v in vouchers %}
+        {% set expired = v.valid_until and v.valid_until < today %}
+        <tr>
+          <td><strong class="nowrap">{{ v.code }}</strong><br><span class="small muted">{{ v.KIND_LABEL }}</span></td>
+          <td>{{ v.value_label }}</td>
+          <td class="num">{{ v.min_subtotal | vnd }}</td>
+          <td class="small nowrap">{{ v.valid_until | dt(false) if v.valid_until else 'Không giới hạn' }}</td>
+          <td class="num">{{ v.used_count }}{% if v.usage_limit %} / {{ v.usage_limit }}{% endif %}</td>
+          <td>
+            {% if not v.active %}<span class="status status-cancelled">Tạm ngưng</span>
+            {% elif expired %}<span class="status status-cancelled">Hết hạn</span>
+            {% elif v.remaining_uses == 0 %}<span class="status status-cancelled">Hết lượt</span>
+            {% else %}<span class="status status-completed">Đang áp dụng</span>{% endif %}
+          </td>
+          <td>
+            <div class="actions">
+              <form method="post" action="{{ url_for('admin.toggle_voucher', code=v.code) }}">{{ csrf_field() }}
+                <button class="btn btn-small btn-outline">{{ 'Tạm ngưng' if v.active else 'Bật lại' }}</button></form>
+              <form method="post" action="{{ url_for('admin.delete_voucher', code=v.code) }}" data-confirm="Xóa mã {{ v.code }}?">{{ csrf_field() }}
+                <button class="btn btn-small btn-ghost-danger">Xóa</button></form>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<div class="empty">Chưa có mã giảm giá nào.</div>{% endif %}
+  </div>
+
+  <form method="post" class="card stack">
+    {{ csrf_field() }}
+    <h3>Tạo mã mới</h3>
+    <label class="field"><span>Mã *</span><input type="text" name="code" value="{{ form.get('code', '') }}" required maxlength="20" placeholder="VD: SINHVIEN15" style="text-transform: uppercase;">
+      <small>3–20 ký tự: chữ không dấu, số, - hoặc _</small></label>
+    <label class="field"><span>Loại *</span>
+      <select name="kind">{% for kind, label in kinds.items() %}<option value="{{ kind }}" {{ 'selected' if form.get('kind') == kind }}>{{ label }}</option>{% endfor %}</select></label>
+    <label class="field"><span>Mức giảm *</span><input type="number" name="value" value="{{ form.get('value', '') }}" min="1" step="any" required>
+      <small>Giảm theo %: nhập 1–50 · Giảm số tiền: nhập số đồng (VD 30000)</small></label>
+    <label class="field"><span>Đơn tối thiểu (đ)</span><input type="number" name="min_subtotal" value="{{ form.get('min_subtotal', '0') }}" min="0"></label>
+    <label class="field"><span>Hạn dùng</span><input type="date" name="valid_until" value="{{ form.get('valid_until', '') }}"><small>Bỏ trống = không giới hạn</small></label>
+    <label class="field"><span>Số lượt dùng tối đa</span><input type="number" name="usage_limit" value="{{ form.get('usage_limit', '') }}" min="1"><small>Bỏ trống = không giới hạn</small></label>
+    <button class="btn">Tạo mã</button>
+  </form>
+</div>
+{% endblock %}

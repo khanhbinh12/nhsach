@@ -1,0 +1,43 @@
+{% extends "admin/layout.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}Khách hàng{% endblock %}
+{% block admin_content %}
+<div class="section-head" style="margin-top: 0;">
+  <h1 style="margin: 0;">Khách hàng</h1>
+  <form method="get" class="toolbar"><input type="search" name="q" value="{{ keyword }}" placeholder="Tên, SĐT, email…"><button class="btn btn-outline">Tìm</button></form>
+</div>
+<div class="card table-wrap">
+  <table>
+    <thead><tr><th>Khách hàng</th><th>Liên hệ</th><th>Loại / hạng</th><th class="num">Điểm</th><th class="num">Chi tiêu</th><th>Hội viên E-Book</th><th>Thao tác</th></tr></thead>
+    <tbody>
+    {% for c in customers.items %}
+      {% set valid = c.membership.is_valid(now) %}
+      <tr>
+        <td><strong>{{ c.name }}</strong><br><span class="small muted">{{ c.id }} · từ {{ c.joined_date }}</span></td>
+        <td class="small">{{ c.phone }}<br>{{ c.email }}</td>
+        <td>{{ c.role }}{% if c.is_vip %}<br><span class="tag tag-accent">{{ c.tier.label }} · -{{ c.discount_rate | percent }}</span>{% endif %}</td>
+        <td class="num">{{ c.loyalty_points }}</td>
+        <td class="num">{{ c.total_spent | vnd }}</td>
+        <td class="small">{% if valid %}<span class="tag tag-success">Còn hạn</span><br>{% endif %}{{ c.membership.status_label(now) }}</td>
+        <td>
+          <div class="actions">
+            <form method="post" action="{{ url_for('admin.grant_membership', customer_id=c.id) }}">{{ csrf_field() }}<button class="btn btn-small btn-outline">{{ 'Gia hạn' if valid else 'Tặng' }} hội viên</button></form>
+            {% if valid %}
+            <form method="post" action="{{ url_for('admin.revoke_membership', customer_id=c.id) }}" data-confirm="Thu hồi hội viên của {{ c.name }}?">{{ csrf_field() }}<button class="btn btn-small btn-ghost-danger">Thu hồi</button></form>
+            {% endif %}
+            {% if not c.is_vip %}
+            <form method="post" action="{{ url_for('admin.promote_vip', customer_id=c.id) }}" class="qty-form">{{ csrf_field() }}
+              <select name="tier" style="width: auto; padding: 5px 8px;">{% for t in vip_tiers %}<option value="{{ t.value }}">{{ t.label }}</option>{% endfor %}</select>
+              <button class="btn btn-small btn-outline">Nâng VIP</button></form>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="7" class="empty">Không tìm thấy khách hàng.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {{ ui.pagination(customers, 'khách hàng') }}
+</div>
+{% endblock %}

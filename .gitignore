@@ -1,0 +1,13 @@
+# Môi trường ảo & cache Python
+.venv/
+__pycache__/
+*.pyc
+
+# Dữ liệu chạy thử (tự tạo lại khi chạy run.py)
+data/
+
+# Hệ điều hành / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

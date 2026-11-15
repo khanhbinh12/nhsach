@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Đang xem quảng cáo{% endblock %}
+{% block content %}
+<div style="max-width: 760px; margin: 0 auto;" data-ad-countdown data-total="{{ duration }}" data-remaining="{{ remaining }}">
+  <div class="ad-stage" style="--h: {{ ad.hue }}">
+    <span class="ad-label">Quảng cáo mô phỏng · {{ ad.sponsor }}</span>
+    <h2>{{ ad.headline }}</h2>
+    <p>{{ ad.message }}</p>
+  </div>
+  <div class="progress"><span data-ad-bar></span></div>
+  <div class="actions" style="justify-content: space-between;">
+    <span class="muted">Còn lại: <strong data-ad-label>{{ remaining }} giây</strong></span>
+    <form method="post" action="{{ url_for('support.complete') }}">
+      {{ csrf_field() }}
+      <button class="btn btn-accent" data-ad-finish {{ 'disabled' if remaining > 0 }}>Hoàn tất &amp; ủng hộ</button>
+    </form>
+  </div>
+  <p class="small muted">Máy chủ tự kiểm tra thời gian xem thực tế – lượt xem chỉ được tính khi bạn xem đủ {{ duration }} giây.</p>
+</div>
+{% endblock %}

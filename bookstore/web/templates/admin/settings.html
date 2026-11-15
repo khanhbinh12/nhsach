@@ -1,0 +1,40 @@
+{% extends "admin/layout.html" %}
+{% block title %}Cấu hình{% endblock %}
+{% block admin_content %}
+<h1>Cấu hình</h1>
+<div class="grid-cols" style="align-items: start;">
+  <form method="post" class="card stack">
+    {{ csrf_field() }}<input type="hidden" name="section" value="vault">
+    <h3>Kho E-Book &amp; gói hội viên</h3>
+    <label class="field"><span>Tên kho</span><input type="text" name="title" value="{{ vault.title }}" required></label>
+    <label class="field"><span>Link thư mục Google Drive</span><input type="url" name="folder_url" value="{{ vault.folder_url }}" required>
+      <small>Chỉ hiện cho hội viên còn hạn và quản trị viên</small></label>
+    <div class="form-grid">
+      <label class="field"><span>Phí hội viên (đ)</span><input type="number" name="membership_fee" value="{{ vault.membership_fee | int }}" min="0" required></label>
+      <label class="field"><span>Thời hạn (ngày)</span><input type="number" name="duration_days" value="{{ vault.duration_days }}" min="1" required></label>
+    </div>
+    <label class="field"><span>Thông tin chuyển khoản</span><input type="text" name="bank_info" value="{{ vault.bank_info }}" required></label>
+    <label class="field"><span>Mô tả</span><textarea name="description" rows="3">{{ vault.description }}</textarea></label>
+    <div><button class="btn">Lưu cấu hình kho</button></div>
+  </form>
+
+  <div class="stack">
+    <form method="post" class="card stack">
+      {{ csrf_field() }}<input type="hidden" name="section" value="ads">
+      <h3>Quảng cáo ủng hộ (mô phỏng)</h3>
+      <label class="field"><span>Thời lượng bắt buộc xem (giây)</span><input type="number" name="duration_seconds" value="{{ ad_settings.duration_seconds }}" min="5" max="120" required></label>
+      <label class="field"><span>Doanh thu ước tính mỗi lượt (đ)</span><input type="number" name="revenue_per_view" value="{{ ad_settings.revenue_per_view | int }}" min="0" required>
+        <small>Chỉ dùng để ước tính trên trang tổng quan</small></label>
+      <div><button class="btn">Lưu cấu hình quảng cáo</button></div>
+    </form>
+
+    <form method="post" action="{{ url_for('admin.reset_data') }}" class="card stack panel-accent" style="border: 1px solid #f3d9b5;"
+          data-confirm="Xóa toàn bộ dữ liệu hiện tại và tạo lại dữ liệu mẫu?">
+      {{ csrf_field() }}
+      <h3>Đặt lại dữ liệu mẫu</h3>
+      <p class="small muted">Xóa toàn bộ sách, khách hàng, tài khoản, đơn hàng hiện có và tạo lại dữ liệu demo. Không thể hoàn tác.</p>
+      <div><button class="btn btn-danger">Đặt lại dữ liệu</button></div>
+    </form>
+  </div>
+</div>
+{% endblock %}

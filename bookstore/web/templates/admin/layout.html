@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="admin-nav">
+  {% set ep = request.endpoint %}
+  <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if ep == 'admin.dashboard' }}">Tổng quan</a>
+  <a href="{{ url_for('admin.orders') }}" class="{{ 'active' if ep == 'admin.orders' }}">Đơn hàng{% if pending_count %} <span class="badge">{{ pending_count }}</span>{% endif %}</a>
+  <a href="{{ url_for('admin.products') }}" class="{{ 'active' if ep in ('admin.products', 'admin.create_product', 'admin.edit_product') }}">Sách &amp; E-Book</a>
+  <a href="{{ url_for('admin.customers') }}" class="{{ 'active' if ep == 'admin.customers' }}">Khách hàng</a>
+  <a href="{{ url_for('admin.vouchers') }}" class="{{ 'active' if ep == 'admin.vouchers' }}">Mã giảm giá</a>
+  <a href="{{ url_for('admin.settings') }}" class="{{ 'active' if ep == 'admin.settings' }}">Cấu hình</a>
+</nav>
+{% block admin_content %}{% endblock %}
+{% endblock %}

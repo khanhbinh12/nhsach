@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Đặt hàng{% endblock %}
+{% block content %}
+<h1>Thông tin đặt hàng</h1>
+<form method="post" class="grid-2">
+  {{ csrf_field() }}
+  <div class="card stack">
+    <div class="form-grid">
+      <label class="field"><span>Người nhận</span><input type="text" value="{{ current_customer.name }}" disabled></label>
+      <label class="field"><span>Số điện thoại nhận hàng *</span><input type="text" name="contact_phone" value="{{ form.contact_phone }}" required></label>
+      <label class="field full"><span>Địa chỉ nhận hàng *</span>
+        <textarea name="shipping_address" rows="3" required placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố">{{ form.shipping_address }}</textarea></label>
+    </div>
+    <div>
+      <h3>Phương thức thanh toán</h3>
+      <div class="stack">
+        {% for method in payment_methods %}
+          <label class="radio-card"><input type="radio" name="payment_method" value="{{ method }}" {{ 'checked' if method == form.payment_method }}>
+            <span><strong>{{ method }}</strong>
+            {% if loop.index == 2 %}<br><span class="small muted">{{ store.vault.bank_info }} · Nội dung: mã đơn sẽ hiện sau khi đặt</span>{% endif %}</span></label>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <aside class="card">
+    <h3>Đơn hàng</h3>
+    {% for book, quantity in cart.items() %}
+      <div class="summary-row small"><span>{{ book.title }} × {{ quantity }}</span><span>{{ (book.price * quantity) | vnd }}</span></div>
+    {% endfor %}
+    <hr style="border: 0; border-top: 1px solid var(--line);">
+    <div class="summary-row"><span>Tạm tính</span><span>{{ quote.subtotal | vnd }}</span></div>
+    <div class="summary-row"><span>Giảm giá</span><span>-{{ quote.discount_amount | vnd }}</span></div>
+    <div class="small muted">{{ quote.policy_description }}</div>
+    {% if quote.voucher_code and not quote.voucher_applied %}<div class="small muted">Mã {{ quote.voucher_code }} chưa dùng vì ưu đãi hiện có tốt hơn.</div>{% endif %}
+    <div class="summary-row"><span>Phí vận chuyển</span><span>{{ quote.shipping_fee | vnd }}</span></div>
+    <div class="summary-row summary-total"><span>Tổng cộng</span><span>{{ quote.total | vnd }}</span></div>
+    <button class="btn btn-accent btn-block" style="margin-top: 16px;">Xác nhận đặt hàng</button>
+    <p class="small muted"><a href="{{ url_for('shop.cart') }}">← Quay lại giỏ hàng để nhập mã giảm giá</a></p>
+  </aside>
+</form>
+{% endblock %}

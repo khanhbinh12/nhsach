@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}Kho E-Book{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-main">
+    <h1>{{ store.vault.title }}</h1>
+    <p>{{ store.vault.description }}</p>
+    <p><strong>{{ ebook_total }}</strong> đầu sách PDF/EPUB · cập nhật thường xuyên</p>
+  </div>
+
+  {% if access %}
+    <aside class="hero-side panel-success" style="background: var(--success-soft); border-color: #b7e2c4;">
+      <h3 style="color: var(--success);">Bạn đã mở khóa Kho E-Book</h3>
+      {% if customer %}<p class="muted">{{ customer.membership.status_label() }}</p>{% else %}<p class="muted">Đang xem với quyền quản trị.</p>{% endif %}
+      <a class="btn" href="{{ access.folder_url }}" target="_blank" rel="noopener">Mở thư mục Google Drive</a>
+    </aside>
+  {% elif pending %}
+    <aside class="hero-side">
+      <h3>Đang chờ xác nhận thanh toán</h3>
+      <p class="muted">Yêu cầu <strong>{{ pending.id }}</strong> đã được ghi nhận. Link Drive sẽ hiện ngay khi nhà sách xác nhận đã nhận {{ pending.final_total | vnd }}.</p>
+    </aside>
+  {% else %}
+    <aside class="hero-side">
+      <h3>Trở thành hội viên</h3>
+      <div class="price-tag">{{ store.vault.membership_fee | vnd }}<span class="muted small"> / {{ store.vault.duration_days }} ngày</span></div>
+      <p class="muted">Xem link Google Drive chứa toàn bộ sách trong kho, tải file PDF/EPUB về đọc.</p>
+      <a class="btn btn-accent" href="{{ url_for('library.subscribe') }}">Đăng ký hội viên</a>
+      <p class="small muted">Hoặc <a href="{{ url_for('support.index') }}">ủng hộ web bằng cách xem quảng cáo</a>.</p>
+    </aside>
+  {% endif %}
+</section>
+
+<div class="section-head"><h2>Sách trong kho</h2></div>
+<div class="chips" style="margin-bottom: 18px;">
+  <a class="chip {{ 'active' if not category }}" href="{{ url_for('library.index') }}">Tất cả</a>
+  {% for c in categories %}<a class="chip {{ 'active' if c == category }}" href="{{ url_for('library.index', **{'the-loai': c}) }}">{{ c }}</a>{% endfor %}
+</div>
+<div class="ebook-list">
+  {% for ebook in ebooks.items %}
+    <div class="ebook-item">
+      {{ ui.cover(ebook, 'mini') }}
+      <div class="ebook-meta">
+        <span class="book-title">{{ ebook.title }}</span>
+        <span class="muted small">{{ ebook.byline() }} · {{ ebook.file_format }} · {{ ebook.file_size_mb }} MB</span>
+      </div>
+      {% if access and access.ebook_links.get(ebook.id) %}
+        <a class="btn btn-small" href="{{ access.ebook_links[ebook.id] }}" target="_blank" rel="noopener">Mở</a>
+      {% else %}
+        <span class="lock" title="Dành cho hội viên">🔒 Hội viên</span>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="card empty">Kho chưa có E-Book nào.</div>
+  {% endfor %}
+</div>
+{{ ui.pagination(ebooks, 'E-Book') }}
+{% endblock %}

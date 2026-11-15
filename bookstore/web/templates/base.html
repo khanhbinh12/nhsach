@@ -1,0 +1,90 @@
+<!doctype html>
+{% from "_icons.html" import icon %}
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Nhà Sách Trí Tri{% endblock %} · Nhà Sách Trí Tri</title>
+  <meta name="description" content="{% block description %}Nhà Sách Trí Tri – sách giấy chọn lọc giao tận nhà và Kho E-Book dành cho hội viên.{% endblock %}">
+  <meta name="theme-color" content="#1f4d43">
+  <link rel="icon" href="{{ asset_url('favicon.svg') }}" type="image/svg+xml">
+  <link rel="alternate icon" href="{{ url_for('favicon') }}">
+  <link rel="preload" href="{{ url_for('static', filename='fonts/be-vietnam-pro-vietnamese-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ asset_url('style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ url_for('shop.index') }}" aria-label="Nhà Sách Trí Tri – trang chủ">
+      <span class="brand-mark">{{ icon("book") }}</span>
+      <span class="brand-name"><small>Nhà sách</small>Trí Tri</span>
+    </a>
+    <nav class="main-nav" aria-label="Điều hướng chính">
+      <a href="{{ url_for('shop.index') }}" class="{{ 'active' if request.endpoint in ('shop.index', 'shop.book_detail') }}">Sách giấy</a>
+      <a href="{{ url_for('library.index') }}" class="{{ 'active' if request.blueprint == 'library' }}">Kho E-Book</a>
+      <a href="{{ url_for('support.index') }}" class="{{ 'active' if request.blueprint == 'support' }}">Ủng hộ web</a>
+      {% if current_account and current_account.is_admin %}
+        <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request.blueprint == 'admin' }}">Quản trị{% if pending_count %}<span class="badge">{{ pending_count }}</span>{% endif %}</a>
+      {% endif %}
+    </nav>
+    <div class="header-actions">
+      {% if not (current_account and current_account.is_admin) %}
+        <a href="{{ url_for('shop.cart') }}" aria-label="Giỏ hàng ({{ cart_count }} cuốn)">{{ icon("bag") }}<span class="label">Giỏ hàng</span>{% if cart_count %}<span class="badge">{{ cart_count }}</span>{% endif %}</a>
+      {% endif %}
+      {% if current_account %}
+        <a href="{{ url_for(current_account.home_endpoint) }}">{{ icon("user") }}<span class="label">{{ display_name }}</span></a>
+        <form method="post" action="{{ url_for('accounts.logout') }}" class="inline">{{ csrf_field() }}
+          <button class="link-button" title="Đăng xuất" aria-label="Đăng xuất">{{ icon("logout") }}</button></form>
+      {% else %}
+        <a href="{{ url_for('accounts.login') }}">{{ icon("user") }}<span class="label">Đăng nhập</span></a>
+        <a class="btn btn-small btn-accent" href="{{ url_for('accounts.register') }}">Đăng ký</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flashes">
+        {% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}</div>{% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand" href="{{ url_for('shop.index') }}"><span class="brand-mark">{{ icon("book") }}</span>
+        <span class="brand-name"><small>Nhà sách</small>Trí Tri</span></a>
+      <p class="footer-about">Sách giấy chọn lọc giao tận nhà, thanh toán khi nhận hàng. Hội viên Kho E-Book đọc toàn bộ thư viện PDF/EPUB chỉ với {{ store.vault.membership_fee | vnd }}/năm.</p>
+    </div>
+    <div>
+      <h4>Khám phá</h4>
+      <ul>
+        <li><a href="{{ url_for('shop.index') }}">Sách giấy</a></li>
+        <li><a href="{{ url_for('library.index') }}">Kho E-Book hội viên</a></li>
+        <li><a href="{{ url_for('support.index') }}">Ủng hộ nhà sách</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Tài khoản</h4>
+      <ul>
+        {% if current_account %}
+          <li><a href="{{ url_for(current_account.home_endpoint) }}">{{ 'Trang quản trị' if current_account.is_admin else 'Tài khoản của tôi' }}</a></li>
+        {% else %}
+          <li><a href="{{ url_for('accounts.login') }}">Đăng nhập</a></li>
+          <li><a href="{{ url_for('accounts.register') }}">Tạo tài khoản</a></li>
+        {% endif %}
+        <li><a href="{{ url_for('shop.cart') }}">Giỏ hàng</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">© Nhà Sách Trí Tri · Đồ án Phát triển ứng dụng hướng đối tượng (Python + Flask)</div>
+</footer>
+<script src="{{ asset_url('app.js') }}" defer></script>
+</body>
+</html>

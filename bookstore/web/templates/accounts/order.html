@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}Đơn {{ order.id }}{% endblock %}
+{% block content %}
+<p class="small"><a href="{{ url_for('accounts.profile') }}">Tài khoản của tôi</a> / Đơn hàng</p>
+<h1>Đơn {{ order.id }} {{ ui.status(order) }}</h1>
+<div class="grid-2">
+  <div class="card stack">
+    {{ ui.order_lines(order) }}
+    <dl class="spec">
+      <dt>Ngày đặt</dt><dd>{{ order.created_at | dt }}</dd>
+      <dt>Loại đơn</dt><dd>{{ order.order_type.label }}</dd>
+      <dt>Thanh toán</dt><dd>{{ order.payment_method }}</dd>
+      <dt>Điện thoại</dt><dd>{{ order.contact_phone or '—' }}</dd>
+      {% if order.shipping_address %}<dt>Giao tới</dt><dd>{{ order.shipping_address }}</dd>{% endif %}
+    </dl>
+    {% if order.is_pending and order.payment_method == 'Chuyển khoản ngân hàng' %}
+      <div class="panel panel-accent">Vui lòng chuyển khoản <strong>{{ order.final_total | vnd }}</strong> tới {{ store.vault.bank_info }}
+        với nội dung <span class="copy-box">TRITRI {{ order.id }}</span></div>
+    {% endif %}
+  </div>
+  <aside class="card">
+    {{ ui.order_summary(order) }}
+    <p class="panel panel-info small" style="margin-top: 16px;">{{ order.status_hint }}</p>
+    {% if order.customer_can_cancel %}
+      <form method="post" action="{{ url_for('accounts.cancel_order', order_id=order.id) }}" style="margin-top: 16px;"
+            data-confirm="Bạn chắc chắn muốn hủy đơn này?">
+        {{ csrf_field() }}<button class="btn btn-ghost-danger btn-block">Hủy đơn</button>
+      </form>
+    {% endif %}
+  </aside>
+</div>
+{% endblock %}

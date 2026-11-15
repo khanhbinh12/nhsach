@@ -1,0 +1,41 @@
+{% extends "admin/layout.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}Đơn hàng{% endblock %}
+{% block admin_content %}
+<div class="section-head" style="margin-top: 0;">
+  <h1 style="margin: 0;">Đơn hàng</h1>
+  <div class="chips">
+    <a class="chip {{ 'active' if not status }}" href="{{ url_for('admin.orders') }}">Tất cả</a>
+    {% for st in statuses %}<a class="chip {{ 'active' if st == status }}" href="{{ url_for('admin.orders', **{'trang-thai': st.value}) }}">{{ st.label }}</a>{% endfor %}
+  </div>
+</div>
+<div class="card table-wrap">
+  {% if orders.total %}
+  <table>
+    <thead><tr><th>Mã đơn</th><th>Ngày</th><th>Loại</th><th>Khách hàng</th><th>Thanh toán</th><th class="num">Tổng</th><th>Trạng thái</th><th></th></tr></thead>
+    <tbody>
+    {% for o in orders.items %}
+      <tr>
+        <td><details><summary>{{ o.id }}</summary>
+          <div class="details-body small">
+            {% for line in o.lines %}{{ line.title }} × {{ line.quantity }} ({{ line.subtotal | vnd }})<br>{% endfor %}
+            Giảm: -{{ o.discount_amount | vnd }} ({{ o.discount_description }}) · Ship: {{ o.shipping_fee | vnd }}<br>
+            {% if o.shipping_address %}Giao tới: {{ o.shipping_address }}{% endif %}
+          </div></details></td>
+        <td class="nowrap small">{{ o.created_at | dt }}</td>
+        <td>{{ o.order_type.label }}</td>
+        <td>{{ o.customer_name }}<br><span class="small muted">{{ o.contact_phone }}</span></td>
+        <td class="small">{{ o.payment_method }}</td>
+        <td class="num">{{ o.final_total | vnd }}</td>
+        <td>{{ ui.status(o) }}</td>
+        <td>{{ ui.order_actions(o) }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {{ ui.pagination(orders, 'đơn') }}
+  {% else %}<div class="empty">Không có đơn hàng.</div>{% endif %}
+</div>
+<p class="small muted">Đơn sách: Chờ xử lý → <strong>Giao hàng</strong> → <strong>Hoàn tất</strong> (hủy được khi chưa hoàn tất, sách tự hoàn về kho).
+  Đơn hội viên: Chờ xử lý → <strong>Hoàn tất</strong> (tự kích hoạt gói cho khách).</p>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}{{ book.title }}{% endblock %}
+{% block description %}{{ book.title }} – {{ book.byline() }}. {{ book.description | truncate(140) }}{% endblock %}
+{% block head %}
+  {% set canonical = url_for('shop.book_detail', product_id=book.id, slug=book.slug, _external=True) %}
+  <link rel="canonical" href="{{ canonical }}">
+  <meta property="og:type" content="book">
+  <meta property="og:title" content="{{ book.title }}">
+  <meta property="og:description" content="{{ book.byline() }} – {{ book.price | vnd }}. {{ book.description | truncate(120) }}">
+  <meta property="og:url" content="{{ canonical }}">
+  {% if book.cover_image %}<meta property="og:image" content="{{ url_for('media.cover', filename=book.cover_image, _external=True) }}">{% endif %}
+{% endblock %}
+{% block content %}
+<nav class="breadcrumb" aria-label="Vị trí"><a href="{{ url_for('shop.index') }}">Sách giấy</a> ›
+  <a href="{{ url_for('shop.index', **{'the-loai': book.category}) }}">{{ book.category }}</a> › {{ book.title }}</nav>
+<div class="detail">
+  <div class="detail-media">{{ ui.cover(book, 'large') }}</div>
+  <div>
+    <span class="eyebrow">{{ book.category }}</span>
+    <h1>{{ book.title }}</h1>
+    <div class="detail-author">Tác giả <strong>{{ book.byline() }}</strong>{% if book.publisher %} · {{ book.publisher }}{% endif %}</div>
+    <div class="detail-price">{{ book.price | vnd }}</div>
+
+    <div class="buy-panel stack">
+      {% if book.can_supply(1) %}
+        <span class="stock-pill {{ 'low' if book.is_low_stock(store.inventory.LOW_STOCK_THRESHOLD) }}">Còn {{ book.stock_label() }} cuốn trong kho</span>
+        <form method="post" action="{{ url_for('shop.add_to_cart') }}" class="buy-row">
+          {{ csrf_field() }}
+          <input type="hidden" name="product_id" value="{{ book.id }}">
+          <input type="number" name="quantity" value="1" min="1" max="{{ book.stock }}" aria-label="Số lượng">
+          <button class="btn btn-accent" style="flex: 1;">Thêm vào giỏ hàng</button>
+        </form>
+        <p class="small muted" style="margin: 0;">Phí giao hàng dự kiến {{ book.shipping_fee() | vnd }} · Thanh toán khi nhận hàng</p>
+      {% else %}
+        <p class="text-danger" style="margin: 0;">Tạm hết hàng – vui lòng quay lại sau.</p>
+      {% endif %}
+    </div>
+
+    {% if book.description %}
+      <h3 style="margin-top: 32px;">Giới thiệu</h3>
+      <p>{{ book.description }}</p>
+    {% endif %}
+    <h3 style="margin-top: 28px;">Thông tin chi tiết</h3>
+    <dl class="spec">
+      <dt>Nhà xuất bản</dt><dd>{{ book.publisher or '—' }}</dd>
+      <dt>Năm xuất bản</dt><dd>{{ book.publish_year }}</dd>
+      <dt>ISBN</dt><dd>{{ book.isbn or '—' }}</dd>
+      {% for label, value in book.extra_info().items() %}<dt>{{ label }}</dt><dd>{{ value }}</dd>{% endfor %}
+    </dl>
+  </div>
+</div>
+
+{% if related %}
+  <div class="section-head"><div><span class="eyebrow">Có thể bạn thích</span><h2>Cùng thể loại</h2></div></div>
+  <div class="book-grid">{% for b in related %}{{ ui.book_card(b) }}{% endfor %}</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Đăng nhập{% endblock %}
+{% block content %}
+<div class="card auth-card stack">
+  <div class="auth-head"><div class="brand-mark">{{ icon("book") }}</div>
+    <h1>Chào mừng trở lại</h1><p>Đăng nhập để đặt sách và đọc Kho E-Book</p></div>
+  <form method="post" class="stack">
+    {{ csrf_field() }}
+    <label class="field"><span>Email, số điện thoại hoặc tên đăng nhập</span>
+      <input type="text" name="login" value="{{ login_value }}" required autofocus></label>
+    <label class="field"><span>Mật khẩu</span><input type="password" name="password" required></label>
+    <button class="btn btn-block">Đăng nhập</button>
+  </form>
+  <p class="small">Chưa có tài khoản? <a href="{{ url_for('accounts.register', next=request.args.get('next')) }}">Đăng ký ngay</a></p>
+  <div class="demo-box">
+    <strong>Tài khoản demo</strong><br>
+    Quản trị: <code>{{ demo.admin[0] }}</code> / <code>{{ demo.admin[1] }}</code><br>
+    Khách (đang là hội viên): <code>{{ demo.customer[0] }}</code> / <code>{{ demo.customer[1] }}</code>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Ủng hộ web{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-main">
+    <h1>Ủng hộ Nhà Sách Trí Tri</h1>
+    <p>Mỗi lượt xem quảng cáo giúp chúng tôi trang trải chi phí duy trì web và tiếp tục giới thiệu những cuốn sách hay. Hoàn toàn miễn phí với bạn.</p>
+    <form method="post" action="{{ url_for('support.start') }}">
+      {{ csrf_field() }}
+      <button class="btn btn-accent">Xem quảng cáo ({{ duration }} giây)</button>
+    </form>
+  </div>
+  <aside class="hero-side">
+    <h3>Cộng đồng đã ủng hộ</h3>
+    <div class="price-tag">{{ total_views }} <span class="muted small">lượt xem</span></div>
+    <p class="muted">Hôm nay: {{ today_views }} lượt</p>
+  </aside>
+</section>
+
+<div class="grid-cols" style="margin-top: 24px;">
+  <div class="card">
+    <h3>Xem quảng cáo có mở khóa sách không?</h3>
+    <p class="muted">Không. Xem quảng cáo là cách ủng hộ web, không mở link Drive. Kho E-Book chỉ dành cho hội viên để bảo vệ nguồn sách.</p>
+  </div>
+  <div class="card">
+    <h3>Muốn đọc E-Book?</h3>
+    <p class="muted">Đăng ký hội viên {{ store.vault.membership_fee | vnd }}/{{ store.vault.duration_days }} ngày để xem link Drive chứa toàn bộ sách.</p>
+    <a href="{{ url_for('library.index') }}">Xem Kho E-Book →</a>
+  </div>
+  <div class="card">
+    <h3>Thích sách giấy?</h3>
+    <p class="muted">Mua sách giấy là cách ủng hộ nhà sách tốt nhất – giao tận nhà, thanh toán khi nhận hàng.</p>
+    <a href="{{ url_for('shop.index') }}">Xem sách giấy →</a>
+  </div>
+</div>
+{% endblock %}

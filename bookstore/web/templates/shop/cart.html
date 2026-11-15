@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}Giỏ hàng{% endblock %}
+{% block content %}
+<h1>Giỏ hàng</h1>
+{% if cart.is_empty() %}
+  {% call ui.empty_state("Giỏ hàng của bạn đang trống.", "bag") %}
+    <a class="btn" href="{{ url_for('shop.index') }}">Khám phá sách</a>
+  {% endcall %}
+{% else %}
+<div class="grid-2">
+  <div class="card table-wrap">
+    <table class="cart-table">
+      <thead><tr><th>Sách</th><th class="num">Đơn giá</th><th>Số lượng</th><th class="num">Thành tiền</th><th></th></tr></thead>
+      <tbody>
+      {% for book, quantity in cart.items() %}
+        <tr>
+          <td><div class="line-item">{{ ui.cover(book, 'mini') }}
+            <div><a class="book-title" href="{{ url_for('shop.book_detail', product_id=book.id, slug=book.slug) }}">{{ book.title }}</a>
+              <div class="muted small">{{ book.byline() }}</div></div></div></td>
+          <td class="num">{{ book.price | vnd }}</td>
+          <td>
+            <form method="post" action="{{ url_for('shop.update_cart') }}" class="qty-form">
+              {{ csrf_field() }}
+              <input type="hidden" name="product_id" value="{{ book.id }}">
+              <input type="number" name="quantity" value="{{ quantity }}" min="1" max="{{ book.stock }}">
+              <button class="btn btn-small btn-outline">Cập nhật</button>
+            </form>
+          </td>
+          <td class="num">{{ (book.price * quantity) | vnd }}</td>
+          <td>
+            <form method="post" action="{{ url_for('shop.remove_from_cart') }}">
+              {{ csrf_field() }}<input type="hidden" name="product_id" value="{{ book.id }}">
+              <button class="link-button" style="color: var(--danger)" title="Xóa">✕</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <aside class="card">
+    <h3>Tóm tắt đơn hàng</h3>
+    <div class="summary-row"><span>Tạm tính ({{ cart.total_quantity() }} cuốn)</span><span>{{ quote.subtotal | vnd }}</span></div>
+    <div class="summary-row"><span>Giảm giá</span><span>-{{ quote.discount_amount | vnd }}</span></div>
+    <div class="small muted">{{ quote.policy_description }}</div>
+    <div class="summary-row"><span>Phí vận chuyển</span><span>{{ quote.shipping_fee | vnd }}</span></div>
+    <div class="summary-row summary-total"><span>Tổng cộng</span><span>{{ quote.total | vnd }}</span></div>
+
+    {% if quote.voucher_code %}
+      <div class="voucher-applied">
+        <span>Mã <strong>{{ quote.voucher_code }}</strong>
+          {% if quote.voucher_applied %}đã được áp dụng{% else %}hợp lệ nhưng ưu đãi hiện có tốt hơn nên chưa dùng{% endif %}</span>
+        <form method="post" action="{{ url_for('shop.remove_voucher') }}">{{ csrf_field() }}<button class="link-button" style="color: var(--danger)">Gỡ mã</button></form>
+      </div>
+    {% else %}
+      <form method="post" action="{{ url_for('shop.apply_voucher') }}" class="voucher-form">
+        {{ csrf_field() }}
+        <input type="text" name="code" placeholder="Nhập mã giảm giá" required maxlength="20">
+        <button class="btn btn-outline">Áp dụng</button>
+      </form>
+    {% endif %}
+
+    <a class="btn btn-accent btn-block" style="margin-top: 16px;" href="{{ url_for('shop.checkout') }}">Tiến hành đặt hàng</a>
+    <p class="small muted">Hệ thống tự chọn ưu đãi có lợi nhất (không cộng dồn): hạng VIP, -12% cho đơn từ 250.000đ, -15% khi mua từ 4 cuốn, hoặc mã giảm giá bạn nhập.</p>
+  </aside>
+</div>
+{% endif %}
+{% endblock %}

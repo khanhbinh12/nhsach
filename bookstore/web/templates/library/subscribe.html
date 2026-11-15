@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Đăng ký hội viên{% endblock %}
+{% block content %}
+<p class="small"><a href="{{ url_for('library.index') }}">Kho E-Book</a> / Đăng ký hội viên</p>
+<h1>Đăng ký hội viên Kho E-Book</h1>
+<div class="grid-2">
+  <div class="card stack">
+    {% if has_access %}
+      <div class="panel panel-success">Bạn đang là hội viên: {{ customer.membership.status_label() }}. Gia hạn thêm sẽ được <strong>cộng nối tiếp</strong> vào thời hạn còn lại.</div>
+    {% endif %}
+
+    {% if pending %}
+      <div class="panel panel-info">
+        <h3>Đã ghi nhận yêu cầu {{ pending.id }}</h3>
+        Nhà sách đang kiểm tra giao dịch. Gói sẽ tự kích hoạt ngay khi được xác nhận – bạn có thể theo dõi trong
+        <a href="{{ url_for('accounts.profile') }}">Tài khoản của tôi</a>.
+      </div>
+    {% endif %}
+
+    <ol class="steps">
+      <li><div><strong>Chuyển khoản {{ store.vault.membership_fee | vnd }}</strong><br>
+        <span class="muted">{{ store.vault.bank_info }}</span></div></li>
+      <li><div><strong>Ghi nội dung chuyển khoản</strong><br><span class="copy-box">{{ transfer_note }}</span></div></li>
+      <li><div><strong>Bấm “Tôi đã chuyển khoản”</strong><br>
+        <span class="muted">Nhà sách xác nhận xong, link Google Drive sẽ hiện trong Kho E-Book.</span></div></li>
+    </ol>
+
+    {% if not pending %}
+      <form method="post">
+        {{ csrf_field() }}
+        <button class="btn btn-accent">Tôi đã chuyển khoản</button>
+      </form>
+    {% endif %}
+  </div>
+
+  <aside class="card">
+    <h3>Quyền lợi hội viên</h3>
+    <ul>
+      <li>Xem link Google Drive chứa <strong>toàn bộ</strong> sách trong kho</li>
+      <li>Tải file PDF/EPUB về đọc trên mọi thiết bị</li>
+      <li>Nhận sách mới cập nhật trong {{ store.vault.duration_days }} ngày</li>
+    </ul>
+    <div class="price-tag">{{ store.vault.membership_fee | vnd }}</div>
+    <p class="small muted">Gói hội viên chỉ áp dụng cho Kho E-Book, không bao gồm ưu đãi sách giấy.</p>
+  </aside>
+</div>
+{% endblock %}

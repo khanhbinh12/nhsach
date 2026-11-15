@@ -1,0 +1,96 @@
+{% extends "admin/layout.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}Quản trị{% endblock %}
+{% block admin_content %}
+{% set s = summary %}
+<div class="stats">
+  <div class="stat primary">
+    <div class="stat-label">Doanh thu bán sách (nguồn chính)</div>
+    <div class="stat-value">{{ s.book_revenue | vnd }}</div>
+    <div class="stat-note">{{ s.completed_orders }} đơn đã hoàn tất</div>
+  </div>
+  <div class="stat accent">
+    <div class="stat-label">Thu nhập phụ (hội viên + quảng cáo)</div>
+    <div class="stat-value">{{ s.side_income | vnd }}</div>
+    <div class="stat-note">Hội viên {{ s.membership_revenue | vnd }} · QC ước tính {{ s.ad_revenue | vnd }}</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Tổng doanh thu</div>
+    <div class="stat-value">{{ s.total_revenue | vnd }}</div>
+    <div class="stat-note">Chỉ tính đơn đã xác nhận</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Đơn chờ xử lý / đang giao</div>
+    <div class="stat-value">{{ s.pending_orders }} / {{ s.shipping_orders }}</div>
+    <div class="stat-note"><a href="{{ url_for('admin.orders', **{'trang-thai': 'PENDING'}) }}">Duyệt ngay →</a></div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Hội viên E-Book còn hạn</div>
+    <div class="stat-value">{{ s.active_members }}</div>
+    <div class="stat-note">trên {{ s.customer_count }} khách hàng</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Lượt xem quảng cáo</div>
+    <div class="stat-value">{{ s.ad_views }}</div>
+    <div class="stat-note">{{ store.ads.settings.revenue_per_view | vnd }}/lượt (ước tính)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Tồn kho sách giấy</div>
+    <div class="stat-value">{{ s.physical_stock }}</div>
+    <div class="stat-note">{{ s.low_stock_count }} đầu sách sắp hết</div>
+  </div>
+</div>
+
+<div class="grid-wide" style="margin-top: 24px;">
+  <div class="card table-wrap">
+    <h3>Đơn cần xử lý</h3>
+    {% if open_orders %}
+    <table>
+      <tbody>
+      {% for o in open_orders %}
+        <tr><td><strong class="nowrap">{{ o.id }}</strong> {{ ui.status(o) }}<br><span class="small muted">{{ o.customer_name }} · {{ o.order_type.label }} · {{ o.final_total | vnd }}</span></td>
+          <td>{{ ui.order_actions(o) }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="muted">Không có đơn nào cần xử lý.</p>{% endif %}
+  </div>
+
+  <div class="card table-wrap">
+    <h3>Sách bán chạy</h3>
+    <table>
+      <thead><tr><th>Sách</th><th class="num">Đã bán</th><th class="num">Doanh số</th></tr></thead>
+      <tbody>{% for t in top_sellers %}<tr><td>{{ t.title }}</td><td class="num">{{ t.quantity }}</td><td class="num">{{ t.revenue | vnd }}</td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+
+  <div class="card table-wrap">
+    <h3>Sắp hết hàng</h3>
+    {% if low_stock %}
+    <table>
+      <tbody>
+      {% for p in low_stock %}
+        <tr><td>{{ p.title }}<br><span class="text-danger small">Còn {{ p.stock_label() }}</span></td>
+          <td><form method="post" action="{{ url_for('admin.restock', product_id=p.id) }}" class="qty-form">{{ csrf_field() }}
+            <input type="number" name="quantity" value="10" min="1"><button class="btn btn-small btn-outline">Nhập</button></form></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="muted">Tồn kho ổn định.</p>{% endif %}
+  </div>
+
+  <div class="card table-wrap">
+    <h3>Doanh số theo thể loại</h3>
+    <table>
+      <tbody>{% for name, amount in categories %}<tr><td>{{ name }}</td><td class="num">{{ amount | vnd }}</td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+
+  <div class="card table-wrap">
+    <h3>Lượt xem quảng cáo 7 ngày</h3>
+    <table>
+      <tbody>{% for day, views in ad_days | reverse %}<tr><td>{{ day | dt(false) }}</td><td class="num">{{ views }} lượt</td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

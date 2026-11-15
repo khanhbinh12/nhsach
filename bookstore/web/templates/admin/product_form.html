@@ -1,0 +1,32 @@
+{% extends "admin/layout.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}{{ 'Sửa' if form.is_edit else 'Thêm' }} {{ form.heading }}{% endblock %}
+{% block admin_content %}
+<p class="small"><a href="{{ url_for('admin.products') }}">Sách &amp; E-Book</a> / {{ 'Sửa' if form.is_edit else 'Thêm mới' }}</p>
+<h1>{{ 'Sửa' if form.is_edit else 'Thêm' }} {{ form.heading }}{% if form.is_edit %}: {{ form.product.title }}{% endif %}</h1>
+<form method="post" enctype="multipart/form-data" class="card stack" style="max-width: 860px;">
+  {{ csrf_field() }}
+  <h3>Thông tin chung</h3>
+  <div class="form-grid">{% for f in form.common_fields %}{{ ui.field(f, form.value(f.name)) }}{% endfor %}</div>
+  <h3>Thông tin riêng – {{ form.heading }}</h3>
+  <div class="form-grid">{% for f in form.SPECIFIC_FIELDS %}{{ ui.field(f, form.value(f.name)) }}{% endfor %}</div>
+
+  <h3>Ảnh bìa</h3>
+  <div class="cover-preview">
+    {% if form.is_edit %}{{ ui.cover(form.product) }}{% endif %}
+    <div class="stack" style="flex: 1;">
+      <label class="field"><span>Tải ảnh bìa mới</span>
+        <input type="file" name="cover" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+        <small>JPG, PNG hoặc WEBP, tối đa 2 MB. Không có ảnh thì web tự vẽ bìa theo tên sách.</small></label>
+      {% if form.is_edit and form.product.cover_image %}
+        <label class="small"><input type="checkbox" name="remove_cover" value="1"> Xóa ảnh bìa hiện tại</label>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn">Lưu</button>
+    <a class="btn btn-outline" href="{{ url_for('admin.products') }}">Hủy</a>
+  </div>
+</form>
+{% endblock %}

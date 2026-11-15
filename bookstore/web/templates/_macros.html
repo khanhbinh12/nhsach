@@ -1,0 +1,123 @@
+{% from "_icons.html" import icon %}
+
+{% macro cover(book, size='') -%}
+{% if book.cover_image %}
+<img class="cover-img {{ size }}" src="{{ cover_src(book, size) }}" alt="Bìa sách {{ book.title }}" loading="lazy">
+{% else %}
+<div class="cover {{ size }}" style="--h: {{ book.id | hue }}">
+  <span class="cover-cat">{{ book.category }}</span>
+  <span class="cover-title">{{ book.title }}</span>
+  <span class="cover-author">{{ book.byline() }}</span>
+</div>
+{% endif %}
+{%- endmacro %}
+
+{% macro order_actions(order, compact=false) -%}
+<div class="actions">
+  {% for action in order.available_actions %}
+    <form method="post" action="{{ url_for('admin.order_action', order_id=order.id, action=action.value) }}"
+          {% if action.value == 'cancel' %}data-confirm="Hủy đơn {{ order.id }}? Sách sẽ được hoàn về kho."{% endif %}>
+      {{ csrf_field() }}
+      <button class="btn btn-small {{ 'btn-ghost-danger' if action.value == 'cancel' else ('btn-accent' if action.value == 'ship' else '') }}">{{ action.label }}</button>
+    </form>
+  {% endfor %}
+</div>
+{%- endmacro %}
+
+{% macro add_to_cart(book, label='+ Giỏ', css='btn btn-small') -%}
+<form method="post" action="{{ url_for('shop.add_to_cart') }}">
+  {{ csrf_field() }}
+  <input type="hidden" name="product_id" value="{{ book.id }}">
+  <input type="hidden" name="next" value="{{ request.full_path }}">
+  <button class="{{ css }}">{{ label }}</button>
+</form>
+{%- endmacro %}
+
+{% macro book_card(book) -%}
+{% set link = url_for('shop.book_detail', product_id=book.id, slug=book.slug) %}
+<article class="book-card">
+  <a class="book-card-media" href="{{ link }}" tabindex="-1" aria-hidden="true">
+    {% if not book.can_supply(1) %}<span class="stock-badge out">Hết hàng</span>
+    {% elif book.is_low_stock(store.inventory.LOW_STOCK_THRESHOLD) %}<span class="stock-badge">Chỉ còn {{ book.stock_label() }} cuốn</span>{% endif %}
+    {{ cover(book) }}
+  </a>
+  <div class="book-card-body">
+    <span class="book-category">{{ book.category }}</span>
+    <a class="book-title" href="{{ link }}">{{ book.title }}</a>
+    <div class="muted small">{{ book.byline() }}</div>
+    <div class="book-card-foot">
+      <span class="price">{{ book.price | vnd }}</span>
+      {% if book.can_supply(1) %}
+        <form method="post" action="{{ url_for('shop.add_to_cart') }}">
+          {{ csrf_field() }}
+          <input type="hidden" name="product_id" value="{{ book.id }}">
+          <input type="hidden" name="next" value="{{ request.full_path }}">
+          <button class="icon-btn" title="Thêm vào giỏ" aria-label="Thêm “{{ book.title }}” vào giỏ">{{ icon("plus") }}</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</article>
+{%- endmacro %}
+
+{% macro empty_state(message, icon_name="book") -%}
+<div class="card empty">
+  <div class="empty-icon">{{ icon(icon_name) }}</div>
+  <p>{{ message }}</p>
+  {{ caller() if caller is defined else '' }}
+</div>
+{%- endmacro %}
+
+{% macro pagination(page, noun='mục') -%}
+{% if page.total %}
+<nav class="pagination" aria-label="Phân trang">
+  <span class="muted small">{{ page.first_index }}–{{ page.last_index }} / {{ page.total }} {{ noun }}</span>
+  {% if page.pages > 1 %}
+  <div class="page-links">
+    {% if page.has_prev %}<a href="{{ page_url(page.number - 1) }}" rel="prev">‹ Trước</a>{% endif %}
+    {% for number in page.window() %}
+      {% if number is none %}<span class="gap">…</span>
+      {% elif number == page.number %}<span class="current" aria-current="page">{{ number }}</span>
+      {% else %}<a href="{{ page_url(number) }}">{{ number }}</a>{% endif %}
+    {% endfor %}
+    {% if page.has_next %}<a href="{{ page_url(page.number + 1) }}" rel="next">Sau ›</a>{% endif %}
+  </div>
+  {% endif %}
+</nav>
+{% endif %}
+{%- endmacro %}
+
+{% macro status(order) -%}
+<span class="status status-{{ order.status.value | lower }}">{{ order.status.label }}</span>
+{%- endmacro %}
+
+{% macro order_summary(order) -%}
+<div class="summary-row"><span>Tạm tính</span><span>{{ order.subtotal | vnd }}</span></div>
+<div class="summary-row"><span>Giảm giá <span class="muted small">({{ order.discount_description }})</span></span><span>-{{ order.discount_amount | vnd }}</span></div>
+<div class="summary-row"><span>Phí vận chuyển</span><span>{{ order.shipping_fee | vnd }}</span></div>
+<div class="summary-row summary-total"><span>Tổng cộng</span><span>{{ order.final_total | vnd }}</span></div>
+{%- endmacro %}
+
+{% macro order_lines(order) -%}
+<div class="table-wrap"><table>
+  <thead><tr><th>Sản phẩm</th><th class="num">Đơn giá</th><th class="num">SL</th><th class="num">Thành tiền</th></tr></thead>
+  <tbody>
+  {% for line in order.lines %}
+    <tr><td>{{ line.title }} <span class="tag tag-muted">{{ line.format.label }}</span></td>
+      <td class="num">{{ line.unit_price | vnd }}</td><td class="num">{{ line.quantity }}</td><td class="num">{{ line.subtotal | vnd }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table></div>
+{%- endmacro %}
+
+{% macro field(f, value) -%}
+<label class="field {{ 'full' if f.kind == 'textarea' }}">
+  <span>{{ f.label }}{% if f.required %} *{% endif %}</span>
+  {% if f.kind == 'textarea' %}
+    <textarea name="{{ f.name }}" rows="4">{{ value }}</textarea>
+  {% else %}
+    <input type="{{ f.kind }}" name="{{ f.name }}" value="{{ value }}" {% if f.required %}required{% endif %} {% if f.kind == 'number' %}step="any" min="0"{% endif %}>
+  {% endif %}
+  {% if f.help %}<small>{{ f.help }}</small>{% endif %}
+</label>
+{%- endmacro %}

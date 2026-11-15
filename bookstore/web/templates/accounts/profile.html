@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% import "_macros.html" as ui with context %}
+{% block title %}Tài khoản của tôi{% endblock %}
+{% block content %}
+<h1>Xin chào, {{ customer.name }}</h1>
+<div class="grid-cols">
+  <div class="card">
+    <h3>Thông tin tài khoản</h3>
+    <dl class="spec" style="grid-template-columns: 130px 1fr; margin: 8px 0 0;">
+      <dt>Điện thoại</dt><dd>{{ customer.phone }}</dd>
+      <dt>Email</dt><dd>{{ customer.email }}</dd>
+      <dt>Loại khách</dt><dd>{{ customer.role }}{% if customer.is_vip %} · hạng {{ customer.tier.label }} (giảm {{ customer.discount_rate | percent }}){% endif %}</dd>
+      <dt>Điểm tích lũy</dt><dd>{{ customer.loyalty_points }}</dd>
+      <dt>Tổng chi tiêu</dt><dd>{{ customer.total_spent | vnd }}</dd>
+    </dl>
+  </div>
+  <div class="card stack">
+    <h3>Hội viên Kho E-Book</h3>
+    {% if has_access %}
+      <div class="panel panel-success"><strong>Đang hoạt động</strong><br>{{ customer.membership.status_label() }}</div>
+      <a class="btn" href="{{ url_for('library.index') }}">Mở Kho E-Book</a>
+    {% elif pending_membership %}
+      <div class="panel panel-info">Yêu cầu <strong>{{ pending_membership.id }}</strong> đang chờ nhà sách xác nhận thanh toán.</div>
+    {% else %}
+      <p class="muted">{{ customer.membership.status_label() }}. Đăng ký {{ store.vault.membership_fee | vnd }}/{{ store.vault.duration_days }} ngày để xem link Drive chứa toàn bộ E-Book.</p>
+      <a class="btn btn-accent" href="{{ url_for('library.subscribe') }}">Đăng ký hội viên</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="section-head"><h2>Đơn hàng của tôi</h2></div>
+<div class="card table-wrap">
+  {% if orders.total %}
+  <table>
+    <thead><tr><th>Mã đơn</th><th>Ngày đặt</th><th>Loại</th><th>Sản phẩm</th><th class="num">Tổng tiền</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+    {% for order in orders.items %}
+      <tr>
+        <td><a href="{{ url_for('accounts.order_detail', order_id=order.id) }}">{{ order.id }}</a></td>
+        <td class="nowrap">{{ order.created_at | dt }}</td>
+        <td>{{ order.order_type.label }}</td>
+        <td class="small">{% for line in order.lines %}{{ line.title }} ×{{ line.quantity }}{{ ', ' if not loop.last }}{% endfor %}</td>
+        <td class="num">{{ order.final_total | vnd }}</td>
+        <td>{{ ui.status(order) }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {{ ui.pagination(orders, 'đơn') }}
+  {% else %}<div class="empty">Bạn chưa có đơn hàng nào. <a href="{{ url_for('shop.index') }}">Mua sách ngay</a></div>{% endif %}
+</div>
+
+<div class="section-head"><h2>Đổi mật khẩu</h2></div>
+<form method="post" action="{{ url_for('accounts.change_password') }}" class="card form-grid" style="max-width: 720px;">
+  {{ csrf_field() }}
+  <label class="field full"><span>Mật khẩu hiện tại</span><input type="password" name="old_password" required></label>
+  <label class="field"><span>Mật khẩu mới</span><input type="password" name="new_password" minlength="6" required></label>
+  <label class="field"><span>Nhập lại mật khẩu mới</span><input type="password" name="confirm_password" minlength="6" required></label>
+  <div><button class="btn btn-outline">Đổi mật khẩu</button></div>
+</form>
+{% endblock %}

@@ -1,0 +1,6 @@
+{
+  "name": "Quản Lý Nhà Sách Trí Tri",
+  "description": "Phần mềm quản lý nhà sách toàn diện: bán hàng thu ngân (POS), quản lý kho sách in/e-book/sách nói, chăm sóc khách hàng và báo cáo doanh thu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,1552 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tổng quan quản lý — Nhà Sách Tri Thức</title>
+  <link rel="stylesheet" href="../static/css/giao_dien.css">
+  
+</head>
+<body class="than-ql">
+  <a class="bo-qua-noi-dung" href="#noi-dung-chinh">Bỏ qua đến nội dung chính</a>
+  
+  <div class="bo-cuc-ql">
+    
+    <aside class="thanh-ben-ql" aria-label="Điều hướng quản lý">
+      <div class="thanh-ben-ql__dau">
+        <a href="/quan-ly/" class="logo">
+          <span class="logo__bieu-tuong" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
+              <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v17h5.5A2.5 2.5 0 0 1 20 22V5.5Z"/>
+            </svg>
+          </span>
+          <span class="logo__chu">
+            <span class="logo__ten">Tri Thức</span>
+            <span class="logo__phu">Khu quản lý</span>
+          </span>
+        </a>
+
+        <a href="/" class="ql-xem-cua-hang" title="Mở trang cửa hàng phía khách">
+          <span>Cửa hàng</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true">
+            <path d="M14 4h6v6M10 14 20 4M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/>
+          </svg>
+        </a>
+      </div>
+
+      <nav class="menu-ql" aria-label="Các mục quản lý">
+        <a href="/quan-ly/" class="menu-ql__muc menu-ql__muc--chon" aria-current="page">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="9" rx="1.5"/>
+            <rect x="14" y="3" width="7" height="5" rx="1.5"/>
+            <rect x="14" y="12" width="7" height="9" rx="1.5"/>
+            <rect x="3" y="16" width="7" height="5" rx="1.5"/>
+          </svg>
+          <span>Tổng quan</span>
+        </a>
+
+        <a href="/quan-ly/sach" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>
+          </svg>
+          <span>Sách</span>
+        </a>
+
+        <a href="/quan-ly/danh-muc" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h10"/>
+          </svg>
+          <span>Thể loại</span>
+        </a>
+
+        <a href="/quan-ly/don" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 8h12l-1 12H7L6 8Z"/>
+            <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+          </svg>
+          <span>Đơn hàng</span>
+        </a>
+
+        <a href="/quan-ly/khach-hang" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>Khách hàng</span>
+        </a>
+
+        <a href="/quan-ly/ma-giam-gia" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/>
+            <circle cx="7" cy="7" r="1.2"/>
+          </svg>
+          <span>Mã giảm giá</span>
+        </a>
+
+        <a href="/quan-ly/danh-gia" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span>Đánh giá</span>
+        </a>
+
+        <a href="/quan-ly/review" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          <span>Review</span>
+        </a>
+
+        <form class="menu-ql__form-thoat" method="post" action="/quan-ly/dang-xuat">
+          <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+          <button type="submit" class="menu-ql__muc menu-ql__muc--thoat">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span>Đăng xuất</span>
+          </button>
+        </form>
+      </nav>
+    </aside>
+
+    
+    <main id="noi-dung-chinh" class="vung-chinh-ql" tabindex="-1">
+      
+        
+        
+      
+
+      
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Tổng quan cửa hàng</h1>
+    <p class="phu-de-trang">Theo dõi doanh thu hoàn thành (tạm tính trừ giảm giá), tình hình đơn hàng và tồn kho.</p>
+  </div>
+  <div class="ql-dau-trang__nut">
+    <a href="/quan-ly/xuat/don.csv" class="nut nut--phu nut--nho">Xuất đơn CSV</a>
+    <a href="/quan-ly/xuat/doanh-thu.csv" class="nut nut--phu nut--nho">Xuất doanh thu CSV</a>
+    <a href="/quan-ly/sach/moi" class="nut nut--chinh nut--nho">+ Thêm sách</a>
+  </div>
+</div>
+
+
+<section class="luoi-the-so" aria-label="Chỉ số tổng quan">
+  <article class="the-so the-so--nhan">
+    <div class="the-so__nhan">Doanh thu tháng này</div>
+    <div class="the-so__gia-tri">5.100.000 đ</div>
+    <div class="the-so__phu">Chỉ tính đơn đã hoàn thành</div>
+  </article>
+
+  <a href="/quan-ly/don?trang_thai=cho_xac_nhan" class="the-so">
+    <div class="the-so__nhan">Đơn chờ xác nhận</div>
+    <div class="the-so__gia-tri">4</div>
+    <div class="the-so__phu">Bấm để xử lý đơn mới &rarr;</div>
+  </a>
+
+  <a href="/quan-ly/sach?loc=sap_het" class="the-so the-so--canh-bao">
+    <div class="the-so__nhan">Sách sắp hết hàng</div>
+    <div class="the-so__gia-tri">4</div>
+    <div class="the-so__phu">Tồn kho từ 5 cuốn trở xuống</div>
+  </a>
+
+  <a href="/quan-ly/khach-hang" class="the-so">
+    <div class="the-so__nhan">Khách hàng đăng ký</div>
+    <div class="the-so__gia-tri">28</div>
+    <div class="the-so__phu">Xem danh sách khách hàng &rarr;</div>
+  </a>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="luoi-bieu-do" aria-label="Biểu đồ doanh thu">
+  
+  <div class="hop-trang hop-bieu-do">
+    <div class="hop-bieu-do__dau">
+      <div>
+        <h2 class="hop-trang__tieu-de" style="margin-bottom: 2px;">Doanh thu 30 ngày gần nhất</h2>
+        <p class="phu-de-trang" style="font-size: var(--c-sm);">Tổng 30 ngày: <strong>24.980.000 đ</strong></p>
+      </div>
+      <span class="nhan nhan--trung-tinh">Theo ngày</span>
+    </div>
+
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <div class="boc-bieu-do">
+        <div class="khung-svg-bieu-do">
+          <svg viewBox="0 0 680 248" xmlns="http://www.w3.org/2000/svg" role="img"
+               aria-label="Biểu đồ cột doanh thu 30 ngày gần nhất. Tổng 24.980.000 đ, cao nhất 1.530.000 đ.">
+            
+            
+              
+              <line x1="84" y1="210.0" x2="662" y2="210.0"
+                    stroke="#e6e7ec" stroke-width="1" />
+              <text x="76" y="214.5" text-anchor="end" fill="#626875"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                0k
+              </text>
+            
+              
+              <line x1="84" y1="115.0" x2="662" y2="115.0"
+                    stroke="#e6e7ec" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="76" y="119.5" text-anchor="end" fill="#626875"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                765k
+              </text>
+            
+              
+              <line x1="84" y1="20.0" x2="662" y2="20.0"
+                    stroke="#e6e7ec" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="76" y="24.5" text-anchor="end" fill="#626875"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                1530k
+              </text>
+            
+
+            
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-10-26: 945.000 đ</title>
+                <rect x="87.3" y="92.6"
+                      width="12.7" height="117.4"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+                
+                
+                <text x="93.6" y="238" text-anchor="middle" fill="#525866"
+                      font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                  26/10
+                </text>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-10-27: 225.000 đ</title>
+                <rect x="106.5" y="182.1"
+                      width="12.7" height="27.9"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-10-28: 1.240.000 đ</title>
+                <rect x="125.8" y="56.0"
+                      width="12.7" height="154.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-10-29: 660.000 đ</title>
+                <rect x="145.1" y="128.0"
+                      width="12.7" height="82.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-10-30: 220.000 đ</title>
+                <rect x="164.3" y="182.7"
+                      width="12.7" height="27.3"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-10-31: 1.095.000 đ</title>
+                <rect x="183.6" y="74.0"
+                      width="12.7" height="136.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+                
+                
+                <text x="190.0" y="238" text-anchor="middle" fill="#525866"
+                      font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                  31/10
+                </text>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-01: 515.000 đ</title>
+                <rect x="202.9" y="146.0"
+                      width="12.7" height="64.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-02: 1.530.000 đ</title>
+                <rect x="222.1" y="20.0"
+                      width="12.7" height="190.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-03: 1.090.000 đ</title>
+                <rect x="241.4" y="74.6"
+                      width="12.7" height="135.4"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-04: 370.000 đ</title>
+                <rect x="260.7" y="164.1"
+                      width="12.7" height="45.9"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-05: 1.385.000 đ</title>
+                <rect x="279.9" y="38.0"
+                      width="12.7" height="172.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+                
+                
+                <text x="286.3" y="238" text-anchor="middle" fill="#525866"
+                      font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                  05/11
+                </text>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-06: 805.000 đ</title>
+                <rect x="299.2" y="110.0"
+                      width="12.7" height="100.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-07: 365.000 đ</title>
+                <rect x="318.5" y="164.7"
+                      width="12.7" height="45.3"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-08: 1.240.000 đ</title>
+                <rect x="337.7" y="56.0"
+                      width="12.7" height="154.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-09: 660.000 đ</title>
+                <rect x="357.0" y="128.0"
+                      width="12.7" height="82.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-10: 80.000 đ</title>
+                <rect x="376.3" y="200.1"
+                      width="12.7" height="9.9"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+                
+                
+                <text x="382.6" y="238" text-anchor="middle" fill="#525866"
+                      font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                  10/11
+                </text>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-11: 1.235.000 đ</title>
+                <rect x="395.5" y="56.6"
+                      width="12.7" height="153.4"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-12: 515.000 đ</title>
+                <rect x="414.8" y="146.0"
+                      width="12.7" height="64.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-13: 1.530.000 đ</title>
+                <rect x="434.1" y="20.0"
+                      width="12.7" height="190.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-14: 950.000 đ</title>
+                <rect x="453.3" y="92.0"
+                      width="12.7" height="118.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-15: 510.000 đ</title>
+                <rect x="472.6" y="146.7"
+                      width="12.7" height="63.3"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+                
+                
+                <text x="479.0" y="238" text-anchor="middle" fill="#525866"
+                      font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                  15/11
+                </text>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-16: 1.385.000 đ</title>
+                <rect x="491.9" y="38.0"
+                      width="12.7" height="172.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-17: 805.000 đ</title>
+                <rect x="511.1" y="110.0"
+                      width="12.7" height="100.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-18: 225.000 đ</title>
+                <rect x="530.4" y="182.1"
+                      width="12.7" height="27.9"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-19: 1.380.000 đ</title>
+                <rect x="549.7" y="38.6"
+                      width="12.7" height="171.4"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-20: 660.000 đ</title>
+                <rect x="568.9" y="128.0"
+                      width="12.7" height="82.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+                
+                
+                <text x="575.3" y="238" text-anchor="middle" fill="#525866"
+                      font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                  20/11
+                </text>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-21: 80.000 đ</title>
+                <rect x="588.2" y="200.1"
+                      width="12.7" height="9.9"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-22: 1.095.000 đ</title>
+                <rect x="607.5" y="74.0"
+                      width="12.7" height="136.0"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-23: 655.000 đ</title>
+                <rect x="626.7" y="128.7"
+                      width="12.7" height="81.3"
+                      rx="3" fill="#6e7787" fill-opacity="0.85"/>
+              </g>
+              
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11-24: 1.530.000 đ</title>
+                <rect x="646.0" y="20.0"
+                      width="12.7" height="190.0"
+                      rx="3" fill="#c92127" fill-opacity="1"/>
+              </g>
+              
+                
+                
+                <text x="652.4" y="238" text-anchor="middle" fill="#525866"
+                      font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                  24/11
+                </text>
+              
+            
+          </svg>
+        </div>
+      </div>
+      <p class="goi-y-cuon-bieu-do">Đang hiện ngày mới nhất • Vuốt ngang để xem các ngày trước.</p>
+      <details class="bang-so-lieu-bieu-do">
+        <summary>Bảng số liệu doanh thu 30 ngày</summary>
+        <div class="bang-so-lieu-bieu-do__cuon">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Ngày</th>
+                <th scope="col">Doanh thu</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>2026-10-26</td>
+                  <td>945.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-10-27</td>
+                  <td>225.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-10-28</td>
+                  <td>1.240.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-10-29</td>
+                  <td>660.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-10-30</td>
+                  <td>220.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-10-31</td>
+                  <td>1.095.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-01</td>
+                  <td>515.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-02</td>
+                  <td>1.530.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-03</td>
+                  <td>1.090.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-04</td>
+                  <td>370.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-05</td>
+                  <td>1.385.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-06</td>
+                  <td>805.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-07</td>
+                  <td>365.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-08</td>
+                  <td>1.240.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-09</td>
+                  <td>660.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-10</td>
+                  <td>80.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-11</td>
+                  <td>1.235.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-12</td>
+                  <td>515.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-13</td>
+                  <td>1.530.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-14</td>
+                  <td>950.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-15</td>
+                  <td>510.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-16</td>
+                  <td>1.385.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-17</td>
+                  <td>805.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-18</td>
+                  <td>225.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-19</td>
+                  <td>1.380.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-20</td>
+                  <td>660.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-21</td>
+                  <td>80.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-22</td>
+                  <td>1.095.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-23</td>
+                  <td>655.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11-24</td>
+                  <td>1.530.000 đ</td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </details>
+    
+  </div>
+
+  
+  <div class="hop-trang hop-bieu-do">
+    <div class="hop-bieu-do__dau">
+      <div>
+        <h2 class="hop-trang__tieu-de" style="margin-bottom: 2px;">Doanh thu 12 tháng</h2>
+        <p class="phu-de-trang" style="font-size: var(--c-sm);">Tổng 12 tháng: <strong>73.550.000 đ</strong></p>
+      </div>
+      <span class="nhan nhan--trung-tinh">Theo tháng</span>
+    </div>
+
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+      <div class="boc-bieu-do">
+        <div class="khung-svg-bieu-do">
+          <svg viewBox="0 0 680 248" xmlns="http://www.w3.org/2000/svg" role="img"
+               aria-label="Biểu đồ cột doanh thu 12 tháng. Tổng 73.550.000 đ, cao nhất 8.900.000 đ.">
+            
+              
+              <line x1="84" y1="210.0" x2="662" y2="210.0"
+                    stroke="#e6e7ec" stroke-width="1" />
+              <text x="76" y="214.5" text-anchor="end" fill="#626875"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                
+                0k
+              </text>
+            
+              
+              <line x1="84" y1="119.0" x2="662" y2="119.0"
+                    stroke="#e6e7ec" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="76" y="123.5" text-anchor="end" fill="#626875"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                
+                4.5tr
+              </text>
+            
+              
+              <line x1="84" y1="28.0" x2="662" y2="28.0"
+                    stroke="#e6e7ec" stroke-width="1" stroke-dasharray="4 4"/>
+              <text x="76" y="32.5" text-anchor="end" fill="#626875"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                
+                8.9tr
+              </text>
+            
+
+            
+              
+              
+              
+              
+              <g>
+                <title>2025-12: 6.050.000 đ</title>
+                <rect x="94.6" y="86.3"
+                      width="27.0" height="123.7"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="108.1" y="80.3" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    6.0tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="108.1" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                12/25
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-01: 4.150.000 đ</title>
+                <rect x="142.8" y="125.1"
+                      width="27.0" height="84.9"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="156.2" y="119.1" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    4.2tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="156.2" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                01/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-02: 8.900.000 đ</title>
+                <rect x="190.9" y="28.0"
+                      width="27.0" height="182.0"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="204.4" y="22.0" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    8.9tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="204.4" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                02/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-03: 7.000.000 đ</title>
+                <rect x="239.1" y="66.9"
+                      width="27.0" height="143.1"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="252.6" y="60.9" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    7.0tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="252.6" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                03/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-04: 5.100.000 đ</title>
+                <rect x="287.3" y="105.7"
+                      width="27.0" height="104.3"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="300.8" y="99.7" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    5.1tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="300.8" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                04/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-05: 3.200.000 đ</title>
+                <rect x="335.4" y="144.6"
+                      width="27.0" height="65.4"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="348.9" y="138.6" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    3.2tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="348.9" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                05/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-06: 7.950.000 đ</title>
+                <rect x="383.6" y="47.4"
+                      width="27.0" height="162.6"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="397.1" y="41.4" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    8.0tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="397.1" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                06/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-07: 6.050.000 đ</title>
+                <rect x="431.8" y="86.3"
+                      width="27.0" height="123.7"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="445.2" y="80.3" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    6.0tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="445.2" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                07/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-08: 4.150.000 đ</title>
+                <rect x="479.9" y="125.1"
+                      width="27.0" height="84.9"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="493.4" y="119.1" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    4.2tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="493.4" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                08/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-09: 8.900.000 đ</title>
+                <rect x="528.1" y="28.0"
+                      width="27.0" height="182.0"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="541.6" y="22.0" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    8.9tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="541.6" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                09/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-10: 7.000.000 đ</title>
+                <rect x="576.3" y="66.9"
+                      width="27.0" height="143.1"
+                      rx="4" fill="#6e7787" fill-opacity="0.85"/>
+                
+                  <text x="589.8" y="60.9" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    7.0tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="589.8" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                10/26
+              </text>
+            
+              
+              
+              
+              
+              <g>
+                <title>2026-11: 5.100.000 đ</title>
+                <rect x="624.4" y="105.7"
+                      width="27.0" height="104.3"
+                      rx="4" fill="#c92127" fill-opacity="1"/>
+                
+                  <text x="637.9" y="99.7" text-anchor="middle" fill="#525866"
+                        font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5" font-weight="600">
+                    5.1tr
+                  </text>
+                
+              </g>
+              
+              
+                
+              
+              <text x="637.9" y="238" text-anchor="middle" fill="#525866"
+                    font-family="'Segoe UI', system-ui, sans-serif" font-size="13.5">
+                11/26
+              </text>
+            
+          </svg>
+        </div>
+      </div>
+      <p class="goi-y-cuon-bieu-do">Đang hiện tháng gần nhất • Vuốt ngang để xem các tháng trước.</p>
+      <details class="bang-so-lieu-bieu-do">
+        <summary>Bảng số liệu doanh thu 12 tháng</summary>
+        <div class="bang-so-lieu-bieu-do__cuon">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Tháng</th>
+                <th scope="col">Doanh thu</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>2025-12</td>
+                  <td>6.050.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-01</td>
+                  <td>4.150.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-02</td>
+                  <td>8.900.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-03</td>
+                  <td>7.000.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-04</td>
+                  <td>5.100.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-05</td>
+                  <td>3.200.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-06</td>
+                  <td>7.950.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-07</td>
+                  <td>6.050.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-08</td>
+                  <td>4.150.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-09</td>
+                  <td>8.900.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-10</td>
+                  <td>7.000.000 đ</td>
+                </tr>
+              
+                <tr>
+                  <td>2026-11</td>
+                  <td>5.100.000 đ</td>
+                </tr>
+              
+            </tbody>
+          </table>
+        </div>
+      </details>
+    
+  </div>
+</section>
+
+
+<section class="luoi-ql-2-cot" aria-label="Bán chạy và cảnh báo tồn kho">
+  <div class="hop-trang">
+    <div class="dau-muc" style="margin-bottom: 14px;">
+      <h2 class="hop-trang__tieu-de" style="margin: 0;">Top 10 sách bán chạy</h2>
+      <a href="/quan-ly/sach" class="hop-loc__xoa">Quản lý sách &rarr;</a>
+    </div>
+
+    
+      
+      <div class="ds-top-ql">
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang muc-top-ql__hang--noi">1</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Dế Mèn phiêu lưu ký">
+      <rect width="240" height="360" fill="#2e7d32"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="32" y="24" width="188" height="312" rx="26" fill="none" stroke="#ffffff" stroke-opacity="0.48" stroke-width="5" stroke-dasharray="14 10"/>
+        <path d="M 124 62 L 130 46 L 136 62 L 152 68 L 136 74 L 130 90 L 124 74 L 108 68 Z" fill="#ffffff" fill-opacity="0.55"/><text x="130" y="176" text-anchor="middle" fill="#ffffff"
+            font-family="&#39;Be Vietnam Pro&#39;, &#39;Segoe UI&#39;, system-ui, sans-serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Dế Mèn</tspan><tspan x="130" dy="50">phiêu…</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/1/sua" class="muc-top-ql__ten">Dế Mèn phiêu lưu ký</a>
+              <div class="muc-top-ql__phu">Tô Hoài • 55.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 100%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">106 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang muc-top-ql__hang--noi">2</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Cho tôi xin một vé đi tuổi thơ">
+      <rect width="240" height="360" fill="#1565c0"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="32" y="24" width="188" height="312" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="5"/>
+        <polygon points="128,58 142,72 128,86 114,72" fill="#ffffff" fill-opacity="0.55"/><text x="130" y="176" text-anchor="middle" fill="#ffffff"
+            font-family="&#39;Noto Serif&#39;, &#39;Times New Roman&#39;, serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Cho tôi</tspan><tspan x="130" dy="50">xin…</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/2/sua" class="muc-top-ql__ten">Cho tôi xin một vé đi tuổi thơ</a>
+              <div class="muc-top-ql__phu">Nguyễn Nhật Ánh • 75.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 98%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">104 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang muc-top-ql__hang--noi">3</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Mắt biếc">
+      <rect width="240" height="360" fill="#00838f"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="32" y="24" width="188" height="312" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="5"/>
+        <polygon points="128,58 142,72 128,86 114,72" fill="#ffffff" fill-opacity="0.55"/><text x="130" y="198" text-anchor="middle" fill="#ffffff"
+            font-family="&#39;Noto Serif&#39;, &#39;Times New Roman&#39;, serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Mắt biếc</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/3/sua" class="muc-top-ql__ten">Mắt biếc</a>
+              <div class="muc-top-ql__phu">Nguyễn Nhật Ánh • 95.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 97%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">103 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang">4</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Nhà giả kim">
+      <rect width="240" height="360" fill="#d84315"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="26" y="0" width="214" height="44" fill="#000000" fill-opacity="0.16"/>
+        <path d="M 42 104 L 214 104 M 42 260 L 214 260" stroke="#000000" stroke-opacity="0.55" stroke-width="6"/><text x="130" y="176" text-anchor="middle" fill="#000000"
+            font-family="&#39;Be Vietnam Pro&#39;, &#39;Segoe UI&#39;, system-ui, sans-serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Nhà giả</tspan><tspan x="130" dy="50">kim</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/4/sua" class="muc-top-ql__ten">Nhà giả kim</a>
+              <div class="muc-top-ql__phu">Paulo Coelho • 69.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 95%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">101 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang">5</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Đắc nhân tâm">
+      <rect width="240" height="360" fill="#4527a0"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="26" y="0" width="214" height="44" fill="#ffffff" fill-opacity="0.16"/>
+        <path d="M 42 104 L 214 104 M 42 260 L 214 260" stroke="#ffffff" stroke-opacity="0.55" stroke-width="6"/><text x="130" y="176" text-anchor="middle" fill="#ffffff"
+            font-family="&#39;Be Vietnam Pro&#39;, &#39;Segoe UI&#39;, system-ui, sans-serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Đắc nhân</tspan><tspan x="130" dy="50">tâm</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/5/sua" class="muc-top-ql__ten">Đắc nhân tâm</a>
+              <div class="muc-top-ql__phu">Dale Carnegie • 85.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 94%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">100 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang">6</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Quẳng gánh lo đi mà vui sống">
+      <rect width="240" height="360" fill="#558b2f"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="26" y="0" width="214" height="44" fill="#000000" fill-opacity="0.16"/>
+        <path d="M 42 104 L 214 104 M 42 260 L 214 260" stroke="#000000" stroke-opacity="0.55" stroke-width="6"/><text x="130" y="176" text-anchor="middle" fill="#000000"
+            font-family="&#39;Be Vietnam Pro&#39;, &#39;Segoe UI&#39;, system-ui, sans-serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Quẳng gánh</tspan><tspan x="130" dy="50">lo…</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/6/sua" class="muc-top-ql__ten">Quẳng gánh lo đi mà vui sống</a>
+              <div class="muc-top-ql__phu">Dale Carnegie • 78.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 92%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">98 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang">7</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Sapiens: Lược sử loài người">
+      <rect width="240" height="360" fill="#37474f"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="32" y="24" width="188" height="312" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="5"/>
+        <polygon points="128,58 142,72 128,86 114,72" fill="#ffffff" fill-opacity="0.55"/><text x="130" y="176" text-anchor="middle" fill="#ffffff"
+            font-family="&#39;Noto Serif&#39;, &#39;Times New Roman&#39;, serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Sapiens:</tspan><tspan x="130" dy="50">Lược…</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/7/sua" class="muc-top-ql__ten">Sapiens: Lược sử loài người</a>
+              <div class="muc-top-ql__phu">Yuval Noah Harari • 185.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 91%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">97 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang">8</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Cây cam ngọt của tôi">
+      <rect width="240" height="360" fill="#ad1457"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="32" y="24" width="188" height="312" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="5"/>
+        <polygon points="128,58 142,72 128,86 114,72" fill="#ffffff" fill-opacity="0.55"/><text x="130" y="176" text-anchor="middle" fill="#ffffff"
+            font-family="&#39;Noto Serif&#39;, &#39;Times New Roman&#39;, serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Cây cam</tspan><tspan x="130" dy="50">ngọt…</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/8/sua" class="muc-top-ql__ten">Cây cam ngọt của tôi</a>
+              <div class="muc-top-ql__phu">José Mauro de Vasconcelos • 82.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 89%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">95 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang">9</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Không gia đình">
+      <rect width="240" height="360" fill="#0277bd"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="32" y="24" width="188" height="312" rx="26" fill="none" stroke="#ffffff" stroke-opacity="0.48" stroke-width="5" stroke-dasharray="14 10"/>
+        <path d="M 124 62 L 130 46 L 136 62 L 152 68 L 136 74 L 130 90 L 124 74 L 108 68 Z" fill="#ffffff" fill-opacity="0.55"/><text x="130" y="176" text-anchor="middle" fill="#ffffff"
+            font-family="&#39;Be Vietnam Pro&#39;, &#39;Segoe UI&#39;, system-ui, sans-serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Không gia</tspan><tspan x="130" dy="50">đình</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/9/sua" class="muc-top-ql__ten">Không gia đình</a>
+              <div class="muc-top-ql__phu">Hector Malot • 125.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 88%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">94 cuốn</div>
+          </div>
+        
+          
+          <div class="muc-top-ql">
+            <span class="muc-top-ql__hang">10</span>
+            <div class="muc-top-ql__bia"><div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Hoàng tử bé">
+      <rect width="240" height="360" fill="#f57f17"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="32" y="24" width="188" height="312" rx="6" fill="none" stroke="#1a1a1a" stroke-opacity="0.45" stroke-width="5"/>
+        <polygon points="128,58 142,72 128,86 114,72" fill="#1a1a1a" fill-opacity="0.55"/><text x="130" y="176" text-anchor="middle" fill="#1a1a1a"
+            font-family="&#39;Noto Serif&#39;, &#39;Times New Roman&#39;, serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Hoàng tử</tspan><tspan x="130" dy="50">bé</tspan></text>
+    </svg></div>
+</div>
+            <div class="muc-top-ql__thong-tin">
+              <a href="/quan-ly/sach/10/sua" class="muc-top-ql__ten">Hoàng tử bé</a>
+              <div class="muc-top-ql__phu">Antoine de Saint-Exupéry • 52.000 đ</div>
+              <div class="thanh-tien-do-nho" aria-hidden="true">
+                <span style="width: 86%;"></span>
+              </div>
+            </div>
+            <div class="muc-top-ql__so">92 cuốn</div>
+          </div>
+        
+      </div>
+    
+  </div>
+
+  <div class="hop-trang">
+    <div class="dau-muc" style="margin-bottom: 14px;">
+      <h2 class="hop-trang__tieu-de" style="margin: 0;">Cảnh báo sắp hết hàng (tồn ≤ 5)</h2>
+      <span class="nhan nhan--canh-bao">4 đầu sách</span>
+    </div>
+
+    
+      <div class="ds-sap-het">
+        
+          <div class="muc-sap-het">
+            <div class="muc-sap-het__thong-tin">
+              <a href="/quan-ly/sach/15/sua" class="muc-top-ql__ten">Đại Việt sử ký toàn thư</a>
+              <div class="muc-top-ql__phu">Ngô Sĩ Liên • 240.000 đ</div>
+            </div>
+            <div class="muc-sap-het__phai">
+              
+                <span class="nhan nhan--canh-bao">Còn 5</span>
+              
+              <a href="/quan-ly/sach/15/sua" class="nut nut--phu nut--nho">Cập nhật</a>
+            </div>
+          </div>
+        
+          <div class="muc-sap-het">
+            <div class="muc-sap-het__thong-tin">
+              <a href="/quan-ly/sach/21/sua" class="muc-top-ql__ten">Chờ đến mẫu giáo thì đã muộn</a>
+              <div class="muc-top-ql__phu">Ibuka Masaru • 65.000 đ</div>
+            </div>
+            <div class="muc-sap-het__phai">
+              
+                <span class="nhan nhan--loi">Hết hàng (0)</span>
+              
+              <a href="/quan-ly/sach/21/sua" class="nut nut--phu nut--nho">Cập nhật</a>
+            </div>
+          </div>
+        
+          <div class="muc-sap-het">
+            <div class="muc-sap-het__thong-tin">
+              <a href="/quan-ly/sach/25/sua" class="muc-top-ql__ten">Tắt đèn</a>
+              <div class="muc-top-ql__phu">Ngô Tất Tố • 68.000 đ</div>
+            </div>
+            <div class="muc-sap-het__phai">
+              
+                <span class="nhan nhan--loi">Hết hàng (0)</span>
+              
+              <a href="/quan-ly/sach/25/sua" class="nut nut--phu nut--nho">Cập nhật</a>
+            </div>
+          </div>
+        
+          <div class="muc-sap-het">
+            <div class="muc-sap-het__thong-tin">
+              <a href="/quan-ly/sach/27/sua" class="muc-top-ql__ten">Súng, vi trùng và thép</a>
+              <div class="muc-top-ql__phu">Jared Diamond • 190.000 đ</div>
+            </div>
+            <div class="muc-sap-het__phai">
+              
+                <span class="nhan nhan--canh-bao">Còn 4</span>
+              
+              <a href="/quan-ly/sach/27/sua" class="nut nut--phu nut--nho">Cập nhật</a>
+            </div>
+          </div>
+        
+      </div>
+    
+  </div>
+</section>
+
+    </main>
+  </div>
+  <script src="../static/js/bieu_mau.js" defer></script>
+</body>
+</html>

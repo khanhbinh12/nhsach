@@ -1,0 +1,62 @@
+{% extends "quan_ly/_khung.html" %}
+
+{% block tieu_de %}Quản lý đánh giá — Nhà Sách Tri Thức{% endblock %}
+{% block muc_dang_chon %}danh_gia{% endblock %}
+
+{% block noi_dung %}
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Quản lý đánh giá độc giả</h1>
+    <p class="phu-de-trang">Kiểm duyệt nhận xét của khách hàng — ẩn hoặc hiện lại ngay trên trang chi tiết sách.</p>
+  </div>
+</div>
+
+{% if danh_gia %}
+  <div class="ds-danh-gia">
+    {% for item in danh_gia %}
+      {% set dg = item.danh_gia %}
+      <article class="hop-trang{% if dg.an %} the-dg-an{% endif %}" style="padding: 18px 20px;">
+        <div class="muc-danh-gia__dau" style="margin-bottom: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+              <a href="/sach/{{ item.sach.ma }}" style="font-weight: 800; color: var(--chu);">{{ item.sach.tieu_de }}</a>
+              {% if dg.an %}
+                <span class="nhan nhan--loi">Đang ẩn</span>
+              {% else %}
+                <span class="nhan nhan--tot">Đang hiện</span>
+              {% endif %}
+            </div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.84rem; color: var(--chu-phu);">
+              <span><strong>{{ item.khach.ho_ten }}</strong> ({{ item.khach.email }})</span>
+              <span>•</span>
+              <span class="sao-hang" aria-label="{{ dg.so_sao }} sao">
+                {% for i in range(1, 6) %}
+                  <svg class="sao-svg {{ 'sao-svg--day' if dg.so_sao >= i else 'sao-svg--rong' }}" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                {% endfor %}
+              </span>
+              <span>•</span>
+              <span>{{ dg.tao_luc | ngay }}</span>
+            </div>
+          </div>
+
+          <form class="form-inline" method="post" action="/quan-ly/danh-gia/{{ dg.ma }}/an">
+            <input type="hidden" name="csrf" value="{{ csrf }}">
+            <button type="submit" class="nut nut--phu nut--nho" {% if not dg.an %}style="color: var(--loi);"{% endif %}>
+              {{ 'Hiện lại' if dg.an else 'Ẩn đánh giá' }}
+            </button>
+          </form>
+        </div>
+
+        <p class="muc-danh-gia__noi-dung" style="margin-top: 4px;">{{ dg.noi_dung }}</p>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="trang-thai-trong">
+    <h2 class="trang-thai-trong__tieu-de">Chưa có đánh giá nào</h2>
+    <p class="trang-thai-trong__mo-ta">Đánh giá của khách hàng sau khi mua sách sẽ xuất hiện tại đây.</p>
+  </div>
+{% endif %}
+{% endblock %}

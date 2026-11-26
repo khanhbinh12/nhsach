@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block tieu_de %}Đơn hàng của tôi — Nhà Sách Tri Thức{% endblock %}
+
+{% block noi_dung %}
+{% set hs = ho_so or {} %}
+{% set lt = loi_truong or {} %}
+<div class="khung trang-con">
+  <nav class="duong-dan" aria-label="Đường dẫn">
+    <a href="/">Trang chủ</a>
+    <span class="duong-dan__ngan" aria-hidden="true">/</span>
+    <span class="duong-dan__hien-tai">Tài khoản &amp; Đơn hàng</span>
+  </nav>
+
+  {% if khach %}
+    <section class="the-ho-so" aria-label="Thông tin tài khoản">
+      <div class="the-ho-so__nguoi">
+        <span class="the-ho-so__avt" aria-hidden="true">{{ khach.ho_ten[:1]|upper }}</span>
+        <div>
+          <h1 class="the-ho-so__ten">{{ khach.ho_ten }}</h1>
+          <p class="the-ho-so__phu">
+            {{ khach.email }}
+            {% if khach.dien_thoai %} • {{ khach.dien_thoai }}{% endif %}
+          </p>
+          {% if khach.dia_chi %}
+            <p class="the-ho-so__phu">{{ khach.dia_chi }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <form class="form-inline" method="post" action="/dang-xuat">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button type="submit" class="nut nut--phu">Đăng xuất</button>
+      </form>
+    </section>
+
+    <section class="hop-trang" style="margin-bottom: 24px;" aria-labelledby="tieu-de-sua-ho-so">
+      <h2 id="tieu-de-sua-ho-so" class="hop-trang__tieu-de">Thông tin giao hàng mặc định</h2>
+      <form method="post" action="/tai-khoan/ho-so" data-dang-xu-ly>
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <div class="luoi-form-2">
+          <div class="truong">
+            <label class="truong__nhan" for="hs-ho-ten">Họ và tên <span class="truong__bat-buoc">*</span></label>
+            <input id="hs-ho-ten" class="o-nhap{% if lt.get('ho_ten') %} o-nhap--loi{% endif %}" type="text" name="ho_ten" required autocomplete="name"
+                   value="{{ hs.get('ho_ten') if hs.get('ho_ten') is not none else khach.ho_ten }}"
+                   {% if lt.get('ho_ten') %}aria-invalid="true" aria-describedby="loi-hs-ho-ten"{% endif %}>
+            {% if lt.get('ho_ten') %}
+              <p id="loi-hs-ho-ten" class="truong__loi" role="alert">{{ lt['ho_ten'] }}</p>
+            {% endif %}
+          </div>
+          <div class="truong">
+            <label class="truong__nhan" for="hs-dien-thoai">Số điện thoại <span class="truong__bat-buoc">*</span></label>
+            <input id="hs-dien-thoai" class="o-nhap{% if lt.get('dien_thoai') %} o-nhap--loi{% endif %}" type="tel" name="dien_thoai" required autocomplete="tel" inputmode="tel"
+                   value="{{ hs.get('dien_thoai') if hs.get('dien_thoai') is not none else khach.dien_thoai }}"
+                   {% if lt.get('dien_thoai') %}aria-invalid="true" aria-describedby="loi-hs-dien-thoai"{% endif %}>
+            {% if lt.get('dien_thoai') %}
+              <p id="loi-hs-dien-thoai" class="truong__loi" role="alert">{{ lt['dien_thoai'] }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="truong">
+          <label class="truong__nhan" for="hs-dia-chi">Địa chỉ giao hàng mặc định</label>
+          <input id="hs-dia-chi" class="o-nhap{% if lt.get('dia_chi') %} o-nhap--loi{% endif %}" type="text" name="dia_chi" autocomplete="street-address"
+                 value="{{ hs.get('dia_chi') if hs.get('dia_chi') is not none else khach.dia_chi }}"
+                 placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                 {% if lt.get('dia_chi') %}aria-invalid="true" aria-describedby="loi-hs-dia-chi"{% endif %}>
+          {% if lt.get('dia_chi') %}
+            <p id="loi-hs-dia-chi" class="truong__loi" role="alert">{{ lt['dia_chi'] }}</p>
+          {% endif %}
+        </div>
+        <button type="submit" class="nut nut--chinh" data-nhan-xu-ly="Đang lưu…">Lưu thông tin</button>
+      </form>
+    </section>
+  {% endif %}
+
+  <div class="dau-muc" style="margin-bottom: 16px;">
+    <div>
+      <h2 class="dau-muc__tieu-de">Lịch sử đơn hàng ({{ don|length }})</h2>
+      <p class="dau-muc__phu">Bấm vào từng đơn để xem tiến độ giao hàng, mã QR hoặc hủy đơn khi chưa giao.</p>
+    </div>
+    <a href="/sach" class="xem-them">Mua thêm sách &rarr;</a>
+  </div>
+
+  {% if don %}
+    <div class="ds-don-khach">
+      {% for d in don %}
+        {% set tt = d.trang_thai.value %}
+        <article class="the-don-khach">
+          <div class="the-don-khach__dau">
+            <div>
+              <a href="/don/{{ d.ma_tra_cuu }}" class="the-don-khach__ma">#{{ d.ma_tra_cuu }}</a>
+              <span class="the-don-khach__ngay">{{ d.tao_luc | ngay }}</span>
+            </div>
+            <div class="cum-nhan-don">
+              {% if tt == 'hoan_thanh' %}
+                <span class="nhan nhan--tot">{{ d.trang_thai.nhan }}</span>
+              {% elif tt == 'da_huy' %}
+                <span class="nhan nhan--loi">{{ d.trang_thai.nhan }}</span>
+              {% elif tt == 'dang_giao' %}
+                <span class="nhan nhan--thong-tin">{{ d.trang_thai.nhan }}</span>
+              {% else %}
+                <span class="nhan nhan--canh-bao">{{ d.trang_thai.nhan }}</span>
+              {% endif %}
+
+              {% if d.da_thanh_toan %}
+                <span class="nhan nhan--tot">Đã thanh toán</span>
+                {% if tt == 'da_huy' %}
+                  {% if d.da_hoan_tien %}
+                    <span class="nhan nhan--thong-tin">Đã hoàn tiền</span>
+                  {% else %}
+                    <span class="nhan nhan--canh-bao">Đang chờ hoàn tiền</span>
+                  {% endif %}
+                {% endif %}
+              {% else %}
+                <span class="nhan nhan--trung-tinh">Chưa thanh toán</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="the-don-khach__muc">
+            {% for m in d.muc[:3] %}
+              <div>• <strong>{{ m.tieu_de }}</strong> × {{ m.so_luong }} ({{ (m.don_gia * m.so_luong) | tien }})</div>
+            {% endfor %}
+            {% if d.muc|length > 3 %}
+              <div style="color: var(--chu-nhat);">... và {{ d.muc|length - 3 }} tựa sách khác</div>
+            {% endif %}
+          </div>
+
+          <div class="the-don-khach__chan">
+            <div style="font-size: 0.86rem; color: var(--chu-phu);">
+              {{ d.phuong_thuc.nhan }} • Tổng tiền: <span class="the-don-khach__tong">{{ d.tong | tien }}</span>
+            </div>
+            <a href="/don/{{ d.ma_tra_cuu }}" class="nut nut--vien-nhan nut--nho">Xem chi tiết &rarr;</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="trang-thai-trong" style="padding-block: 48px;">
+      <h3 class="trang-thai-trong__tieu-de">Bạn chưa có đơn hàng nào</h3>
+      <p class="trang-thai-trong__mo-ta" style="margin-bottom: 18px;">
+        Khi bạn đặt mua sách, lịch sử đơn hàng sẽ hiển thị đầy đủ tại đây.
+      </p>
+      <a href="/sach" class="nut nut--chinh">Khám phá kho sách</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+{% from "_bia.html" import bia %}
+{% from "_the_sach.html" import the_sach %}
+
+{% block tieu_de %}Nhà Sách Tri Thức — Mua sách trực tuyến, giao nhanh toàn quốc{% endblock %}
+
+{% block noi_dung %}
+{# 1. Hero gọn (~300px ở 1440px, ~240px thẻ ngang ở 390px) kèm 3 cuốn tiêu điểm #}
+<section class="khung bang-hinh-vung" aria-label="Sách nổi bật và tiêu điểm">
+  {% if noi_bat %}
+    {% set co_giam_nb = noi_bat.gia_bia and noi_bat.gia_bia > noi_bat.gia %}
+    {% set pt_nb = ((noi_bat.gia_bia - noi_bat.gia) * 100 // noi_bat.gia_bia) if co_giam_nb else 0 %}
+    {% set het_nb = (noi_bat.ton_kho or 0) <= 0 %}
+    {% set co_rv_nb = noi_bat.co_review if noi_bat.co_review is defined else False %}
+    <div class="hero-moi{% if not tieu_diem %} hero-moi--don{% endif %}">
+      <div class="bang-hinh">
+        <div class="bang-hinh__san-khau">
+          <a href="/sach/{{ noi_bat.ma }}" class="bang-hinh__bia-boc" aria-label="Xem sách {{ noi_bat.tieu_de }}">
+            {{ bia(noi_bat, 'lon') }}
+          </a>
+        </div>
+
+        <div class="bang-hinh__noi-dung">
+          <div class="bang-hinh__nhan-hang">
+            <span class="nhan-noi-bat">
+              <span class="nhan-noi-bat__cham" aria-hidden="true"></span>
+              <span>Nổi bật tuần này</span>
+            </span>
+            {% if co_rv_nb %}
+              <span class="nhan-review">Có review</span>
+            {% endif %}
+          </div>
+
+          <h1 class="bang-hinh__tieu-de">
+            <a href="/sach/{{ noi_bat.ma }}">{{ noi_bat.tieu_de }}</a>
+          </h1>
+
+          <div class="bang-hinh__thong-tin">
+            {% if noi_bat.tac_gia %}
+              <a href="/sach?tac_gia={{ noi_bat.tac_gia | urlencode }}" class="bang-hinh__tac-gia">{{ noi_bat.tac_gia }}</a>
+            {% endif %}
+            {% if noi_bat.so_danh_gia %}
+              <span aria-hidden="true">•</span>
+              <span class="bang-hinh__sao-gon">★ {{ '%.1f'|format(noi_bat.diem_tb or 0) }} ({{ noi_bat.so_danh_gia }})</span>
+            {% endif %}
+          </div>
+
+          {% if noi_bat.mo_ta %}
+            <p class="bang-hinh__mo-ta">{{ noi_bat.mo_ta }}</p>
+          {% endif %}
+
+          <div class="bang-hinh__gia-hang">
+            <span class="bang-hinh__gia">{{ noi_bat.gia | tien }}</span>
+            {% if co_giam_nb %}
+              <span class="bang-hinh__gia-bia">{{ noi_bat.gia_bia | tien }}</span>
+              {% if pt_nb > 0 %}
+                <span class="the-giam-gia">-{{ pt_nb }}%</span>
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="bang-hinh__hanh-dong">
+          {% if het_nb %}
+            <button type="button" class="nut nut--phu" disabled>Tạm hết hàng</button>
+          {% else %}
+            <form class="form-inline" method="post" action="/gio/them">
+              <input type="hidden" name="csrf" value="{{ csrf }}">
+              <input type="hidden" name="ma" value="{{ noi_bat.ma }}">
+              <input type="hidden" name="so_luong" value="1">
+              <input type="hidden" name="tiep" value="/dat-hang">
+              <button type="submit" class="nut nut--chinh" data-mua-ngay>Mua ngay</button>
+            </form>
+            <form class="form-inline" method="post" action="/gio/them" data-gio-them>
+              <input type="hidden" name="csrf" value="{{ csrf }}">
+              <input type="hidden" name="ma" value="{{ noi_bat.ma }}">
+              <input type="hidden" name="so_luong" value="1">
+              <input type="hidden" name="tiep" value="/">
+              <button type="submit" class="nut nut--vien-nhan">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="9" cy="20" r="1.5"/>
+                  <circle cx="18" cy="20" r="1.5"/>
+                  <path d="M2.5 3.5h2.7l2.2 11.2a1.8 1.8 0 0 0 1.8 1.5h8.8a1.8 1.8 0 0 0 1.7-1.3l1.6-6.9H6.2"/>
+                </svg>
+                <span>Thêm vào giỏ</span>
+              </button>
+            </form>
+          {% endif %}
+          <a href="/sach/{{ noi_bat.ma }}" class="nut nut--nhe bang-hinh__xem-them">Chi tiết &rarr;</a>
+        </div>
+      </div>
+
+      {% if tieu_diem %}
+        <aside class="cot-tieu-diem" aria-label="Đáng chú ý tuần này">
+          <div class="cot-tieu-diem__dau">
+            <h2 class="cot-tieu-diem__tieu-de">Đáng chú ý tuần này</h2>
+            <a href="/sach" class="cot-tieu-diem__xem">Tất cả &rarr;</a>
+          </div>
+          <div class="cot-tieu-diem__ds">
+            {% for s in tieu_diem[:3] %}
+              {% set co_giam_td = s.gia_bia and s.gia_bia > s.gia %}
+              {% set pt_td = ((s.gia_bia - s.gia) * 100 // s.gia_bia) if co_giam_td else 0 %}
+              <a href="/sach/{{ s.ma }}" class="muc-tieu-diem">
+                <div class="muc-tieu-diem__bia">{{ bia(s, 'nho') }}</div>
+                <div class="muc-tieu-diem__thong-tin">
+                  <div class="muc-tieu-diem__ten">{{ s.tieu_de }}</div>
+                  <div class="muc-tieu-diem__tac-gia">{{ s.tac_gia }}</div>
+                  <div class="muc-tieu-diem__gia-hang">
+                    <span class="muc-tieu-diem__gia">{{ s.gia | tien }}</span>
+                    {% if co_giam_td and pt_td > 0 %}
+                      <span class="the-giam-gia">-{{ pt_td }}%</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+        </aside>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="trang-thai-trong">
+      <h1 class="trang-thai-trong__tieu-de">Chào mừng đến với Nhà Sách Tri Thức</h1>
+      <p class="trang-thai-trong__mo-ta">Khám phá hàng trăm đầu sách chọn lọc thuộc nhiều thể loại hấp dẫn.</p>
+    </div>
+  {% endif %}
+</section>
+
+{# 2. Kệ đầu tiên: Bán chạy hoặc Gợi ý cho bạn #}
+<section class="muc-trang muc-trang--dau" aria-labelledby="tieu-de-ban-chay">
+  <div class="khung">
+    <div class="dau-muc">
+      <div>
+        <h2 id="tieu-de-ban-chay" class="dau-muc__tieu-de">{{ ten_khoi or 'Bán chạy' }}</h2>
+        <p class="dau-muc__phu">
+          {% if ten_khoi == 'Bán chạy' %}
+            Những đầu sách được độc giả đặt mua nhiều nhất trong 30 ngày qua
+          {% else %}
+            Tuyển chọn những tựa sách đáng đọc nhất đang sẵn hàng tại Tri Thức
+          {% endif %}
+        </p>
+      </div>
+      {% if ten_khoi == 'Bán chạy' %}
+        <a href="/sach?sap_xep=ban_chay" class="xem-them">Xem bảng xếp hạng &rarr;</a>
+      {% else %}
+        <a href="/sach" class="xem-them">Xem tất cả sách &rarr;</a>
+      {% endif %}
+    </div>
+
+    {% if ban_chay %}
+      <div class="luoi-sach">
+        {% for s in ban_chay %}
+          {{ the_sach(s, csrf, '/', loop.index if (ten_khoi == 'Bán chạy' and loop.index <= 3) else None) }}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="trang-thai-trong">
+        <p class="trang-thai-trong__tieu-de">Đang cập nhật kệ sách</p>
+        <p class="trang-thai-trong__mo-ta">Các tựa sách nổi bật sẽ xuất hiện tại đây.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{# 3. Ưu đãi nổi bật #}
+{% if uu_dai %}
+<section class="muc-trang muc-trang--trang" aria-labelledby="tieu-de-uu-dai">
+  <div class="khung">
+    <div class="dau-muc">
+      <div>
+        <h2 id="tieu-de-uu-dai" class="dau-muc__tieu-de">Ưu đãi nổi bật</h2>
+        <p class="dau-muc__phu">Mức giá tốt hơn giá bìa — tiết kiệm ngay khi đặt mua hôm nay</p>
+      </div>
+      <a href="/sach?giam_gia=1&amp;sap_xep=giam_sau" class="xem-them">Xem tất cả ưu đãi &rarr;</a>
+    </div>
+
+    <div class="luoi-sach">
+      {% for s in uu_dai %}
+        {{ the_sach(s, csrf, '/') }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# 4. Góc review của nhà sách (ẩn khi rỗng) #}
+{% if goc_review %}
+<section class="muc-trang" aria-labelledby="tieu-de-goc-review">
+  <div class="khung">
+    <div class="dau-muc">
+      <div>
+        <h2 id="tieu-de-goc-review" class="dau-muc__tieu-de">Góc review từ Tri Thức</h2>
+        <p class="dau-muc__phu">Điểm sách có bài viết biên tập giúp bạn chọn đúng cuốn hợp gu</p>
+      </div>
+      <a href="/sach?co_review=1" class="xem-them">Xem tất cả sách có review &rarr;</a>
+    </div>
+
+    <div class="luoi-goc-review">
+      {% for muc in goc_review %}
+        {% set s = muc.sach %}
+        {% set het_rv = (s.ton_kho or 0) <= 0 %}
+        <article class="the-goc-review">
+          <a href="/sach/{{ s.ma }}" class="the-goc-review__bia" aria-label="Xem sách {{ s.tieu_de }}">
+            {{ bia(s, 'vua') }}
+          </a>
+          <div class="the-goc-review__noi-dung">
+            <span class="nhan-review">Review của nhà sách</span>
+            <h3 class="the-goc-review__tieu-de">
+              <a href="/sach/{{ s.ma }}">{{ s.tieu_de }}</a>
+            </h3>
+            <p class="the-goc-review__tac-gia">{{ s.tac_gia }}</p>
+            {% if muc.trich %}
+              <p class="the-goc-review__trich">“{{ muc.trich }}”</p>
+            {% endif %}
+            <div class="the-goc-review__chan">
+              <span class="the-sach__gia">{{ s.gia | tien }}</span>
+              <div class="the-goc-review__nut">
+                <a href="/sach/{{ s.ma }}#tieu-de-review-nha-sach" class="nut nut--phu nut--nho">Đọc review</a>
+                {% if not het_rv %}
+                  <form class="form-inline" method="post" action="/gio/them" data-gio-them>
+                    <input type="hidden" name="csrf" value="{{ csrf }}">
+                    <input type="hidden" name="ma" value="{{ s.ma }}">
+                    <input type="hidden" name="so_luong" value="1">
+                    <input type="hidden" name="tiep" value="/">
+                    <button type="submit" class="nut nut--vien-nhan nut--nho">+ Giỏ</button>
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# 5. Sách mới phát hành #}
+{% if sach_moi %}
+<section class="muc-trang muc-trang--trang" aria-labelledby="tieu-de-sach-moi">
+  <div class="khung">
+    <div class="dau-muc">
+      <div>
+        <h2 id="tieu-de-sach-moi" class="dau-muc__tieu-de">Sách mới lên kệ</h2>
+        <p class="dau-muc__phu">Những đầu sách mới nhập đa dạng thể loại, sẵn sàng giao ngay</p>
+      </div>
+      <a href="/sach?sap_xep=moi" class="xem-them">Xem tất cả sách mới &rarr;</a>
+    </div>
+
+    <div class="luoi-sach">
+      {% for s in sach_moi %}
+        {{ the_sach(s, csrf, '/') }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# 6. Kệ Bạn vừa xem (dữ liệu từ server vua_xem, ẩn khi rỗng) #}
+{% if vua_xem %}
+<section class="muc-trang" aria-labelledby="tieu-de-vua-xem">
+  <div class="khung">
+    <div class="dau-muc">
+      <div>
+        <h2 id="tieu-de-vua-xem" class="dau-muc__tieu-de">Bạn vừa xem gần đây</h2>
+        <p class="dau-muc__phu">Quay lại nhanh những cuốn sách bạn đã mở xem trước đó</p>
+      </div>
+    </div>
+
+    <div class="luoi-sach">
+      {% for s in vua_xem[:4] %}
+        {{ the_sach(s, csrf, '/') }}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# 7. Dải cam kết (dời xuống cuối trang) & Lời mời thành viên #}
+<section class="khung vung-cuoi-trang" aria-label="Cam kết dịch vụ và thành viên">
+  <div class="dai-cam-ket">
+    <div class="cam-ket">
+      <div class="cam-ket__icon" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/>
+          <circle cx="7.5" cy="18" r="1.75"/>
+          <circle cx="17.5" cy="18" r="1.75"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cam-ket__tieu-de">Miễn phí giao hàng</div>
+        <div class="cam-ket__mo-ta">Áp dụng cho đơn từ 300.000 đ</div>
+      </div>
+    </div>
+
+    <div class="cam-ket">
+      <div class="cam-ket__icon" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7.5"/>
+          <path d="m20 20-3.8-3.8"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cam-ket__tieu-de">Tra cứu đơn dễ dàng</div>
+        <div class="cam-ket__mo-ta">Theo dõi tiến độ bằng mã đơn + số điện thoại</div>
+      </div>
+    </div>
+
+    <div class="cam-ket">
+      <div class="cam-ket__icon" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <path d="M14 14h3v3h-3zM18 18h3v3h-3zM14 20h2M20 14v2"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cam-ket__tieu-de">Thanh toán linh hoạt</div>
+        <div class="cam-ket__mo-ta">Trả khi nhận hàng hoặc quét mã QR</div>
+      </div>
+    </div>
+
+    <div class="cam-ket">
+      <div class="cam-ket__icon" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 3-6.7L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cam-ket__tieu-de">Hủy đơn chủ động</div>
+        <div class="cam-ket__mo-ta">Tự hủy khi đơn chưa thanh toán và chưa giao</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hop-loi-moi">
+    <div>
+      <h2 class="hop-loi-moi__tieu-de">
+        {% if khach %}
+          Chào {{ khach.ho_ten }}, xem lại hành trình đọc của bạn
+        {% else %}
+          Mua nhanh không cần đăng nhập — hoặc tạo tài khoản trong 30 giây
+        {% endif %}
+      </h2>
+      <p class="hop-loi-moi__mo-ta">
+        {% if khach %}
+          Theo dõi trạng thái giao hàng, xem lại hóa đơn cũ và gửi đánh giá cho những cuốn sách bạn đã đọc.
+        {% else %}
+          Tài khoản thành viên giúp lưu địa chỉ giao hàng, xem lại toàn bộ lịch sử đơn, tự hủy đơn khi chưa giao và gửi đánh giá sách.
+        {% endif %}
+      </p>
+    </div>
+    <div class="hop-loi-moi__nut">
+      {% if khach %}
+        <a href="/tai-khoan" class="nut nut--chinh nut--lon">Đơn hàng của tôi</a>
+      {% else %}
+        <a href="/dang-ky" class="nut nut--chinh nut--lon">Tạo tài khoản miễn phí</a>
+        <a href="/sach" class="nut nut--phu nut--lon">Khám phá kho sách</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "quan_ly/_khung.html" %}
+
+{% block tieu_de %}Quản lý thể loại — Nhà Sách Tri Thức{% endblock %}
+{% block muc_dang_chon %}danh_muc{% endblock %}
+
+{% block noi_dung %}
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Quản lý thể loại</h1>
+    <p class="phu-de-trang">Thêm, chỉnh sửa tên / đường dẫn / thứ tự hiển thị. Chỉ xóa được thể loại khi không còn sách.</p>
+  </div>
+</div>
+
+{# Form thêm thể loại mới #}
+<section class="hop-trang" style="margin-bottom: 20px;" aria-labelledby="tieu-de-them-dm">
+  <h2 id="tieu-de-them-dm" class="hop-trang__tieu-de">Thêm thể loại mới</h2>
+  <form method="post" action="/quan-ly/danh-muc" class="form-luoi-ngang">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="truong" style="margin: 0;">
+      <label class="truong__nhan" for="dm-ten">Tên thể loại <span class="truong__bat-buoc">*</span></label>
+      <input id="dm-ten" class="o-nhap" type="text" name="ten" required placeholder="Ví dụ: Tâm lý học">
+    </div>
+    <div class="truong" style="margin: 0;">
+      <label class="truong__nhan" for="dm-slug">Đường dẫn (slug) <span class="truong__bat-buoc">*</span></label>
+      <input id="dm-slug" class="o-nhap" type="text" name="duong_dan" required placeholder="tam-ly-hoc">
+    </div>
+    <div class="truong" style="margin: 0;">
+      <label class="truong__nhan" for="dm-tt">Thứ tự</label>
+      <input id="dm-tt" class="o-nhap" type="number" name="thu_tu" value="{{ (danh_muc|length) + 1 }}" min="0">
+    </div>
+    <div style="display: flex; align-items: flex-end;">
+      <button type="submit" class="nut nut--chinh nut--rong">+ Thêm thể loại</button>
+    </div>
+  </form>
+</section>
+
+{# Danh sách thể loại hiện có #}
+<section class="hop-trang hop-bang" aria-label="Danh sách thể loại">
+  {% if danh_muc %}
+    <div class="bang-cuon">
+      <table class="bang-ql">
+        <thead>
+          <tr>
+            <th>Tên thể loại</th>
+            <th>Đường dẫn (slug)</th>
+            <th style="width: 100px;">Thứ tự</th>
+            <th style="width: 110px;">Số sách</th>
+            <th style="text-align: right;">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for muc in danh_muc %}
+            {% set dm = muc.danh_muc %}
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-{{ dm.ma }}" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="{{ csrf }}">
+                  <input type="hidden" name="ma" value="{{ dm.ma }}">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="{{ dm.ten }}" required aria-label="Tên thể loại {{ dm.ten }}">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="{{ dm.duong_dan }}" required aria-label="Đường dẫn {{ dm.ten }}"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="{{ dm.thu_tu }}" min="0" aria-label="Thứ tự {{ dm.ten }}">
+                </form>
+              </td>
+              <td>
+                {% set so_ban = muc.so_sach_dang_ban if muc.so_sach_dang_ban is defined else muc.so_sach %}
+                <span class="nhan {% if muc.so_sach > 0 %}nhan--thong-tin{% else %}nhan--trung-tinh{% endif %}">
+                  {{ muc.so_sach }} đầu sách
+                </span>
+                {% if muc.so_sach > so_ban %}
+                  <div class="truong__goi-y" style="margin-top: 4px;">
+                    {{ so_ban }} đang bán • {{ muc.so_sach - so_ban }} ngừng bán
+                  </div>
+                {% endif %}
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-{{ dm.ma }}" class="nut nut--phu nut--nho">Lưu</button>
+                  {% if muc.so_sach == 0 %}
+                    <form class="form-inline" method="post" action="/quan-ly/danh-muc/{{ dm.ma }}/xoa">
+                      <input type="hidden" name="csrf" value="{{ csrf }}">
+                      <button type="submit" class="nut nut--nhe nut--nho" style="color: var(--loi);">Xóa</button>
+                    </form>
+                  {% elif so_ban == 0 %}
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Còn sách ngừng bán</span>
+                  {% else %}
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="trang-thai-trong" style="margin: 18px;">Chưa có thể loại nào.</div>
+  {% endif %}
+</section>
+{% endblock %}

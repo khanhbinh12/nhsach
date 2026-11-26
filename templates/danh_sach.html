@@ -1,0 +1,354 @@
+{% extends "base.html" %}
+{% from "_the_sach.html" import the_sach %}
+
+{% set q_val = bo_loc.get('q') or '' %}
+{% set dm_val = bo_loc.get('danh_muc') or '' %}
+{% set tac_gia_val = bo_loc.get('tac_gia') or '' %}
+{% set gia_tu_raw = bo_loc.get('gia_tu') %}
+{% set gia_tu_val = '' if gia_tu_raw is none else gia_tu_raw %}
+{% set gia_den_raw = bo_loc.get('gia_den') %}
+{% set gia_den_val = '' if gia_den_raw is none else gia_den_raw %}
+{% set giam_gia_val = bo_loc.get('giam_gia') or false %}
+{% set con_hang_val = bo_loc.get('con_hang') or false %}
+{% set co_review_val = bo_loc.get('co_review') or false %}
+{% set sap_xep_raw = bo_loc.get('sap_xep') %}
+{% set sap_xep_val = sap_xep_raw or ('lien_quan' if q_val else 'moi') %}
+
+{% macro url_loc(danh_muc=dm_val, q=q_val, tac_gia=tac_gia_val, gia_tu=gia_tu_val, gia_den=gia_den_val, giam_gia=giam_gia_val, con_hang=con_hang_val, co_review=co_review_val, sap_xep=sap_xep_raw, trang=1) -%}
+{%- set tham_so = [] -%}
+{%- if q %}{% set _ = tham_so.append('q=' ~ (q|urlencode)) %}{% endif -%}
+{%- if danh_muc %}{% set _ = tham_so.append('danh_muc=' ~ (danh_muc|urlencode)) %}{% endif -%}
+{%- if tac_gia %}{% set _ = tham_so.append('tac_gia=' ~ (tac_gia|urlencode)) %}{% endif -%}
+{%- if gia_tu != '' and gia_tu is not none %}{% set _ = tham_so.append('gia_tu=' ~ gia_tu) %}{% endif -%}
+{%- if gia_den != '' and gia_den is not none %}{% set _ = tham_so.append('gia_den=' ~ gia_den) %}{% endif -%}
+{%- if giam_gia %}{% set _ = tham_so.append('giam_gia=1') %}{% endif -%}
+{%- if con_hang %}{% set _ = tham_so.append('con_hang=1') %}{% endif -%}
+{%- if co_review %}{% set _ = tham_so.append('co_review=1') %}{% endif -%}
+{%- if sap_xep and (sap_xep != 'moi' or q) %}{% set _ = tham_so.append('sap_xep=' ~ sap_xep) %}{% endif -%}
+{%- if trang and trang > 1 %}{% set _ = tham_so.append('trang=' ~ trang) %}{% endif -%}
+/sach{% if tham_so %}?{{ tham_so|join('&') }}{% endif %}
+{%- endmacro %}
+
+{% set cac_kieu = (
+  [('lien_quan', 'Liên quan')] if q_val else []
+) + [
+  ('moi', 'Mới nhất'),
+  ('ban_chay', 'Bán chạy'),
+  ('danh_gia', 'Đánh giá cao'),
+  ('giam_sau', 'Giảm giá sâu'),
+  ('gia_tang', 'Giá tăng'),
+  ('gia_giam', 'Giá giảm'),
+  ('ten', 'Tên A–Z')
+] %}
+
+{% block tieu_de %}
+  {%- if tac_gia_val -%}
+    Sách của {{ tac_gia_val }} — Nhà Sách Tri Thức
+  {%- elif danh_muc_dang_chon -%}
+    {{ danh_muc_dang_chon.ten }} — Nhà Sách Tri Thức
+  {%- elif q_val -%}
+    Tìm kiếm "{{ q_val }}" — Nhà Sách Tri Thức
+  {%- else -%}
+    Kho sách — Nhà Sách Tri Thức
+  {%- endif -%}
+{% endblock %}
+
+{% block noi_dung %}
+<div class="khung trang-con">
+  <nav class="duong-dan" aria-label="Đường dẫn">
+    <a href="/">Trang chủ</a>
+    <span class="duong-dan__ngan" aria-hidden="true">/</span>
+    {% if danh_muc_dang_chon %}
+      <a href="/sach">Kho sách</a>
+      <span class="duong-dan__ngan" aria-hidden="true">/</span>
+      <span class="duong-dan__hien-tai">{{ danh_muc_dang_chon.ten }}</span>
+    {% elif tac_gia_val %}
+      <a href="/sach">Kho sách</a>
+      <span class="duong-dan__ngan" aria-hidden="true">/</span>
+      <span class="duong-dan__hien-tai">{{ tac_gia_val }}</span>
+    {% else %}
+      <span class="duong-dan__hien-tai">Kho sách</span>
+    {% endif %}
+  </nav>
+
+  <div class="dau-muc dau-muc--danh-sach">
+    <div>
+      <h1 class="tieu-de-trang">
+        {% if tac_gia_val %}
+          Sách của {{ tac_gia_val }}
+        {% elif danh_muc_dang_chon %}
+          {{ danh_muc_dang_chon.ten }}
+        {% elif q_val %}
+          Kết quả tìm kiếm cho "{{ q_val }}"
+        {% else %}
+          Tất cả đầu sách
+        {% endif %}
+      </h1>
+      <p class="phu-de-trang">
+        Tìm thấy <strong>{{ ket_qua.tong }}</strong> đầu sách phù hợp
+        {% if q_val and (danh_muc_dang_chon or tac_gia_val) %}
+          với từ khóa "{{ q_val }}"
+        {% endif %}
+      </p>
+    </div>
+  </div>
+
+  {% set co_gia = (gia_tu_val != '' or gia_den_val != '') %}
+  {% set so_loc_bat = (1 if dm_val else 0) + (1 if tac_gia_val else 0) + (1 if co_gia else 0) + (1 if giam_gia_val else 0) + (1 if con_hang_val else 0) + (1 if co_review_val else 0) %}
+  {% set co_chip_loc = q_val or so_loc_bat > 0 %}
+
+  {# Chip hiển thị các bộ lọc đang bật kèm nút × #}
+  {% if co_chip_loc %}
+    <div class="thanh-chip-loc" aria-label="Bộ lọc đang áp dụng">
+      {% if q_val %}
+        <a href="{{ url_loc(q='', sap_xep=(None if sap_xep_raw == 'lien_quan' else sap_xep_raw), trang=1) }}" class="chip-loc-bat">
+          <span>Từ khóa: {{ q_val }}</span>
+          <span class="chip-loc-bat__x" aria-hidden="true">×</span>
+        </a>
+      {% endif %}
+      {% if danh_muc_dang_chon %}
+        <a href="{{ url_loc(danh_muc='', trang=1) }}" class="chip-loc-bat">
+          <span>Thể loại: {{ danh_muc_dang_chon.ten }}</span>
+          <span class="chip-loc-bat__x" aria-hidden="true">×</span>
+        </a>
+      {% endif %}
+      {% if tac_gia_val %}
+        <a href="{{ url_loc(tac_gia='', trang=1) }}" class="chip-loc-bat">
+          <span>Tác giả: {{ tac_gia_val }}</span>
+          <span class="chip-loc-bat__x" aria-hidden="true">×</span>
+        </a>
+      {% endif %}
+      {% if co_gia %}
+        <a href="{{ url_loc(gia_tu='', gia_den='', trang=1) }}" class="chip-loc-bat">
+          <span>Giá: {% if gia_tu_val != '' %}{{ gia_tu_val | tien }}{% else %}0 đ{% endif %} – {% if gia_den_val != '' %}{{ gia_den_val | tien }}{% else %}trở lên{% endif %}</span>
+          <span class="chip-loc-bat__x" aria-hidden="true">×</span>
+        </a>
+      {% endif %}
+      {% if giam_gia_val %}
+        <a href="{{ url_loc(giam_gia=false, trang=1) }}" class="chip-loc-bat">
+          <span>Đang giảm giá</span>
+          <span class="chip-loc-bat__x" aria-hidden="true">×</span>
+        </a>
+      {% endif %}
+      {% if con_hang_val %}
+        <a href="{{ url_loc(con_hang=false, trang=1) }}" class="chip-loc-bat">
+          <span>Còn hàng</span>
+          <span class="chip-loc-bat__x" aria-hidden="true">×</span>
+        </a>
+      {% endif %}
+      {% if co_review_val %}
+        <a href="{{ url_loc(co_review=false, trang=1) }}" class="chip-loc-bat">
+          <span>Có review</span>
+          <span class="chip-loc-bat__x" aria-hidden="true">×</span>
+        </a>
+      {% endif %}
+      <a href="/sach" class="chip-loc-xoa-het">Xóa tất cả</a>
+    </div>
+  {% endif %}
+
+  <div class="bo-cuc-danh-sach">
+    {# Cột bộ lọc bên trái (trên <=1020px gộp Lọc + Sắp xếp thành 1 thanh cao 44px, nội dung lọc thu gọn mặc định) #}
+    <aside class="cot-loc" aria-label="Bộ lọc sách">
+      <input id="mo-bo-loc" class="bo-loc-kiem sr-only" type="checkbox">
+
+      <div class="thanh-cong-cu-mobile">
+        <label for="mo-bo-loc" class="nut nut--phu bo-loc-nut-mo">
+          <span>Bộ lọc{% if so_loc_bat %} ({{ so_loc_bat }}){% endif %}</span>
+          <span class="bo-loc-nut-mo__mui" aria-hidden="true">▾</span>
+        </label>
+
+        <form class="thanh-cong-cu-mobile__sap-xep" method="get" action="/sach" data-tu-gui-chon>
+          {% if q_val %}<input type="hidden" name="q" value="{{ q_val }}">{% endif %}
+          {% if dm_val %}<input type="hidden" name="danh_muc" value="{{ dm_val }}">{% endif %}
+          {% if tac_gia_val %}<input type="hidden" name="tac_gia" value="{{ tac_gia_val }}">{% endif %}
+          {% if gia_tu_val != '' %}<input type="hidden" name="gia_tu" value="{{ gia_tu_val }}">{% endif %}
+          {% if gia_den_val != '' %}<input type="hidden" name="gia_den" value="{{ gia_den_val }}">{% endif %}
+          {% if giam_gia_val %}<input type="hidden" name="giam_gia" value="1">{% endif %}
+          {% if con_hang_val %}<input type="hidden" name="con_hang" value="1">{% endif %}
+          {% if co_review_val %}<input type="hidden" name="co_review" value="1">{% endif %}
+          <label class="sr-only" for="sap-xep-mobile">Sắp xếp sách</label>
+          <select id="sap-xep-mobile" name="sap_xep" class="o-chon thanh-cong-cu-mobile__chon">
+            {% for ma_sx, nhan_sx in cac_kieu %}
+              <option value="{{ ma_sx }}"{% if sap_xep_val == ma_sx %} selected{% endif %}>Sắp xếp: {{ nhan_sx }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="nut nut--phu nut--nho stepper__gui-du-phong">Lọc</button>
+        </form>
+      </div>
+
+      <div class="bo-loc-noi-dung">
+        {# Lọc nhanh 1 bấm #}
+        <div class="hop-loc">
+          <div class="hop-loc__dau">
+            <h2 class="hop-loc__tieu-de">Lọc nhanh</h2>
+            {% if co_chip_loc %}
+              <a href="/sach" class="hop-loc__xoa">Xóa lọc</a>
+            {% endif %}
+          </div>
+          <div class="loc-nhanh-cum">
+            <a href="{{ url_loc(giam_gia=(not giam_gia_val), trang=1) }}"
+               class="chip-gia{% if giam_gia_val %} chip-gia--chon{% endif %}"
+               aria-pressed="{{ 'true' if giam_gia_val else 'false' }}">Đang giảm giá</a>
+            <a href="{{ url_loc(con_hang=(not con_hang_val), trang=1) }}"
+               class="chip-gia{% if con_hang_val %} chip-gia--chon{% endif %}"
+               aria-pressed="{{ 'true' if con_hang_val else 'false' }}">Còn hàng</a>
+            <a href="{{ url_loc(co_review=(not co_review_val), trang=1) }}"
+               class="chip-gia{% if co_review_val %} chip-gia--chon{% endif %}"
+               aria-pressed="{{ 'true' if co_review_val else 'false' }}">Có review</a>
+          </div>
+        </div>
+
+        {# Thể loại kèm số đếm #}
+        <div class="hop-loc">
+          <div class="hop-loc__dau">
+            <h2 class="hop-loc__tieu-de">Thể loại</h2>
+          </div>
+          <ul class="ds-loc-dm">
+            <li>
+              <a href="{{ url_loc(danh_muc='', trang=1) }}"
+                 class="ds-loc-dm__link{% if not danh_muc_dang_chon %} ds-loc-dm__link--chon{% endif %}"
+                 {% if not danh_muc_dang_chon %}aria-current="page"{% endif %}>
+                <span>Tất cả thể loại</span>
+              </a>
+            </li>
+            {% if danh_muc_kem_dem is defined and danh_muc_kem_dem %}
+              {% for muc in danh_muc_kem_dem %}
+                {% set dm = muc.danh_muc %}
+                <li>
+                  <a href="{{ url_loc(danh_muc=dm.duong_dan, trang=1) }}"
+                     class="ds-loc-dm__link{% if danh_muc_dang_chon and danh_muc_dang_chon.duong_dan == dm.duong_dan %} ds-loc-dm__link--chon{% endif %}"
+                     {% if danh_muc_dang_chon and danh_muc_dang_chon.duong_dan == dm.duong_dan %}aria-current="page"{% endif %}>
+                    <span>{{ dm.ten }}</span>
+                    <span class="ds-loc-dm__so">{{ muc.so_sach_dang_ban }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            {% else %}
+              {% for dm in danh_muc or [] %}
+                <li>
+                  <a href="{{ url_loc(danh_muc=dm.duong_dan, trang=1) }}"
+                     class="ds-loc-dm__link{% if danh_muc_dang_chon and danh_muc_dang_chon.duong_dan == dm.duong_dan %} ds-loc-dm__link--chon{% endif %}"
+                     {% if danh_muc_dang_chon and danh_muc_dang_chon.duong_dan == dm.duong_dan %}aria-current="page"{% endif %}>
+                    <span>{{ dm.ten }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+
+        {# Khoảng giá #}
+        <div class="hop-loc">
+          <div class="hop-loc__dau">
+            <h2 class="hop-loc__tieu-de">Khoảng giá (đồng)</h2>
+          </div>
+          <form method="get" action="/sach">
+            {% if q_val %}<input type="hidden" name="q" value="{{ q_val }}">{% endif %}
+            {% if dm_val %}<input type="hidden" name="danh_muc" value="{{ dm_val }}">{% endif %}
+            {% if tac_gia_val %}<input type="hidden" name="tac_gia" value="{{ tac_gia_val }}">{% endif %}
+            {% if giam_gia_val %}<input type="hidden" name="giam_gia" value="1">{% endif %}
+            {% if con_hang_val %}<input type="hidden" name="con_hang" value="1">{% endif %}
+            {% if co_review_val %}<input type="hidden" name="co_review" value="1">{% endif %}
+            {% if sap_xep_raw %}<input type="hidden" name="sap_xep" value="{{ sap_xep_raw }}">{% endif %}
+            <div class="loc-gia-hang">
+              <div>
+                <label class="sr-only" for="gia-tu">Giá từ</label>
+                <input id="gia-tu" class="o-nhap" type="number" name="gia_tu" min="0" step="1000"
+                       value="{{ gia_tu_val }}" placeholder="Từ">
+              </div>
+              <div>
+                <label class="sr-only" for="gia-den">Giá đến</label>
+                <input id="gia-den" class="o-nhap" type="number" name="gia_den" min="0" step="1000"
+                       value="{{ gia_den_val }}" placeholder="Đến">
+              </div>
+            </div>
+            <button type="submit" class="nut nut--phu nut--nho nut--rong">Áp dụng mức giá</button>
+          </form>
+
+          {% set gia_tu_str = gia_tu_val|string %}
+          {% set gia_den_str = gia_den_val|string %}
+          <div class="loc-gia-nhanh">
+            <a class="chip-gia{% if gia_tu_str == '' and gia_den_str == '80000' %} chip-gia--chon{% endif %}" href="{{ url_loc(gia_tu='', gia_den='80000', trang=1) }}">Dưới 80.000 đ</a>
+            <a class="chip-gia{% if gia_tu_str == '80000' and gia_den_str == '150000' %} chip-gia--chon{% endif %}" href="{{ url_loc(gia_tu='80000', gia_den='150000', trang=1) }}">80.000 – 150.000 đ</a>
+            <a class="chip-gia{% if gia_tu_str == '150000' and gia_den_str == '' %} chip-gia--chon{% endif %}" href="{{ url_loc(gia_tu='150000', gia_den='', trang=1) }}">Trên 150.000 đ</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    {# Cột danh sách kết quả bên phải #}
+    <section class="cot-ket-qua" aria-label="Danh sách sách">
+      <h2 class="sr-only">Danh sách sách</h2>
+      {% if ket_qua.muc %}
+        <div class="thanh-sap-xep">
+          <div class="thanh-sap-xep__dem">
+            Trang <strong>{{ ket_qua.trang }}</strong> / {{ ket_qua.so_trang if ket_qua.so_trang > 0 else 1 }}
+            • Tổng <strong>{{ ket_qua.tong }}</strong> đầu sách
+          </div>
+          <div class="cum-sap-xep" role="group" aria-label="Sắp xếp sách">
+            {% for ma_sx, nhan_sx in cac_kieu %}
+              <a href="{{ url_loc(sap_xep=ma_sx, trang=1) }}"
+                 class="nut-sap-xep{% if sap_xep_val == ma_sx %} nut-sap-xep--chon{% endif %}">
+                {{ nhan_sx }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+
+        {% set url_hien_tai = url_loc(trang=ket_qua.trang) %}
+        <div class="luoi-sach luoi-sach--danh-sach">
+          {% for s in ket_qua.muc %}
+            {{ the_sach(s, csrf, url_hien_tai) }}
+          {% endfor %}
+        </div>
+
+        {% if ket_qua.so_trang > 1 %}
+          <nav class="phan-trang" aria-label="Phân trang">
+            {% if ket_qua.trang > 1 %}
+              <a href="{{ url_loc(trang=ket_qua.trang - 1) }}"
+                 class="phan-trang__nut"
+                 aria-label="Trang trước">&larr; Trước</a>
+            {% else %}
+              <span class="phan-trang__nut phan-trang__nut--tat"
+                    aria-disabled="true"
+                    aria-label="Trang trước">&larr; Trước</span>
+            {% endif %}
+
+            {% for so in range(1, ket_qua.so_trang + 1) %}
+              <a href="{{ url_loc(trang=so) }}"
+                 class="phan-trang__nut{% if so == ket_qua.trang %} phan-trang__nut--chon{% endif %}"
+                 {% if so == ket_qua.trang %}aria-current="page"{% endif %}>{{ so }}</a>
+            {% endfor %}
+
+            {% if ket_qua.trang < ket_qua.so_trang %}
+              <a href="{{ url_loc(trang=ket_qua.trang + 1) }}"
+                 class="phan-trang__nut"
+                 aria-label="Trang sau">Sau &rarr;</a>
+            {% else %}
+              <span class="phan-trang__nut phan-trang__nut--tat"
+                    aria-disabled="true"
+                    aria-label="Trang sau">Sau &rarr;</span>
+            {% endif %}
+          </nav>
+        {% endif %}
+      {% else %}
+        <div class="trang-thai-trong">
+          <div class="trang-thai-trong__hinh" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="12" width="32" height="40" rx="5" stroke="currentColor" stroke-width="2.4"/>
+              <path d="M18 22h16M18 30h12M18 38h8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+              <circle cx="43" cy="41" r="10" fill="#ffffff" stroke="currentColor" stroke-width="2.4"/>
+              <path d="m50.5 48.5 5.5 5.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h2 class="trang-thai-trong__tieu-de">Không tìm thấy cuốn sách phù hợp</h2>
+          <p class="trang-thai-trong__mo-ta" style="margin-bottom: 18px;">
+            Hãy thử đổi từ khóa tìm kiếm, nới rộng bộ lọc hoặc xem toàn bộ kho sách của nhà sách.
+          </p>
+          <a href="/sach" class="nut nut--chinh">Xem tất cả sách</a>
+        </div>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}

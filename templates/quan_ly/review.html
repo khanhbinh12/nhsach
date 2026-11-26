@@ -1,0 +1,132 @@
+{% extends "quan_ly/_khung.html" %}
+{% from "_bia.html" import bia %}
+
+{% block tieu_de %}Quản lý review nhà sách — Nhà Sách Tri Thức{% endblock %}
+{% block muc_dang_chon %}review{% endblock %}
+
+{% set loc_val = loc.value if (loc is not none and loc.value is defined) else (loc or '') %}
+
+{% block noi_dung %}
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Review của nhà sách</h1>
+    <p class="phu-de-trang">
+      Biên tập và phê duyệt bài giới thiệu sách chính thức trước khi hiển thị công khai trên trang chi tiết sách.
+      Hiện có <strong>{{ bai_review|length }}</strong> bài trong bộ lọc này.
+    </p>
+  </div>
+  <div class="ql-dau-trang__nut">
+    <a class="nut nut--chinh" href="{{ url_for('quan_ly.tao_review') }}">+ Viết review</a>
+  </div>
+</div>
+
+{# Bộ lọc theo trạng thái #}
+<div class="cum-sap-xep" style="margin-bottom: 18px;" role="group" aria-label="Lọc trạng thái review">
+  <a href="/quan-ly/review"
+     class="nut-sap-xep{% if not loc_val %} nut-sap-xep--chon{% endif %}"
+     {% if not loc_val %}aria-current="page"{% endif %}>Tất cả</a>
+  <a href="/quan-ly/review?trang_thai=nhap"
+     class="nut-sap-xep{% if loc_val == 'nhap' %} nut-sap-xep--chon{% endif %}"
+     {% if loc_val == 'nhap' %}aria-current="page"{% endif %}>Nháp</a>
+  <a href="/quan-ly/review?trang_thai=da_duyet"
+     class="nut-sap-xep{% if loc_val == 'da_duyet' %} nut-sap-xep--chon{% endif %}"
+     {% if loc_val == 'da_duyet' %}aria-current="page"{% endif %}>Đã duyệt</a>
+</div>
+
+{% if bai_review %}
+  <div class="hop-trang hop-bang">
+    <div class="bang-cuon">
+      <table class="bang-ql">
+        <thead>
+          <tr>
+            <th>Sách</th>
+            <th>Tiêu đề review</th>
+            <th>Trạng thái</th>
+            <th style="text-align: right;">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in bai_review %}
+            {% set tt = r.trang_thai.value if r.trang_thai.value is defined else (r.trang_thai|string) %}
+            {% set sach_item = r.sach if (r.sach is defined and r.sach) else none %}
+            {% if sach_item and sach_item.ma is defined %}
+              {% set bia_item = sach_item %}
+            {% elif sach_item %}
+              {% set bia_item = {'ma': r.ma_sach, 'tieu_de': sach_item.tieu_de, 'tac_gia': sach_item.tac_gia, 'anh_bia': sach_item.anh_bia} %}
+            {% else %}
+              {% set bia_item = {'ma': r.ma_sach, 'tieu_de': 'Sách #' ~ r.ma_sach} %}
+            {% endif %}
+            {% set ten_sach_hien = sach_item.tieu_de if sach_item else ('Sách #' ~ r.ma_sach) %}
+            <tr>
+              <td>
+                <div class="o-sach-ql">
+                  <a href="/sach/{{ r.ma_sach }}" class="o-sach-ql__bia" aria-label="Xem {{ ten_sach_hien }}">
+                    {{ bia(bia_item, 'nho') }}
+                  </a>
+                  <div style="min-width: 0;">
+                    <a href="/sach/{{ r.ma_sach }}" class="o-sach-ql__ten">{{ ten_sach_hien }}</a>
+                    <div class="o-sach-ql__phu">
+                      {% if sach_item and sach_item.tac_gia is defined and sach_item.tac_gia %}
+                        {{ sach_item.tac_gia }} •
+                      {% endif %}
+                      Mã sách #{{ r.ma_sach }}
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="ql-review-tieu-de">
+                  <a href="/quan-ly/review/{{ r.ma }}/sua" class="o-sach-ql__ten">{{ r.tieu_de }}</a>
+                  <div class="o-sach-ql__phu">
+                    {{ r.tac_gia_review }} • Tạo lúc {{ r.tao_luc | ngay }}
+                    {% if r.duyet_luc %} • Duyệt lúc {{ r.duyet_luc | ngay }}{% endif %}
+                  </div>
+                </div>
+              </td>
+              <td style="white-space: nowrap;">
+                {% if tt == 'da_duyet' %}
+                  <span class="nhan nhan--tot">Đã duyệt</span>
+                {% else %}
+                  <span class="nhan nhan--canh-bao">Nháp</span>
+                {% endif %}
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <a href="/quan-ly/review/{{ r.ma }}/sua" class="nut nut--phu nut--nho">Sửa</a>
+                  {% if tt == 'da_duyet' %}
+                    <form class="form-inline" method="post" action="/quan-ly/review/{{ r.ma }}/bo-duyet">
+                      <input type="hidden" name="csrf" value="{{ csrf }}">
+                      <button type="submit" class="nut nut--nhe nut--nho" style="color: var(--loi);">Bỏ duyệt</button>
+                    </form>
+                  {% else %}
+                    <form class="form-inline" method="post" action="/quan-ly/review/{{ r.ma }}/duyet">
+                      <input type="hidden" name="csrf" value="{{ csrf }}">
+                      <button type="submit" class="nut nut--chinh nut--nho">Duyệt</button>
+                    </form>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="trang-thai-trong">
+    <h2 class="trang-thai-trong__tieu-de">Chưa có bài review nào</h2>
+    <p class="trang-thai-trong__mo-ta">
+      {% if loc_val == 'nhap' %}
+        Hiện không có bài review nào đang ở trạng thái Nháp.
+      {% elif loc_val == 'da_duyet' %}
+        Chưa có bài review nào được duyệt đăng công khai.
+      {% else %}
+        Các bài review nháp của nhà sách sẽ xuất hiện tại đây để biên tập và phê duyệt.
+      {% endif %}
+    </p>
+    {% if loc_val %}
+      <a href="/quan-ly/review" class="nut nut--phu" style="margin-top: 14px;">Xem tất cả review</a>
+    {% endif %}
+  </div>
+{% endif %}
+{% endblock %}

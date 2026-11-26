@@ -1,0 +1,154 @@
+{% extends "quan_ly/_khung.html" %}
+
+{% block tieu_de %}Quản lý đơn hàng — Nhà Sách Tri Thức{% endblock %}
+{% block muc_dang_chon %}don{% endblock %}
+
+{% set tt_loc = loc.value if (loc is not none and loc.value is defined) else (loc.get('trang_thai', '') if loc is mapping else (loc or '')) %}
+{% set q_val = q if (q is defined and q) else '' %}
+
+{% macro url_ql_don(trang_thai=tt_loc, q_param=q_val, trang=1) -%}
+{%- set ts = [] -%}
+{%- if trang_thai %}{% set _ = ts.append('trang_thai=' ~ (trang_thai|urlencode)) %}{% endif -%}
+{%- if q_param %}{% set _ = ts.append('q=' ~ (q_param|urlencode)) %}{% endif -%}
+{%- if trang and trang > 1 %}{% set _ = ts.append('trang=' ~ trang) %}{% endif -%}
+/quan-ly/don{% if ts %}?{{ ts|join('&') }}{% endif %}
+{%- endmacro %}
+
+{% block noi_dung %}
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Quản lý đơn hàng</h1>
+    <p class="phu-de-trang">Tổng <strong>{{ ket_qua.tong }}</strong> đơn hàng trong bộ lọc hiện tại.</p>
+  </div>
+  <div class="ql-dau-trang__nut">
+    <a href="/quan-ly/xuat/don.csv" class="nut nut--phu">Xuất danh sách đơn CSV</a>
+  </div>
+</div>
+
+{# Ô tìm đơn theo mã tra cứu, họ tên hoặc SĐT #}
+<form class="ql-thanh-loc" method="get" action="/quan-ly/don">
+  {% if tt_loc %}<input type="hidden" name="trang_thai" value="{{ tt_loc }}">{% endif %}
+  <div class="ql-thanh-loc__o-tim">
+    <label class="sr-only" for="ql-don-q">Tìm đơn hàng</label>
+    <input id="ql-don-q" class="o-nhap" type="search" name="q" value="{{ q_val }}" placeholder="Tìm theo mã tra cứu, tên khách hoặc SĐT...">
+  </div>
+  <div class="ql-thanh-loc__nut">
+    <button type="submit" class="nut nut--chinh">Tìm đơn</button>
+    {% if q_val or tt_loc %}
+      <a href="/quan-ly/don" class="nut nut--phu">Xóa lọc</a>
+    {% endif %}
+  </div>
+</form>
+
+{# Bộ lọc theo trạng thái đơn #}
+<div class="cum-sap-xep" style="margin-bottom: 18px;" role="group" aria-label="Lọc trạng thái đơn hàng">
+  <a href="{{ url_ql_don(trang_thai='', trang=1) }}"
+     class="nut-sap-xep{% if not tt_loc %} nut-sap-xep--chon{% endif %}">Tất cả</a>
+  {% for tt in cac_trang_thai or [] %}
+    <a href="{{ url_ql_don(trang_thai=tt.value, trang=1) }}"
+       class="nut-sap-xep{% if tt_loc == tt.value %} nut-sap-xep--chon{% endif %}">{{ tt.nhan }}</a>
+  {% endfor %}
+</div>
+
+{% if ket_qua.muc %}
+  <div class="hop-trang hop-bang">
+    <div class="bang-cuon">
+      <table class="bang-ql">
+        <thead>
+          <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Thanh toán</th>
+            <th>Trạng thái</th>
+            <th style="text-align: right;">Tổng tiền</th>
+            <th style="text-align: right;">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in ket_qua.muc %}
+            {% set tt = d.trang_thai.value %}
+            <tr>
+              <td style="white-space: nowrap;">
+                <a href="/quan-ly/don/{{ d.ma }}" style="font-weight: 800; color: var(--chu);">#{{ d.ma }}</a>
+                <div style="font-family: Consolas, 'Courier New', monospace; font-size: 0.78rem; color: var(--chu-nhat);">{{ d.ma_tra_cuu }}</div>
+              </td>
+              <td>
+                <div style="font-weight: 600;">{{ d.ho_ten }}</div>
+                <div style="font-size: 0.8rem; color: var(--chu-phu);">{{ d.dien_thoai }}</div>
+              </td>
+              <td style="white-space: nowrap; font-size: 0.86rem; color: var(--chu-phu);">{{ d.tao_luc | ngay }}</td>
+              <td>
+                <div style="font-size: 0.84rem; margin-bottom: 4px;">{{ d.phuong_thuc.nhan }}</div>
+                {% if d.da_thanh_toan %}
+                  <span class="nhan nhan--tot">Đã thanh toán</span>
+                  {% if tt == 'da_huy' %}
+                    {% if d.da_hoan_tien %}
+                      <span class="nhan nhan--thong-tin">Đã hoàn tiền</span>
+                    {% else %}
+                      <span class="nhan nhan--canh-bao">Chờ hoàn tiền</span>
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                  <span class="nhan nhan--trung-tinh">Chưa thanh toán</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if tt == 'hoan_thanh' %}
+                  <span class="nhan nhan--tot">{{ d.trang_thai.nhan }}</span>
+                {% elif tt == 'da_huy' %}
+                  <span class="nhan nhan--loi">{{ d.trang_thai.nhan }}</span>
+                {% elif tt == 'dang_giao' %}
+                  <span class="nhan nhan--thong-tin">{{ d.trang_thai.nhan }}</span>
+                {% else %}
+                  <span class="nhan nhan--canh-bao">{{ d.trang_thai.nhan }}</span>
+                {% endif %}
+              </td>
+              <td style="text-align: right; white-space: nowrap; font-weight: 800; color: var(--nhan); font-variant-numeric: tabular-nums;">
+                {{ d.tong | tien }}
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <a href="/quan-ly/don/{{ d.ma }}" class="nut nut--phu nut--nho">Chi tiết</a>
+                  <a href="/quan-ly/don/{{ d.ma }}/hoa-don" target="_blank" class="nut nut--nhe nut--nho">Hóa đơn</a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% if ket_qua.so_trang > 1 %}
+    <nav class="phan-trang" aria-label="Phân trang đơn hàng">
+      {% if ket_qua.trang > 1 %}
+        <a href="{{ url_ql_don(trang=ket_qua.trang - 1) }}" class="phan-trang__nut">&larr; Trước</a>
+      {% else %}
+        <span class="phan-trang__nut phan-trang__nut--tat" aria-disabled="true">&larr; Trước</span>
+      {% endif %}
+      {% for so in range(1, ket_qua.so_trang + 1) %}
+        <a href="{{ url_ql_don(trang=so) }}"
+           class="phan-trang__nut{% if so == ket_qua.trang %} phan-trang__nut--chon{% endif %}"
+           {% if so == ket_qua.trang %}aria-current="page"{% endif %}>{{ so }}</a>
+      {% endfor %}
+      {% if ket_qua.trang < ket_qua.so_trang %}
+        <a href="{{ url_ql_don(trang=ket_qua.trang + 1) }}" class="phan-trang__nut">Sau &rarr;</a>
+      {% else %}
+        <span class="phan-trang__nut phan-trang__nut--tat" aria-disabled="true">Sau &rarr;</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <div class="trang-thai-trong">
+    <h2 class="trang-thai-trong__tieu-de">Không tìm thấy đơn hàng nào</h2>
+    <p class="trang-thai-trong__mo-ta">
+      {% if q_val %}
+        Không có đơn hàng khớp từ khóa "{{ q_val }}" trong bộ lọc hiện tại.
+      {% else %}
+        Không có đơn hàng thuộc trạng thái đã chọn.
+      {% endif %}
+    </p>
+  </div>
+{% endif %}
+{% endblock %}

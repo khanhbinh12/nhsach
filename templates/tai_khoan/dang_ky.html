@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block tieu_de %}Đăng ký tài khoản — Nhà Sách Tri Thức{% endblock %}
+
+{% block noi_dung %}
+{% set f = form or {} %}
+{% set lt = loi_truong or {} %}
+<div class="khung trang-con">
+  <div class="khung-giua khung-giua--rong">
+    <section class="the-xac-thuc" aria-labelledby="tieu-de-dang-ky">
+      <div class="the-xac-thuc__dau">
+        <div class="the-xac-thuc__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M19 8v6M22 11h-6"/>
+          </svg>
+        </div>
+        <h1 id="tieu-de-dang-ky" class="tieu-de-trang" style="font-size: 1.55rem;">Tạo tài khoản mới</h1>
+        <p class="phu-de-trang">Xem lịch sử đơn hàng, tự hủy đơn chưa thanh toán và gửi đánh giá sách.</p>
+      </div>
+
+      <form method="post" action="/dang-ky" data-dang-xu-ly>
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+
+        <div class="truong">
+          <label class="truong__nhan" for="dk-ho-ten">Họ và tên <span class="truong__bat-buoc">*</span></label>
+          <input id="dk-ho-ten" class="o-nhap{% if lt.get('ho_ten') %} o-nhap--loi{% endif %}" type="text" name="ho_ten" required autocomplete="name"
+                 value="{{ f.get('ho_ten') or '' }}" placeholder="Nguyễn Văn An"
+                 {% if lt.get('ho_ten') %}aria-invalid="true" aria-describedby="loi-dk-ho-ten"{% endif %}>
+          {% if lt.get('ho_ten') %}
+            <p id="loi-dk-ho-ten" class="truong__loi" role="alert">{{ lt['ho_ten'] }}</p>
+          {% endif %}
+        </div>
+
+        <div class="luoi-form-2">
+          <div class="truong">
+            <label class="truong__nhan" for="dk-email">Email <span class="truong__bat-buoc">*</span></label>
+            <input id="dk-email" class="o-nhap{% if lt.get('email') %} o-nhap--loi{% endif %}" type="email" name="email" required autocomplete="email" inputmode="email"
+                   value="{{ f.get('email') or '' }}" placeholder="ban@email.com"
+                   {% if lt.get('email') %}aria-invalid="true" aria-describedby="loi-dk-email"{% endif %}>
+            {% if lt.get('email') %}
+              <p id="loi-dk-email" class="truong__loi" role="alert">{{ lt['email'] }}</p>
+            {% endif %}
+          </div>
+          <div class="truong">
+            <label class="truong__nhan" for="dk-dien-thoai">Số điện thoại <span class="truong__bat-buoc">*</span></label>
+            <input id="dk-dien-thoai" class="o-nhap{% if lt.get('dien_thoai') %} o-nhap--loi{% endif %}" type="tel" name="dien_thoai" required autocomplete="tel" inputmode="tel"
+                   value="{{ f.get('dien_thoai') or '' }}" placeholder="0901 234 567"
+                   {% if lt.get('dien_thoai') %}aria-invalid="true" aria-describedby="loi-dk-dien-thoai"{% endif %}>
+            {% if lt.get('dien_thoai') %}
+              <p id="loi-dk-dien-thoai" class="truong__loi" role="alert">{{ lt['dien_thoai'] }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="luoi-form-2" style="margin-bottom: 20px;">
+          <div class="truong">
+            <label class="truong__nhan" for="dk-mat-khau">Mật khẩu <span class="truong__bat-buoc">*</span></label>
+            <input id="dk-mat-khau" class="o-nhap{% if lt.get('mat_khau') %} o-nhap--loi{% endif %}" type="password" name="mat_khau" required minlength="8" autocomplete="new-password"
+                   placeholder="Ít nhất 8 ký tự"
+                   {% if lt.get('mat_khau') %}aria-invalid="true" aria-describedby="loi-dk-mat-khau"{% endif %}>
+            {% if lt.get('mat_khau') %}
+              <p id="loi-dk-mat-khau" class="truong__loi" role="alert">{{ lt['mat_khau'] }}</p>
+            {% endif %}
+          </div>
+          <div class="truong">
+            <label class="truong__nhan" for="dk-mat-khau-lai">Nhập lại mật khẩu <span class="truong__bat-buoc">*</span></label>
+            <input id="dk-mat-khau-lai" class="o-nhap{% if lt.get('mat_khau_lai') %} o-nhap--loi{% endif %}" type="password" name="mat_khau_lai" required minlength="8" autocomplete="new-password"
+                   placeholder="Gõ lại mật khẩu"
+                   {% if lt.get('mat_khau_lai') %}aria-invalid="true" aria-describedby="loi-dk-mat-khau-lai"{% endif %}>
+            {% if lt.get('mat_khau_lai') %}
+              <p id="loi-dk-mat-khau-lai" class="truong__loi" role="alert">{{ lt['mat_khau_lai'] }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <button type="submit" class="nut nut--chinh nut--lon nut--rong" data-nhan-xu-ly="Đang xử lý…">Đăng ký tài khoản</button>
+      </form>
+
+      <div class="the-xac-thuc__chan">
+        Đã có tài khoản? <a href="/dang-nhap">Đăng nhập ngay</a>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

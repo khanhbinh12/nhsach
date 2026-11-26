@@ -1,0 +1,124 @@
+{% extends "quan_ly/_khung.html" %}
+
+{% block tieu_de %}Quản lý mã giảm giá — Nhà Sách Tri Thức{% endblock %}
+{% block muc_dang_chon %}ma_giam_gia{% endblock %}
+
+{% block noi_dung %}
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Quản lý mã giảm giá</h1>
+    <p class="phu-de-trang">Tạo chương trình khuyến mãi mới và bật/tắt mã giảm giá bất cứ lúc nào.</p>
+  </div>
+</div>
+
+{# Form tạo mã giảm giá mới #}
+<section class="hop-trang" style="margin-bottom: 20px;" aria-labelledby="tieu-de-tao-mgg">
+  <h2 id="tieu-de-tao-mgg" class="hop-trang__tieu-de">Tạo mã giảm giá mới</h2>
+  <form method="post" action="/quan-ly/ma-giam-gia">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+
+    <div class="luoi-form-3" style="margin-bottom: 14px;">
+      <div class="truong" style="margin: 0;">
+        <label class="truong__nhan" for="mgg-ma">Mã giảm giá (chữ in hoa) <span class="truong__bat-buoc">*</span></label>
+        <input id="mgg-ma" class="o-nhap" type="text" name="ma" required placeholder="GIAM20K"
+               style="text-transform: uppercase; font-family: Consolas, 'Courier New', monospace; font-weight: 700;">
+      </div>
+      <div class="truong" style="margin: 0;">
+        <label class="truong__nhan" for="mgg-kieu">Kiểu giảm <span class="truong__bat-buoc">*</span></label>
+        <select id="mgg-kieu" class="o-chon" name="kieu" required>
+          <option value="phan_tram">Theo phần trăm (%)</option>
+          <option value="tien">Trừ số tiền cố định (đ)</option>
+        </select>
+      </div>
+      <div class="truong" style="margin: 0;">
+        <label class="truong__nhan" for="mgg-gt">Giá trị giảm <span class="truong__bat-buoc">*</span></label>
+        <input id="mgg-gt" class="o-nhap" type="number" name="gia_tri" min="1" required placeholder="10 hoặc 30000">
+      </div>
+    </div>
+
+    <div class="luoi-form-3" style="margin-bottom: 16px;">
+      <div class="truong" style="margin: 0;">
+        <label class="truong__nhan" for="mgg-min">Đơn tối thiểu (đ)</label>
+        <input id="mgg-min" class="o-nhap" type="number" name="don_toi_thieu" min="0" value="0" placeholder="100000">
+      </div>
+      <div class="truong" style="margin: 0;">
+        <label class="truong__nhan" for="mgg-han">Ngày hết hạn (có thể trống)</label>
+        <input id="mgg-han" class="o-nhap" type="date" name="het_han">
+      </div>
+      <div class="truong" style="margin: 0;">
+        <label class="truong__nhan" for="mgg-luot">Số lượt tối đa (có thể trống)</label>
+        <input id="mgg-luot" class="o-nhap" type="number" name="so_luot_toi_da" min="1" placeholder="Không giới hạn">
+      </div>
+    </div>
+
+    <button type="submit" class="nut nut--chinh">+ Tạo mã giảm giá</button>
+  </form>
+</section>
+
+{# Danh sách mã giảm giá #}
+{% if ma_giam_gia %}
+  <div class="hop-trang hop-bang">
+    <div class="bang-cuon">
+      <table class="bang-ql">
+        <thead>
+          <tr>
+            <th>Mã</th>
+            <th>Mức giảm</th>
+            <th>Đơn tối thiểu</th>
+            <th>Lượt dùng</th>
+            <th>Hết hạn</th>
+            <th>Trạng thái</th>
+            <th style="text-align: right;">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in ma_giam_gia %}
+            <tr>
+              <td style="font-family: Consolas, 'Courier New', monospace; font-weight: 800; color: var(--nhan);">{{ m.ma }}</td>
+              <td style="font-weight: 700; white-space: nowrap;">
+                {% if m.kieu == 'phan_tram' %}
+                  Giảm {{ m.gia_tri }}%
+                {% else %}
+                  Giảm {{ m.gia_tri | tien }}
+                {% endif %}
+              </td>
+              <td style="white-space: nowrap; font-variant-numeric: tabular-nums;">{{ m.don_toi_thieu | tien }}</td>
+              <td style="white-space: nowrap; font-variant-numeric: tabular-nums;">
+                {{ m.da_dung }} / {{ m.so_luot_toi_da if m.so_luot_toi_da is not none else '∞' }}
+              </td>
+              <td style="white-space: nowrap; font-size: 0.86rem; color: var(--chu-phu);">
+                {% set hsd_raw = (m.het_han|string) if m.het_han else '' %}
+                {% if hsd_raw|length == 10 and hsd_raw[4] == '-' and hsd_raw[7] == '-' %}
+                  {{ hsd_raw[8:10] }}/{{ hsd_raw[5:7] }}/{{ hsd_raw[0:4] }}
+                {% else %}
+                  {{ hsd_raw or 'Không giới hạn' }}
+                {% endif %}
+              </td>
+              <td>
+                {% if m.dang_bat %}
+                  <span class="nhan nhan--tot">Đang bật</span>
+                {% else %}
+                  <span class="nhan nhan--trung-tinh">Đang tắt</span>
+                {% endif %}
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <form class="form-inline" method="post" action="/quan-ly/ma-giam-gia/{{ m.ma }}/bat-tat">
+                  <input type="hidden" name="csrf" value="{{ csrf }}">
+                  <button type="submit" class="nut nut--phu nut--nho">
+                    {{ 'Tắt mã' if m.dang_bat else 'Bật lại' }}
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="trang-thai-trong">
+    <h2 class="trang-thai-trong__tieu-de">Chưa có mã giảm giá nào</h2>
+    <p class="trang-thai-trong__mo-ta">Tạo mã đầu tiên bằng biểu mẫu phía trên.</p>
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,220 @@
+{% extends "quan_ly/_khung.html" %}
+{% from "_bia.html" import bia %}
+
+{% block tieu_de %}Đơn hàng #{{ don.ma }} ({{ don.ma_tra_cuu }}) — Quản lý{% endblock %}
+{% block muc_dang_chon %}don{% endblock %}
+
+{% block noi_dung %}
+{% set tt_val = don.trang_thai.value %}
+{% set buoc_khong_huy = [] %}
+{% set ns = namespace(co_huy=False) %}
+{% for bt in buoc_tiep or [] %}
+  {% if bt.value == 'da_huy' %}
+    {% set ns.co_huy = True %}
+  {% else %}
+    {% set _ = buoc_khong_huy.append(bt) %}
+  {% endif %}
+{% endfor %}
+
+<div class="ql-dau-trang">
+  <div>
+    <nav class="duong-dan" style="margin-bottom: 6px;" aria-label="Đường dẫn">
+      <a href="/quan-ly/don">Đơn hàng</a>
+      <span class="duong-dan__ngan" aria-hidden="true">/</span>
+      <span class="duong-dan__hien-tai">#{{ don.ma }}</span>
+    </nav>
+    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px;">
+      <h1 class="tieu-de-trang" style="margin: 0;">Đơn hàng #{{ don.ma }}</h1>
+      <span class="ma-tra-cuu-chip">{{ don.ma_tra_cuu }}</span>
+      <button type="button" class="nut-sao-chep" data-sao-chep="{{ don.ma_tra_cuu }}" aria-label="Sao chép mã tra cứu {{ don.ma_tra_cuu }}">Sao chép</button>
+    </div>
+    <p class="phu-de-trang" style="margin-top: 4px;">
+      Đặt lúc {{ don.tao_luc | ngay }} • Cập nhật {{ don.cap_nhat_luc | ngay }}
+    </p>
+  </div>
+
+  <div class="ql-dau-trang__nut">
+    <a href="/quan-ly/don/{{ don.ma }}/hoa-don" target="_blank" class="nut nut--phu">In hóa đơn</a>
+    <a href="/quan-ly/don" class="nut nut--phu">&larr; Danh sách đơn</a>
+  </div>
+</div>
+
+{# Trạng thái tổng quan của đơn #}
+<div class="cum-nhan-don" style="margin-bottom: 18px;">
+  {% if tt_val == 'hoan_thanh' %}
+    <span class="nhan nhan--tot">{{ don.trang_thai.nhan }}</span>
+  {% elif tt_val == 'da_huy' %}
+    <span class="nhan nhan--loi">{{ don.trang_thai.nhan }}</span>
+  {% elif tt_val == 'dang_giao' %}
+    <span class="nhan nhan--thong-tin">{{ don.trang_thai.nhan }}</span>
+  {% else %}
+    <span class="nhan nhan--canh-bao">{{ don.trang_thai.nhan }}</span>
+  {% endif %}
+
+  <span class="nhan nhan--trung-tinh">{{ don.phuong_thuc.nhan }}</span>
+
+  {% if don.da_thanh_toan %}
+    <span class="nhan nhan--tot">Đã thanh toán</span>
+    {% if tt_val == 'da_huy' %}
+      {% if don.da_hoan_tien %}
+        <span class="nhan nhan--thong-tin">Đã hoàn tiền</span>
+      {% else %}
+        <span class="nhan nhan--canh-bao">Đang chờ hoàn tiền</span>
+      {% endif %}
+    {% endif %}
+  {% else %}
+    <span class="nhan nhan--trung-tinh">Chưa thanh toán</span>
+  {% endif %}
+</div>
+
+<div class="bo-cuc-2-cot">
+  {# Cột trái: Danh sách sách + tiền #}
+  <div style="display: grid; gap: 18px; min-width: 0;">
+    <section class="hop-trang" aria-label="Sách trong đơn">
+      <h2 class="hop-trang__tieu-de">Sách trong đơn ({{ don.muc|length }})</h2>
+
+      <div class="ds-muc-don">
+        {% for m in don.muc %}
+          <div class="muc-don-hang">
+            <a href="/quan-ly/sach/{{ m.ma_sach }}/sua" class="muc-don-hang__bia" aria-label="{{ m.tieu_de }}">
+              {{ bia(m, 'nho') }}
+            </a>
+            <div class="muc-don-hang__thong-tin">
+              <a href="/quan-ly/sach/{{ m.ma_sach }}/sua" class="muc-don-hang__ten">{{ m.tieu_de }}</a>
+              <div class="muc-don-hang__chi-tiet">{{ m.don_gia | tien }} × {{ m.so_luong }} cuốn</div>
+            </div>
+            <div class="muc-don-hang__tien">{{ (m.don_gia * m.so_luong) | tien }}</div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="bang-tien">
+        <div class="bang-tien__dong">
+          <span>Tạm tính</span>
+          <span class="bang-tien__so">{{ don.tam_tinh | tien }}</span>
+        </div>
+        {% if don.giam_gia > 0 %}
+          <div class="bang-tien__dong">
+            <span>Giảm giá{% if don.ma_giam_gia %} ({{ don.ma_giam_gia }}){% endif %}</span>
+            <span class="bang-tien__so bang-tien__so--giam">-{{ don.giam_gia | tien }}</span>
+          </div>
+        {% endif %}
+        <div class="bang-tien__dong">
+          <span>Phí giao hàng</span>
+          <span class="bang-tien__so">
+            {% if don.phi_giao == 0 %}
+              <span class="bang-tien__so--giam">Miễn phí</span>
+            {% else %}
+              {{ don.phi_giao | tien }}
+            {% endif %}
+          </span>
+        </div>
+      </div>
+
+      <div class="bang-tien__tong" style="margin-bottom: 0;">
+        <span>Tổng thanh toán</span>
+        <span class="bang-tien__tong-so">{{ don.tong | tien }}</span>
+      </div>
+    </section>
+
+    <section class="hop-trang" aria-label="Thông tin khách hàng và giao nhận">
+      <h2 class="hop-trang__tieu-de">Thông tin người nhận</h2>
+      <div class="bang-ngan-hang" style="margin: 0;">
+        <div class="bang-ngan-hang__dong">
+          <span class="bang-ngan-hang__nhan">Họ và tên</span>
+          <span class="bang-ngan-hang__gia-tri">{{ don.ho_ten }}</span>
+        </div>
+        <div class="bang-ngan-hang__dong">
+          <span class="bang-ngan-hang__nhan">Số điện thoại</span>
+          <span class="bang-ngan-hang__gia-tri">{{ don.dien_thoai }}</span>
+        </div>
+        <div class="bang-ngan-hang__dong bang-ngan-hang__dong--cot">
+          <span class="bang-ngan-hang__nhan">Địa chỉ giao hàng</span>
+          <span class="bang-ngan-hang__gia-tri">{{ don.dia_chi }}</span>
+        </div>
+        {% if don.ghi_chu %}
+          <div class="bang-ngan-hang__dong bang-ngan-hang__dong--cot" style="border-bottom: 0; padding-bottom: 0;">
+            <span class="bang-ngan-hang__nhan">Ghi chú của khách</span>
+            <span class="bang-ngan-hang__gia-tri">{{ don.ghi_chu }}</span>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  {# Cột phải: Điều khiển thanh toán & chuyển trạng thái #}
+  <aside style="display: grid; gap: 18px; min-width: 0;">
+    {# Xác nhận thanh toán cho đơn chuyển khoản chưa thanh toán #}
+    {% if don.phuong_thuc.value == 'chuyen_khoan' and not don.da_thanh_toan and tt_val != 'da_huy' %}
+      <section class="hop-trang hop-xac-nhan-tien" aria-label="Xác nhận chuyển khoản">
+        <span class="nhan nhan--canh-bao" style="margin-bottom: 10px;">Chuyển khoản chưa đối soát</span>
+        <h2 class="hop-trang__tieu-de" style="margin-bottom: 6px;">Xác nhận thanh toán</h2>
+        <p class="phu-de-trang" style="font-size: 0.88rem; margin-bottom: 14px;">
+          Kiểm tra tài khoản đã nhận đủ <strong>{{ don.tong | tien }}</strong> với mã <strong>{{ don.ma_tra_cuu }}</strong>.
+          Đơn chuyển khoản chưa thanh toán sẽ không thể chuyển sang trạng thái Đang giao hàng.
+        </p>
+        <form method="post" action="/quan-ly/don/{{ don.ma }}/da-thanh-toan">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <button type="submit" class="nut nut--chinh nut--rong">Xác nhận đã nhận tiền</button>
+        </form>
+      </section>
+    {% endif %}
+
+    {# Chuyển bước tiếp theo #}
+    <section class="hop-trang" aria-label="Cập nhật trạng thái đơn">
+      <h2 class="hop-trang__tieu-de">Cập nhật trạng thái</h2>
+
+      {% set cho_ck = (don.phuong_thuc.value == 'chuyen_khoan' and not don.da_thanh_toan and tt_val != 'da_huy') %}
+      {% if buoc_khong_huy %}
+        <div style="display: grid; gap: 10px;">
+          {% for bt in buoc_khong_huy %}
+            <form method="post" action="/quan-ly/don/{{ don.ma }}/trang-thai">
+              <input type="hidden" name="csrf" value="{{ csrf }}">
+              <input type="hidden" name="trang_thai" value="{{ bt.value }}">
+              <button type="submit" class="nut {{ 'nut--phu' if cho_ck else 'nut--chinh' }} nut--rong">
+                Chuyển sang: {{ bt.nhan }} &rarr;
+              </button>
+            </form>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="phu-de-trang" style="font-size: 0.9rem;">
+          {% if tt_val == 'hoan_thanh' %}
+            Đơn hàng đã hoàn thành — không còn bước chuyển tiếp.
+          {% elif tt_val == 'da_huy' %}
+            Đơn hàng đã hủy — không thể chuyển trạng thái nữa.
+          {% else %}
+            Chưa có bước chuyển tiếp khả dụng (nếu là đơn chuyển khoản, hãy xác nhận đã nhận tiền trước).
+          {% endif %}
+        </p>
+      {% endif %}
+
+      {# Khối hủy đơn riêng biệt — bắt buộc xác nhận và đánh dấu hoàn tiền nếu đơn đã thanh toán #}
+      {% if ns.co_huy %}
+        <div class="hop-huy-don-ql">
+          <h3 class="hop-huy-don-ql__tieu-de">Hủy đơn hàng</h3>
+          <p class="phu-de-trang" style="font-size: 0.84rem; margin-bottom: 12px;">
+            Hủy đơn sẽ tự động hoàn lại tồn kho sách và lượt dùng mã giảm giá (nếu có).
+          </p>
+          <form method="post" action="/quan-ly/don/{{ don.ma }}/huy">
+            <input type="hidden" name="csrf" value="{{ csrf }}">
+            <label class="hop-kiem-ql" style="margin-bottom: 12px; background: #ffffff;">
+              <input type="checkbox" name="xac_nhan" value="1" required>
+              <span>Tôi muốn hủy đơn này</span>
+            </label>
+            {% if don.da_thanh_toan %}
+              <label class="hop-kiem-ql" style="margin-bottom: 12px; background: #ffffff;">
+                <input type="checkbox" name="da_hoan_tien" value="1" required>
+                <span>Xác nhận <strong>đã hoàn tiền {{ don.tong | tien }}</strong> cho khách hàng (bắt buộc)</span>
+              </label>
+            {% endif %}
+            <button type="submit" class="nut nut--phu nut--rong" style="color: var(--loi); border-color: var(--loi-vien);">
+              Hủy đơn hàng #{{ don.ma }}
+            </button>
+          </form>
+        </div>
+      {% endif %}
+    </section>
+  </aside>
+</div>
+{% endblock %}

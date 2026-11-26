@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block tieu_de %}Lỗi {{ ma_loi }} — Nhà Sách Tri Thức{% endblock %}
+
+{% block noi_dung %}
+<div class="khung trang-con">
+  <section class="hop-loi" aria-labelledby="tieu-de-loi">
+    <span class="hop-loi__ma">LỖI {{ ma_loi }}</span>
+    <h1 id="tieu-de-loi" class="hop-loi__tieu-de">{{ tieu_de }}</h1>
+    <p class="hop-loi__mo-ta">{{ thong_bao }}</p>
+    <div class="hop-loi__nut">
+      <a href="/" class="nut nut--chinh">Về trang chủ</a>
+      <a href="/sach" class="nut nut--phu">Xem kho sách</a>
+    </div>
+  </section>
+</div>
+{% endblock %}

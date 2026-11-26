@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block tieu_de %}Đăng nhập — Nhà Sách Tri Thức{% endblock %}
+
+{% block noi_dung %}
+{% set f = form or {} %}
+<div class="khung trang-con">
+  <div class="khung-giua">
+    <section class="the-xac-thuc" aria-labelledby="tieu-de-dang-nhap">
+      <div class="the-xac-thuc__dau">
+        <div class="the-xac-thuc__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <path d="m10 17 5-5-5-5M15 12H3"/>
+          </svg>
+        </div>
+        <h1 id="tieu-de-dang-nhap" class="tieu-de-trang" style="font-size: 1.55rem;">Đăng nhập</h1>
+        <p class="phu-de-trang">Chào mừng bạn quay lại Nhà Sách Tri Thức.</p>
+      </div>
+
+      <form method="post" action="/dang-nhap" data-dang-xu-ly>
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        {% set tiep_val = f.get('tiep') or (request.args.get('tiep', '') if request is defined and request.args is defined else '') %}
+        {% if tiep_val %}
+          <input type="hidden" name="tiep" value="{{ tiep_val }}">
+        {% endif %}
+
+        <div class="truong">
+          <label class="truong__nhan" for="dn-email">Email <span class="truong__bat-buoc">*</span></label>
+          <input id="dn-email" class="o-nhap" type="email" name="email" required autocomplete="email" inputmode="email"
+                 value="{{ f.get('email') or '' }}" placeholder="ban@email.com">
+        </div>
+
+        <div class="truong" style="margin-bottom: 20px;">
+          <label class="truong__nhan" for="dn-mat-khau">Mật khẩu <span class="truong__bat-buoc">*</span></label>
+          <input id="dn-mat-khau" class="o-nhap" type="password" name="mat_khau" required autocomplete="current-password"
+                 placeholder="Nhập mật khẩu của bạn">
+        </div>
+
+        <button type="submit" class="nut nut--chinh nut--lon nut--rong" data-nhan-xu-ly="Đang xử lý…">Đăng nhập</button>
+      </form>
+
+      <div class="the-xac-thuc__chan">
+        Chưa có tài khoản? <a href="/dang-ky">Đăng ký miễn phí</a>
+        <div style="margin-top: 8px;">
+          Mua hàng không cần đăng nhập? <a href="/tra-cuu">Tra cứu đơn bằng mã</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

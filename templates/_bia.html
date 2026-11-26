@@ -1,0 +1,185 @@
+{# Macro vẽ bìa sách tỉ lệ 2:3 — có anh_bia thì dùng ảnh, không có thì vẽ SVG theo sach.bia (BiaSach).
+   Cỡ 'nho' (< 80px) dùng bản giản lược (màu, khuôn, tiêu đề ngắn cỡ lớn) để không bị nhòe chữ;
+   cũng hỗ trợ MucDon không có thuộc tính sach.bia dưới StrictUndefined. #}
+{% macro bia(sach, co='vua') %}
+{%- set co_anh = sach.anh_bia if (sach.anh_bia is defined and sach.anh_bia) else none -%}
+{%- set id_sach = sach.ma if sach.ma is defined else (sach.ma_sach if sach.ma_sach is defined else 0) -%}
+{%- set bang_mau = ['#2e7d32', '#1565c0', '#00695c', '#9a3412', '#4527a0', '#37474f', '#6a1b9a', '#1e3a5f'] -%}
+{%- set bang_khuon = ['co_dien', 'hien_dai', 'ky_nang', 'thieu_nhi'] -%}
+{%- set mau = sach.mau_bia if (sach.mau_bia is defined and sach.mau_bia) else bang_mau[id_sach % (bang_mau|length)] -%}
+{%- set tieu_de = sach.tieu_de if (sach.tieu_de is defined and sach.tieu_de) else 'Sách chưa đặt tên' -%}
+{%- set tac_gia = sach.tac_gia if (sach.tac_gia is defined and sach.tac_gia) else '' -%}
+{%- set tac_gia_hien = (tac_gia[:22] ~ ('…' if tac_gia|length > 22 else '')) if tac_gia else '' -%}
+{%- set id_goc = 'bia-' ~ id_sach ~ '-' ~ co -%}
+{%- if sach.bia is defined -%}
+  {%- set b = sach.bia -%}
+  {%- set dong_hien = b.dong_tieu_de -%}
+  {%- set co_chu = b.co_chu -%}
+  {%- set mau_chu = b.mau_chu -%}
+  {%- set mau_phu = b.mau_phu -%}
+  {%- set khuon = b.khuon -%}
+{%- else -%}
+  {%- set dong_hien = [tieu_de] -%}
+  {%- set co_chu = 23 -%}
+  {%- set mau_chu = '#ffffff' -%}
+  {%- set mau_phu = '#ffffff' -%}
+  {%- set khuon = bang_khuon[id_sach % (bang_khuon|length)] -%}
+{%- endif -%}
+<div class="bia bia--{{ co }}{% if co_anh %} bia--co-anh{% endif %}">
+  {%- if co_anh -%}
+    <img class="bia__anh" src="{{ co_anh }}" alt="Bìa sách {{ tieu_de }}" loading="{{ 'eager' if co == 'lon' else 'lazy' }}" decoding="async">
+  {%- elif co == 'nho' -%}
+    {# Bản giản lược cho bìa thu nhỏ (< 80px): màu nền, đường nét khuôn tối giản và tối đa 2 dòng chữ lớn rõ nét #}
+    {%- set tu_ds = tieu_de.split() -%}
+    {%- set dong_1 = (tu_ds[0] ~ (' ' ~ tu_ds[1] if tu_ds|length > 1 and (tu_ds[0]|length + tu_ds[1]|length) <= 9 else ''))[:10] -%}
+    {%- set da_lay = 2 if (tu_ds|length > 1 and (tu_ds[0]|length + tu_ds[1]|length) <= 9) else 1 -%}
+    {%- set dong_2 = (tu_ds[da_lay] ~ ('…' if tu_ds|length > da_lay + 1 else ''))[:10] if tu_ds|length > da_lay else '' -%}
+    {%- set font_nho = "'Noto Serif', 'Times New Roman', serif" if khuon == 'co_dien' else "'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif" -%}
+    <svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách {{ tieu_de }}">
+      <rect width="240" height="360" fill="{{ mau }}"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/>
+
+      {%- if khuon == 'co_dien' -%}
+        <rect x="32" y="24" width="188" height="312" rx="6" fill="none" stroke="{{ mau_chu }}" stroke-opacity="0.45" stroke-width="5"/>
+        <polygon points="128,58 142,72 128,86 114,72" fill="{{ mau_chu }}" fill-opacity="0.55"/>
+      {%- elif khuon == 'hien_dai' -%}
+        <polygon points="124,0 240,0 240,124" fill="{{ mau_chu }}" fill-opacity="0.16"/>
+        <rect x="38" y="88" width="10" height="176" rx="5" fill="{{ mau_chu }}" fill-opacity="0.68"/>
+      {%- elif khuon == 'ky_nang' -%}
+        <rect x="26" y="0" width="214" height="44" fill="{{ mau_chu }}" fill-opacity="0.16"/>
+        <path d="M 42 104 L 214 104 M 42 260 L 214 260" stroke="{{ mau_chu }}" stroke-opacity="0.55" stroke-width="6"/>
+      {%- else -%}
+        <rect x="32" y="24" width="188" height="312" rx="26" fill="none" stroke="{{ mau_chu }}" stroke-opacity="0.48" stroke-width="5" stroke-dasharray="14 10"/>
+        <path d="M 124 62 L 130 46 L 136 62 L 152 68 L 136 74 L 130 90 L 124 74 L 108 68 Z" fill="{{ mau_chu }}" fill-opacity="0.55"/>
+      {%- endif -%}
+
+      <text x="130" y="{{ 176 if dong_2 else 198 }}" text-anchor="middle" fill="{{ mau_chu }}"
+            font-family="{{ font_nho }}" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">{{ dong_1 }}</tspan>
+        {%- if dong_2 -%}
+          <tspan x="130" dy="50">{{ dong_2 }}</tspan>
+        {%- endif -%}
+      </text>
+    </svg>
+  {%- else -%}
+    {%- set buoc_dong = co_chu + 8 -%}
+    {%- set y_giua = 152 - ((dong_hien|length - 1) * buoc_dong / 2) -%}
+    <svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách {{ tieu_de }}{% if tac_gia %} — {{ tac_gia }}{% endif %}">
+      <defs>
+        <linearGradient id="{{ id_goc }}-gay" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#000000" stop-opacity="0.28"/>
+          <stop offset="65%" stop-color="#000000" stop-opacity="0.08"/>
+          <stop offset="86%" stop-color="#ffffff" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      {# Nền bìa giữ nguyên độ sáng để bảo toàn tương phản >= 4.5:1 do BiaSach tính #}
+      <rect width="240" height="360" fill="{{ mau }}"/>
+
+      {%- if khuon == 'co_dien' -%}
+        {# Khuôn Cổ điển: khung đôi xuất bản, hoa văn hình thoi và đồng bộ font serif #}
+        <rect x="26" y="18" width="198" height="324" rx="4" fill="none" stroke="{{ mau_chu }}" stroke-opacity="0.34" stroke-width="1.2"/>
+        <rect x="32" y="24" width="186" height="312" rx="2" fill="none" stroke="{{ mau_chu }}" stroke-opacity="0.18" stroke-width="1"/>
+        <path d="M 64 48 L 112 48 M 138 48 L 186 48" stroke="{{ mau_chu }}" stroke-opacity="0.38" stroke-width="1"/>
+        <polygon points="125,41 131,48 125,55 119,48" fill="{{ mau_chu }}" fill-opacity="0.48"/>
+        <path d="M 78 248 L 116 248 M 134 248 L 172 248" stroke="{{ mau_chu }}" stroke-opacity="0.38" stroke-width="1"/>
+        <polygon points="125,244 129,248 125,252 121,248" fill="{{ mau_chu }}" fill-opacity="0.52"/>
+
+        <rect x="0" y="0" width="20" height="360" fill="url(#{{ id_goc }}-gay)"/>
+
+        <text x="125" y="{{ y_giua|int }}" text-anchor="middle" fill="{{ mau_chu }}"
+              font-family="'Noto Serif', 'Times New Roman', serif"
+              font-size="{{ co_chu }}" font-weight="700">
+          {%- for dong in dong_hien -%}
+            <tspan x="125" dy="{{ 0 if loop.first else buoc_dong }}">{{ dong }}</tspan>
+          {%- endfor -%}
+        </text>
+
+        {%- if tac_gia_hien -%}
+          <text x="125" y="294" text-anchor="middle" fill="{{ mau_phu }}"
+                font-family="'Noto Serif', 'Times New Roman', serif"
+                font-size="16" font-weight="700">{{ tac_gia_hien }}</text>
+        {%- endif -%}
+
+      {%- elif khuon == 'hien_dai' -%}
+        {# Khuôn Hiện đại: mảng hình học bất đối xứng, thanh dọc nhấn và chữ căn trái sắc nét #}
+        <polygon points="130,0 240,0 240,120" fill="{{ mau_chu }}" fill-opacity="0.09"/>
+        <circle cx="212" cy="312" r="64" fill="{{ mau_chu }}" fill-opacity="0.08"/>
+        <rect x="32" y="64" width="4" height="156" rx="2" fill="{{ mau_chu }}" fill-opacity="0.62"/>
+        <path d="M 32 256 L 216 256" stroke="{{ mau_chu }}" stroke-opacity="0.36" stroke-width="1.5"/>
+        <rect x="196" y="282" width="18" height="18" rx="3" fill="none" stroke="{{ mau_chu }}" stroke-opacity="0.4" stroke-width="1.5"/>
+
+        <rect x="0" y="0" width="20" height="360" fill="url(#{{ id_goc }}-gay)"/>
+
+        <text x="46" y="{{ (y_giua - 4)|int }}" text-anchor="start" fill="{{ mau_chu }}"
+              font-family="'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif"
+              font-size="{{ co_chu - 1 }}" font-weight="800">
+          {%- for dong in dong_hien -%}
+            <tspan x="46" dy="{{ 0 if loop.first else buoc_dong }}">{{ dong }}</tspan>
+          {%- endfor -%}
+        </text>
+
+        {%- if tac_gia_hien -%}
+          <text x="46" y="296" text-anchor="start" fill="{{ mau_phu }}"
+                font-family="'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif"
+                font-size="16" font-weight="600">{{ tac_gia_hien[:19] ~ ('…' if tac_gia_hien|length > 19 else '') }}</text>
+        {%- endif -%}
+
+      {%- elif khuon == 'ky_nang' -%}
+        {# Khuôn Kỹ năng: dải tiêu đề mạch lạc, chấm lưới hiện đại và vạch đậm kẹp tên sách #}
+        <rect x="20" y="0" width="220" height="32" fill="{{ mau_chu }}" fill-opacity="0.1"/>
+        <g fill="{{ mau_chu }}" fill-opacity="0.28">
+          <circle cx="190" cy="52" r="2.2"/><circle cx="202" cy="52" r="2.2"/><circle cx="214" cy="52" r="2.2"/>
+          <circle cx="190" cy="64" r="2.2"/><circle cx="202" cy="64" r="2.2"/><circle cx="214" cy="64" r="2.2"/>
+          <circle cx="190" cy="76" r="2.2"/><circle cx="202" cy="76" r="2.2"/><circle cx="214" cy="76" r="2.2"/>
+        </g>
+        <path d="M 34 88 L 216 88" stroke="{{ mau_chu }}" stroke-opacity="0.48" stroke-width="2.4"/>
+        <path d="M 34 236 L 216 236" stroke="{{ mau_chu }}" stroke-opacity="0.48" stroke-width="2.4"/>
+        <rect x="34" y="272" width="182" height="44" rx="10" fill="{{ mau_chu }}" fill-opacity="0.1"/>
+
+        <rect x="0" y="0" width="20" height="360" fill="url(#{{ id_goc }}-gay)"/>
+
+        <text x="125" y="{{ (y_giua + 8)|int }}" text-anchor="middle" fill="{{ mau_chu }}"
+              font-family="'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif"
+              font-size="{{ co_chu }}" font-weight="800">
+          {%- for dong in dong_hien -%}
+            <tspan x="125" dy="{{ 0 if loop.first else buoc_dong }}">{{ dong }}</tspan>
+          {%- endfor -%}
+        </text>
+
+        {%- if tac_gia_hien -%}
+          <text x="125" y="300" text-anchor="middle" fill="{{ mau_phu }}"
+                font-family="'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif"
+                font-size="16" font-weight="600">{{ tac_gia_hien }}</text>
+        {%- endif -%}
+
+      {%- else -%}
+        {# Khuôn Thiếu nhi: khung bo tròn mềm, vòm truyện cổ tích và họa tiết sao lấp lánh #}
+        <path d="M 34 252 L 34 114 A 91 91 0 0 1 216 114 L 216 252 Z" fill="{{ mau_chu }}" fill-opacity="0.09"/>
+        <rect x="26" y="18" width="198" height="324" rx="18" fill="none" stroke="{{ mau_chu }}" stroke-opacity="0.34" stroke-width="1.6" stroke-dasharray="6 5"/>
+        <path d="M 56 54 L 59 46 L 62 54 L 70 57 L 62 60 L 59 68 L 56 60 L 48 57 Z" fill="{{ mau_chu }}" fill-opacity="0.44"/>
+        <path d="M 190 48 L 192 42 L 194 48 L 200 50 L 194 52 L 192 58 L 190 52 L 184 50 Z" fill="{{ mau_chu }}" fill-opacity="0.38"/>
+        <circle cx="176" cy="64" r="3" fill="{{ mau_chu }}" fill-opacity="0.35"/>
+        <path d="M 48 256 Q 86 244 125 256 T 202 256" fill="none" stroke="{{ mau_chu }}" stroke-opacity="0.42" stroke-width="2" stroke-linecap="round"/>
+
+        <rect x="0" y="0" width="20" height="360" fill="url(#{{ id_goc }}-gay)"/>
+
+        <text x="125" y="{{ (y_giua + 4)|int }}" text-anchor="middle" fill="{{ mau_chu }}"
+              font-family="'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif"
+              font-size="{{ co_chu }}" font-weight="800">
+          {%- for dong in dong_hien -%}
+            <tspan x="125" dy="{{ 0 if loop.first else buoc_dong }}">{{ dong }}</tspan>
+          {%- endfor -%}
+        </text>
+
+        {%- if tac_gia_hien -%}
+          <text x="125" y="296" text-anchor="middle" fill="{{ mau_phu }}"
+                font-family="'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif"
+                font-size="16.5" font-weight="600">{{ tac_gia_hien }}</text>
+        {%- endif -%}
+      {%- endif -%}
+    </svg>
+  {%- endif -%}
+</div>
+{% endmacro %}

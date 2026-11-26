@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hóa đơn #101 (K8M2P9Q4) — Nhà Sách Tri Thức</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 15px; }
+    body {
+      margin: 0;
+      padding: 20px 14px 40px;
+      background: #f3f2ee;
+      color: #181a20;
+      font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .thanh-in {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nut-in {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      border: 1.5px solid #c92127;
+      background: #c92127;
+      color: #ffffff;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .nut-in--phu {
+      background: #ffffff;
+      color: #181a20;
+      border-color: #7e8594;
+    }
+
+    .to-hoa-don {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #e6e7ec;
+      border-radius: 12px;
+      padding: 32px 34px;
+      box-shadow: 0 6px 24px rgba(24, 26, 32, 0.08);
+    }
+
+    .hd-dau {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid #181a20;
+      margin-bottom: 20px;
+    }
+
+    .hd-cua-hang {
+      margin: 0 0 4px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #c92127;
+    }
+
+    .hd-thong-tin-ch {
+      margin: 0;
+      font-size: 0.86rem;
+      color: #525866;
+    }
+
+    .hd-tieu-de-khung {
+      text-align: right;
+    }
+
+    .hd-tieu-de {
+      margin: 0 0 4px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .hd-ma {
+      font-family: Consolas, "Courier New", monospace;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .hd-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: #faf9f7;
+      border: 1px solid #e6e7ec;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .hd-meta__nhan {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #626875;
+      margin-bottom: 4px;
+    }
+
+    .hd-meta p {
+      margin: 2px 0;
+    }
+
+    .hd-bang-boc {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 18px;
+    }
+
+    table.hd-bang {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .hd-bang th {
+      text-align: left;
+      padding: 9px 8px;
+      border-top: 1.5px solid #181a20;
+      border-bottom: 1.5px solid #181a20;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #525866;
+    }
+
+    .hd-bang td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #e6e7ec;
+      vertical-align: top;
+    }
+
+    .hd-bang th.so,
+    .hd-bang td.so,
+    .so {
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hd-tong-hop {
+      margin-left: auto;
+      max-width: 320px;
+      display: grid;
+      gap: 7px;
+      font-size: 0.92rem;
+    }
+
+    .hd-tong-hop__dong {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #525866;
+    }
+
+    .hd-tong-hop__cuoi {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding-top: 10px;
+      margin-top: 4px;
+      border-top: 2px solid #181a20;
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: #181a20;
+    }
+
+    .hd-tong-hop__cuoi .tien-cuoi {
+      color: #c92127;
+    }
+
+    .hd-chan {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px dashed #d1d5de;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.84rem;
+      color: #525866;
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 12px 10px 28px; }
+      .nut-in { min-height: 44px; }
+      .to-hoa-don { padding: 18px 14px; }
+      .hd-tieu-de-khung { text-align: left; }
+      .hd-meta { grid-template-columns: 1fr; }
+      .hd-tong-hop { max-width: 100%; }
+    }
+
+    @page {
+      size: A5 portrait;
+      margin: 10mm;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+        font-size: 12px;
+      }
+      .thanh-in {
+        display: none !important;
+      }
+      .to-hoa-don {
+        max-width: none;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+      .hd-meta {
+        background: #ffffff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="thanh-in">
+    <a href="/quan-ly/don/101" class="nut-in nut-in--phu">&larr; Quay lại đơn #101</a>
+    <button type="button" class="nut-in" onclick="window.print()">In hóa đơn (A5 / A4)</button>
+  </div>
+
+  <article class="to-hoa-don">
+    <header class="hd-dau">
+      <div>
+        <h1 class="hd-cua-hang">Nhà Sách Tri Thức</h1>
+        <p class="hd-thong-tin-ch">Số 128 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+        <p class="hd-thong-tin-ch">Điện thoại: 1900 6868</p>
+      </div>
+      <div class="hd-tieu-de-khung">
+        <div class="hd-tieu-de">HÓA ĐƠN BÁN HÀNG</div>
+        <div class="hd-ma">Đơn #101 • Mã: K8M2P9Q4</div>
+        <div class="hd-thong-tin-ch">Ngày đặt: 24/11/2026 17:35</div>
+      </div>
+    </header>
+
+    <section class="hd-meta">
+      <div>
+        <div class="hd-meta__nhan">Khách hàng nhận sách</div>
+        <p><strong>Nguyễn Minh Anh</strong></p>
+        <p>ĐT: 0909 123 456</p>
+        <p>45 Lý Tự Trọng, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh</p>
+        
+          <p style="color: #525866;">Ghi chú: Giao giờ hành chính, gọi trước 15 phút.</p>
+        
+      </div>
+      <div>
+        <div class="hd-meta__nhan">Thông tin thanh toán</div>
+        <p>Phương thức: <strong>Chuyển khoản</strong></p>
+        <p>
+          Thanh toán:
+          <strong>Chưa thanh toán</strong>
+          
+        </p>
+        <p>Trạng thái: <strong>Chờ xác nhận</strong></p>
+      </div>
+    </section>
+
+    <div class="hd-bang-boc">
+      <table class="hd-bang">
+        <thead>
+          <tr>
+            <th style="width: 36px;">#</th>
+            <th>Tên sách</th>
+            <th class="so">Đơn giá</th>
+            <th class="so" style="width: 48px;">SL</th>
+            <th class="so">Thành tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            <tr>
+              <td>1</td>
+              <td>Nietzsche - Cuộc Đời Và Triết Lý</td>
+              <td class="so">79.000 đ</td>
+              <td class="so">2</td>
+              <td class="so"><strong>158.000 đ</strong></td>
+            </tr>
+          
+            <tr>
+              <td>2</td>
+              <td>Sapiens: Lược sử loài người</td>
+              <td class="so">185.000 đ</td>
+              <td class="so">1</td>
+              <td class="so"><strong>185.000 đ</strong></td>
+            </tr>
+          
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hd-tong-hop">
+      <div class="hd-tong-hop__dong">
+        <span>Tạm tính</span>
+        <span class="so">343.000 đ</span>
+      </div>
+      
+        <div class="hd-tong-hop__dong">
+          <span>Giảm giá (CHAOHE)</span>
+          <span class="so">-34.300 đ</span>
+        </div>
+      
+      <div class="hd-tong-hop__dong">
+        <span>Phí giao hàng</span>
+        <span class="so">Miễn phí</span>
+      </div>
+      <div class="hd-tong-hop__cuoi">
+        <span>TỔNG CỘNG</span>
+        <span class="so tien-cuoi">308.700 đ</span>
+      </div>
+    </div>
+
+    <footer class="hd-chan">
+      <span>Cảm ơn quý khách đã mua sách tại Nhà Sách Tri Thức!</span>
+      <span>Mã tra cứu: <strong>K8M2P9Q4</strong></span>
+    </footer>
+  </article>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giỏ hàng — Nhà Sách Tri Thức</title>
+  <link rel="stylesheet" href="../static/css/giao_dien.css">
+  
+</head>
+<body data-csrf="xem-truoc-csrf-token">
+  <a class="bo-qua-noi-dung" href="#noi-dung-chinh">Bỏ qua đến nội dung chính</a>
+  
+  <div class="dai-tien-ich">
+    <div class="khung dai-tien-ich__noi">
+      <div class="dai-tien-ich__tin">
+        <span>Miễn phí giao hàng cho đơn từ 300.000 đ</span>
+        <span class="dai-tien-ich__cham dai-tien-ich__cham-an">•</span>
+        <span class="dai-tien-ich__cham-an">Thanh toán khi nhận hàng hoặc mã QR tiện lợi</span>
+      </div>
+      <div class="dai-tien-ich__link">
+        <a href="/tra-cuu" class="dai-tien-ich__tra-cuu">Tra cứu đơn</a>
+        <a href="/sach" class="dai-tien-ich__link-an">Tất cả sách</a>
+        
+          <a href="/quan-ly/dang-nhap" class="dai-tien-ich__link-an">Quản lý</a>
+        
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="dau-trang">
+    <div class="khung dau-trang__chinh">
+      <header class="dau-trang__hang-chinh">
+        <a href="/" class="logo" aria-label="Trang chủ Nhà Sách Tri Thức">
+          <span class="logo__bieu-tuong" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
+              <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v17h5.5A2.5 2.5 0 0 1 20 22V5.5Z"/>
+            </svg>
+          </span>
+          <span class="logo__chu">
+            <span class="logo__ten">Tri Thức</span>
+            <span class="logo__phu">Nhà sách trực tuyến</span>
+          </span>
+        </a>
+
+        <div class="hanh-dong-dau">
+          <a href="/gio" class="nut-gio" aria-label="Giỏ hàng hiện có 3 sản phẩm">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 8h12l-1.1 11.2a1.8 1.8 0 0 1-1.8 1.6H8.9a1.8 1.8 0 0 1-1.8-1.6L6 8Z"/>
+              <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+            </svg>
+            <span class="nut-gio__chu">Giỏ hàng</span>
+            <span class="nut-gio__dem">3</span>
+          </a>
+
+          <div class="tai-khoan-cum">
+            
+              <a href="/dang-nhap" class="nut nut--phu nut--nho tai-khoan-cum__desktop">Đăng nhập</a>
+              <a href="/dang-ky" class="nut nut--chinh nut--nho tai-khoan-cum__desktop">Đăng ký</a>
+              <a href="/dang-nhap" class="nut nut--phu nut--nho tai-khoan-cum__mobile" aria-label="Tài khoản">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>
+                </svg>
+                <span>Tài khoản</span>
+              </a>
+            
+          </div>
+        </div>
+      </header>
+
+      <div class="dau-trang__tim-boc">
+        <div class="tim-kiem-khung" data-goi-y-tim>
+          <form class="tim-kiem" method="get" action="/sach" role="search">
+            <svg class="tim-kiem__icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7.5"/>
+              <path d="m20 20-3.8-3.8"/>
+            </svg>
+            <label class="sr-only" for="o-tim-sach">Tìm kiếm sách</label>
+            <input id="o-tim-sach" class="tim-kiem__o" type="search" name="q"
+                   value=""
+                   placeholder="Tìm tên sách, tác giả, nhà xuất bản..."
+                   role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="goi-y-tim-sach" autocomplete="off">
+            <button type="submit" class="tim-kiem__nut">Tìm kiếm</button>
+          </form>
+          <div id="goi-y-tim-sach" class="goi-y-tim" role="listbox" aria-label="Gợi ý sách" hidden></div>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="thanh-danh-muc" aria-label="Thể loại sách">
+      <div class="khung thanh-danh-muc__cuon" data-cuon-ngang>
+        <ul class="menu-danh-muc">
+          
+          
+          
+          <li class="menu-danh-muc__muc">
+            <a href="/sach" class="menu-danh-muc__link menu-danh-muc__link--tat-ca">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+              <span>Tất cả sách</span>
+            </a>
+          </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=van-hoc" class="menu-danh-muc__link">Văn học</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=kinh-te" class="menu-danh-muc__link">Kinh tế</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=ky-nang-song" class="menu-danh-muc__link">Kỹ năng sống</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=thieu-nhi" class="menu-danh-muc__link">Thiếu nhi</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=khoa-hoc" class="menu-danh-muc__link">Khoa học</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=lich-su" class="menu-danh-muc__link">Lịch sử</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=nuoi-day-con" class="menu-danh-muc__link">Nuôi dạy con</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=tieu-thuyet" class="menu-danh-muc__link">Tiểu thuyết</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=bien-khao" class="menu-danh-muc__link">Biên khảo</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=hoi-ky" class="menu-danh-muc__link">Hồi ký</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=trinh-tham-kinh-di" class="menu-danh-muc__link">Trinh thám – Kinh dị</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=tham-khao" class="menu-danh-muc__link">Tham khảo</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=triet-hoc" class="menu-danh-muc__link">Triết học</a>
+            </li>
+          
+            <li class="menu-danh-muc__muc">
+              <a href="/sach?danh_muc=van-hoa-xa-hoi" class="menu-danh-muc__link">Văn hóa – Xã hội</a>
+            </li>
+          
+        </ul>
+        <button type="button" class="menu-danh-muc__tien" data-cuon-phai aria-label="Xem thêm thể loại">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 6 6 6-6 6"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  
+  
+    
+    
+  
+
+  <main id="noi-dung-chinh" class="noi-dung-chinh" tabindex="-1">
+    
+<div class="khung trang-con">
+  <nav class="duong-dan" aria-label="Đường dẫn">
+    <a href="/">Trang chủ</a>
+    <span class="duong-dan__ngan" aria-hidden="true">/</span>
+    <span class="duong-dan__hien-tai">Giỏ hàng</span>
+  </nav>
+
+  <h1 class="tieu-de-trang" style="margin-bottom: 18px;">Giỏ hàng của bạn</h1>
+
+  
+
+  
+    
+    
+      
+    
+      
+    
+
+    
+      <div class="thanh-mien-ship thanh-mien-ship--dat">
+        <span>✓</span>
+        <span>Chúc mừng! Đơn hàng của bạn được <strong>miễn phí giao hàng</strong>.</span>
+      </div>
+    
+
+    <div class="bo-cuc-2-cot">
+      
+      <section class="ds-gio" aria-label="Sách trong giỏ hàng">
+        
+          
+          
+          
+          <article class="dong-gio">
+            <a href="/sach/31" aria-label="Nietzsche - Cuộc Đời Và Triết Lý">
+              <div class="bia bia--nho bia--co-anh"><img class="bia__anh" src="../du_lieu/bia/nietzsche-cuoc-doi-va-triet-ly.jpg" alt="Bìa sách Nietzsche - Cuộc Đời Và Triết Lý" loading="lazy" decoding="async"></div>
+
+            </a>
+
+            <div class="dong-gio__thong-tin">
+              <h2 class="dong-gio__ten">
+                <a href="/sach/31">Nietzsche - Cuộc Đời Và Triết Lý</a>
+              </h2>
+              <p class="dong-gio__tac-gia">Felicien Challaye</p>
+              <div class="dong-gio__gia-le">79.000 đ / cuốn</div>
+              
+            </div>
+
+            <div class="dong-gio__dieu-khien">
+              <div class="dong-gio__thanh-tien">158.000 đ</div>
+              <div class="dong-gio__hanh-dong">
+                <form class="form-inline form-sl-gio" method="post" action="/gio/sua" data-stepper data-stepper-tu-gui>
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="31">
+                  <label class="sr-only" for="sl-31">Số lượng Nietzsche - Cuộc Đời Và Triết Lý</label>
+                  <div class="stepper stepper--gio">
+                    <button type="button" class="stepper__nut" data-stepper-giam
+                            aria-label="Giảm số lượng Nietzsche - Cuộc Đời Và Triết Lý"
+                            >−</button>
+                    <input id="sl-31" class="stepper__o dong-gio__sl-input" type="number" name="so_luong"
+                           value="2" min="1" max="8" inputmode="numeric"
+                           >
+                    <button type="button" class="stepper__nut" data-stepper-tang
+                            aria-label="Tăng số lượng Nietzsche - Cuộc Đời Và Triết Lý"
+                            >+</button>
+                  </div>
+                  <button type="submit" class="nut nut--phu nut--nho stepper__gui-du-phong">Cập nhật</button>
+                </form>
+                <form class="form-inline" method="post" action="/gio/sua">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="31">
+                  <input type="hidden" name="so_luong" value="0">
+                  <button type="submit" class="nut nut--nhe nut--nho" style="color: var(--loi);">Xóa</button>
+                </form>
+              </div>
+            </div>
+          </article>
+        
+          
+          
+          
+          <article class="dong-gio">
+            <a href="/sach/7" aria-label="Sapiens: Lược sử loài người">
+              <div class="bia bia--nho"><svg class="bia__svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bìa sách Sapiens: Lược sử loài người">
+      <rect width="240" height="360" fill="#37474f"/>
+      <rect x="0" y="0" width="26" height="360" fill="#000000" fill-opacity="0.22"/><rect x="32" y="24" width="188" height="312" rx="6" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="5"/>
+        <polygon points="128,58 142,72 128,86 114,72" fill="#ffffff" fill-opacity="0.55"/><text x="130" y="176" text-anchor="middle" fill="#ffffff"
+            font-family="&#39;Noto Serif&#39;, &#39;Times New Roman&#39;, serif" font-size="38" font-weight="800">
+        <tspan x="130" dy="0">Sapiens:</tspan><tspan x="130" dy="50">Lược…</tspan></text>
+    </svg></div>
+
+            </a>
+
+            <div class="dong-gio__thong-tin">
+              <h2 class="dong-gio__ten">
+                <a href="/sach/7">Sapiens: Lược sử loài người</a>
+              </h2>
+              <p class="dong-gio__tac-gia">Yuval Noah Harari</p>
+              <div class="dong-gio__gia-le">185.000 đ / cuốn</div>
+              
+            </div>
+
+            <div class="dong-gio__dieu-khien">
+              <div class="dong-gio__thanh-tien">185.000 đ</div>
+              <div class="dong-gio__hanh-dong">
+                <form class="form-inline form-sl-gio" method="post" action="/gio/sua" data-stepper data-stepper-tu-gui>
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="7">
+                  <label class="sr-only" for="sl-7">Số lượng Sapiens: Lược sử loài người</label>
+                  <div class="stepper stepper--gio">
+                    <button type="button" class="stepper__nut" data-stepper-giam
+                            aria-label="Giảm số lượng Sapiens: Lược sử loài người"
+                            disabled>−</button>
+                    <input id="sl-7" class="stepper__o dong-gio__sl-input" type="number" name="so_luong"
+                           value="1" min="1" max="15" inputmode="numeric"
+                           >
+                    <button type="button" class="stepper__nut" data-stepper-tang
+                            aria-label="Tăng số lượng Sapiens: Lược sử loài người"
+                            >+</button>
+                  </div>
+                  <button type="submit" class="nut nut--phu nut--nho stepper__gui-du-phong">Cập nhật</button>
+                </form>
+                <form class="form-inline" method="post" action="/gio/sua">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="7">
+                  <input type="hidden" name="so_luong" value="0">
+                  <button type="submit" class="nut nut--nhe nut--nho" style="color: var(--loi);">Xóa</button>
+                </form>
+              </div>
+            </div>
+          </article>
+        
+      </section>
+
+      
+      <aside class="cot-tom-tat hop-trang" aria-label="Tóm tắt thanh toán">
+        <h2 class="hop-trang__tieu-de">Tóm tắt đơn hàng</h2>
+
+        
+          
+          
+          
+          <div class="ma-dang-dung">
+            <div class="ma-dang-dung__thong-tin">
+              <strong>Mã CHAOHE</strong>
+              <div class="ma-dang-dung__giam">Đang giảm 34.300 đ</div>
+              <div class="ma-dang-dung__dieu-kien">
+                Giảm 10%
+                 • Đơn từ 100.000 đ
+                 • <span class="ma-dang-dung__hsd">HSD 31/12/2026</span>
+              </div>
+            </div>
+            <form class="form-inline" method="post" action="/gio/bo-ma">
+              <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+              <button type="submit" class="nut nut--phu nut--nho ma-dang-dung__go">Gỡ mã</button>
+            </form>
+          </div>
+        
+
+        <div class="bang-tien">
+          <div class="bang-tien__dong">
+            <span>Tạm tính</span>
+            <span class="bang-tien__so">343.000 đ</span>
+          </div>
+          
+            <div class="bang-tien__dong">
+              <span>Giảm giá</span>
+              <span class="bang-tien__so bang-tien__so--giam">-34.300 đ</span>
+            </div>
+          
+          <div class="bang-tien__dong">
+            <span>Phí giao hàng</span>
+            <span class="bang-tien__so">
+              
+                <span class="bang-tien__so--giam">Miễn phí</span>
+              
+            </span>
+          </div>
+        </div>
+
+        <div class="bang-tien__tong">
+          <span>Tổng cộng</span>
+          <span class="bang-tien__tong-so">308.700 đ</span>
+        </div>
+
+        
+          <a href="/dat-hang" class="nut nut--chinh nut--lon nut--rong" style="margin-bottom: 10px;">
+            Tiến hành đặt hàng &rarr;
+          </a>
+        
+        <a href="/sach" class="nut nut--phu nut--rong">Tiếp tục chọn sách</a>
+      </aside>
+    </div>
+  
+</div>
+
+  </main>
+
+  <div id="thong-bao-noi" class="thong-bao-noi" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <footer class="chan-trang">
+    <div class="khung chan-trang__luoi">
+      <div>
+        <a href="/" class="logo">
+          <span class="logo__bieu-tuong" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
+              <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v17h5.5A2.5 2.5 0 0 1 20 22V5.5Z"/>
+            </svg>
+          </span>
+          <span class="logo__chu">
+            <span class="logo__ten">Tri Thức</span>
+            <span class="logo__phu">Nhà sách trực tuyến</span>
+          </span>
+        </a>
+        <p class="chan-trang__gioi-thieu">
+          Tuyển chọn sách bản quyền đa dạng thể loại từ văn học, kinh tế, kỹ năng đến thiếu nhi. Đặt nhanh không cần tài khoản, giao tận tay toàn quốc.
+        </p>
+      </div>
+
+      <div>
+        <p class="chan-trang__tieu-de">Thể loại nổi bật</p>
+        <ul class="chan-trang__ds">
+          
+            <li><a href="/sach?danh_muc=van-hoc">Văn học</a></li>
+          
+            <li><a href="/sach?danh_muc=kinh-te">Kinh tế</a></li>
+          
+            <li><a href="/sach?danh_muc=ky-nang-song">Kỹ năng sống</a></li>
+          
+            <li><a href="/sach?danh_muc=thieu-nhi">Thiếu nhi</a></li>
+          
+            <li><a href="/sach?danh_muc=khoa-hoc">Khoa học</a></li>
+          
+            <li><a href="/sach?danh_muc=lich-su">Lịch sử</a></li>
+          
+        </ul>
+      </div>
+
+      <div>
+        <p class="chan-trang__tieu-de">Hỗ trợ khách hàng</p>
+        <ul class="chan-trang__ds">
+          <li><a href="/sach?sap_xep=moi">Sách mới phát hành</a></li>
+          <li><a href="/sach?sap_xep=ban_chay">Sách bán chạy nhất</a></li>
+          <li><a href="/sach?giam_gia=1&sap_xep=giam_sau">Sách đang ưu đãi</a></li>
+          <li><a href="/gio">Giỏ hàng của bạn</a></li>
+          <li><a href="/tra-cuu">Tra cứu đơn hàng</a></li>
+          
+            <li><a href="/dang-nhap">Đăng nhập / Theo dõi đơn</a></li>
+          
+          
+            <li><a href="/quan-ly/dang-nhap">Quản lý nhà sách</a></li>
+          
+        </ul>
+      </div>
+
+      <div>
+        <p class="chan-trang__tieu-de">Liên hệ nhà sách</p>
+        <ul class="chan-trang__ds">
+          <li>Số 128 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</li>
+          <li>Hotline: 1900 6868 (8:00 – 21:00 hằng ngày)</li>
+          <li>Email: hotro@nhasachtrithuc.vn</li>
+          <li>Phí giao 25.000 đ • Miễn phí đơn từ 300.000 đ</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chan-trang__day">
+      <div class="khung chan-trang__day-noi">
+        <span>© 2026 Nhà Sách Tri Thức. Sách bản quyền &amp; trải nghiệm đọc trọn vẹn.</span>
+        <span>Thanh toán COD &amp; chuyển khoản mã QR</span>
+      </div>
+    </div>
+  </footer>
+  <script src="../static/js/bieu_mau.js" defer></script>
+</body>
+</html>

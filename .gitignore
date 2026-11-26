@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.db
+.venv/
+instance/
+
+static/uploads/
+
+# Ebook nguồn của người dùng (chỉ dùng để trích thông tin, không đưa vào repo)
+du_lieu/ebook_nguon/
+du_lieu/*.zip
+du_lieu/ebook_trich.json
+du_lieu/eBook*/
+*.db-shm
+*.db-wal

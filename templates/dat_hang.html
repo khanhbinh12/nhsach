@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% from "_bia.html" import bia %}
+
+{% block tieu_de %}Đặt hàng — Nhà Sách Tri Thức{% endblock %}
+
+{% block noi_dung %}
+{% set md = mac_dinh or {} %}
+{% set lt = loi_truong or {} %}
+{% set pt_chon = md.get('phuong_thuc') or 'cod' %}
+{% set mgg_val = ma_giam_gia if ma_giam_gia is defined else '' %}
+
+<div class="khung trang-con">
+  <nav class="duong-dan" aria-label="Đường dẫn">
+    <a href="/">Trang chủ</a>
+    <span class="duong-dan__ngan" aria-hidden="true">/</span>
+    <a href="/gio">Giỏ hàng</a>
+    <span class="duong-dan__ngan" aria-hidden="true">/</span>
+    <span class="duong-dan__hien-tai">Đặt hàng</span>
+  </nav>
+
+  <h1 class="tieu-de-trang" style="margin-bottom: 6px;">Thông tin đặt hàng</h1>
+  <p class="phu-de-trang" style="margin-bottom: 20px;">
+    {% if khach %}
+      Đang đặt dưới tài khoản <strong>{{ khach.ho_ten }}</strong> — đơn hàng sẽ tự lưu trong mục Đơn của tôi.
+    {% else %}
+      Mua nhanh không cần đăng nhập — bạn sẽ nhận mã tra cứu ngay sau khi xác nhận đơn.
+    {% endif %}
+  </p>
+
+  {% if loi %}
+    <div class="thong-bao thong-bao--loi" role="alert" style="margin-bottom: 18px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 8v5M12 16h.01"/>
+      </svg>
+      <span>{{ loi }}</span>
+    </div>
+  {% endif %}
+
+  {% if gio.canh_bao %}
+    <div class="canh-bao-hop" role="alert">
+      <strong>Lưu ý:</strong>
+      <ul>
+        {% for cb in gio.canh_bao %}
+          <li>{{ cb }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if gio.muc %}
+    <div class="bo-cuc-2-cot">
+      <form id="form-dat-hang" class="hop-trang" method="post" action="/dat-hang" data-dang-xu-ly>
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <input type="hidden" name="ma_thao_tac" value="{{ ma_thao_tac }}">
+
+        <h2 class="hop-trang__tieu-de">1. Địa chỉ nhận sách</h2>
+        <div class="luoi-form-2">
+          <div class="truong">
+            <label class="truong__nhan" for="ho-ten">Họ và tên <span class="truong__bat-buoc">*</span></label>
+            <input id="ho-ten" class="o-nhap{% if lt.get('ho_ten') %} o-nhap--loi{% endif %}" type="text" name="ho_ten" required autocomplete="name"
+                   value="{{ md.get('ho_ten') or '' }}" placeholder="Nguyễn Văn An"
+                   {% if lt.get('ho_ten') %}aria-invalid="true" aria-describedby="loi-ho-ten"{% endif %}>
+            {% if lt.get('ho_ten') %}
+              <p id="loi-ho-ten" class="truong__loi" role="alert">{{ lt['ho_ten'] }}</p>
+            {% endif %}
+          </div>
+          <div class="truong">
+            <label class="truong__nhan" for="dien-thoai">Số điện thoại <span class="truong__bat-buoc">*</span></label>
+            <input id="dien-thoai" class="o-nhap{% if lt.get('dien_thoai') %} o-nhap--loi{% endif %}" type="tel" name="dien_thoai" required autocomplete="tel" inputmode="tel"
+                   value="{{ md.get('dien_thoai') or '' }}" placeholder="0901 234 567"
+                   {% if lt.get('dien_thoai') %}aria-invalid="true" aria-describedby="loi-dien-thoai"{% endif %}>
+            {% if lt.get('dien_thoai') %}
+              <p id="loi-dien-thoai" class="truong__loi" role="alert">{{ lt['dien_thoai'] }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="truong">
+          <label class="truong__nhan" for="dia-chi">Địa chỉ giao hàng <span class="truong__bat-buoc">*</span></label>
+          <input id="dia-chi" class="o-nhap{% if lt.get('dia_chi') %} o-nhap--loi{% endif %}" type="text" name="dia_chi" required autocomplete="street-address"
+                 value="{{ md.get('dia_chi') or '' }}" placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"
+                 {% if lt.get('dia_chi') %}aria-invalid="true" aria-describedby="loi-dia-chi"{% endif %}>
+          {% if lt.get('dia_chi') %}
+            <p id="loi-dia-chi" class="truong__loi" role="alert">{{ lt['dia_chi'] }}</p>
+          {% endif %}
+        </div>
+
+        <div class="truong" style="margin-bottom: 24px;">
+          <label class="truong__nhan" for="ghi-chu">Ghi chú giao hàng (không bắt buộc)</label>
+          <textarea id="ghi-chu" class="o-van-ban" name="ghi_chu"
+                    placeholder="Ví dụ: giao giờ hành chính, gọi trước khi đến...">{{ md.get('ghi_chu') or '' }}</textarea>
+        </div>
+
+        <h2 class="hop-trang__tieu-de">2. Phương thức thanh toán</h2>
+        <div class="luoi-phuong-thuc" style="margin-bottom: 24px;"{% if lt.get('phuong_thuc') %} aria-describedby="loi-phuong-thuc"{% endif %}>
+          <label class="the-phuong-thuc">
+            <input type="radio" name="phuong_thuc" value="cod" {% if pt_chon != 'chuyen_khoan' %}checked{% endif %}
+                   {% if lt.get('phuong_thuc') %}aria-invalid="true"{% endif %}>
+            <div>
+              <div class="the-phuong-thuc__tieu-de">Trả tiền khi nhận hàng (COD)</div>
+              <div class="the-phuong-thuc__mo-ta">Kiểm tra sách trước khi thanh toán tiền mặt cho nhân viên giao hàng.</div>
+            </div>
+          </label>
+
+          <label class="the-phuong-thuc">
+            <input type="radio" name="phuong_thuc" value="chuyen_khoan" {% if pt_chon == 'chuyen_khoan' %}checked{% endif %}
+                   {% if lt.get('phuong_thuc') %}aria-invalid="true"{% endif %}>
+            <div>
+              <div class="the-phuong-thuc__tieu-de">Chuyển khoản ngân hàng (Mã QR)</div>
+              <div class="the-phuong-thuc__mo-ta">Hiện mã QR kèm số tài khoản và nội dung chuyển khoản ngay sau khi đặt đơn.</div>
+            </div>
+          </label>
+          {% if lt.get('phuong_thuc') %}
+            <p id="loi-phuong-thuc" class="truong__loi" role="alert">{{ lt['phuong_thuc'] }}</p>
+          {% endif %}
+        </div>
+
+        <h2 class="hop-trang__tieu-de">3. Mã giảm giá (không bắt buộc)</h2>
+        <div class="truong" style="margin-bottom: 24px;">
+          <label class="sr-only" for="o-ma-giam-dh">Nhập mã giảm giá</label>
+          <div class="form-ma-giam" style="margin-bottom: 0;">
+            <input id="o-ma-giam-dh" class="o-nhap{% if lt.get('ma_giam_gia') %} o-nhap--loi{% endif %}" type="text" name="ma_giam_gia"
+                   value="{{ mgg_val }}" placeholder="Ví dụ: CHAOHE"
+                   {% if lt.get('ma_giam_gia') %}aria-invalid="true" aria-describedby="loi-ma-giam-gia"{% endif %}>
+            <button type="submit" class="nut nut--phu" name="hanh_dong" value="ap_ma" formnovalidate data-khong-khoa>Áp dụng</button>
+          </div>
+          {% if lt.get('ma_giam_gia') %}
+            <p id="loi-ma-giam-gia" class="truong__loi" role="alert">{{ lt['ma_giam_gia'] }}</p>
+          {% else %}
+            <span class="truong__goi-y">Bấm “Áp dụng” để xem trước số tiền giảm, hoặc nhập rồi bấm xác nhận đặt hàng ngay.</span>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="nut nut--chinh nut--lon nut--rong" name="hanh_dong" value="dat" data-nhan-xu-ly="Đang xử lý…">
+          Xác nhận đặt hàng — {{ gio.tong | tien }}
+        </button>
+      </form>
+
+      {# Tóm tắt giỏ hàng #}
+      <aside class="cot-tom-tat hop-trang" aria-label="Tóm tắt đơn hàng">
+        <div class="dau-muc" style="margin-bottom: 14px;">
+          <h2 class="hop-trang__tieu-de" style="margin: 0;">Sách đặt mua ({{ gio.muc|length }})</h2>
+          <a href="/gio" class="hop-loc__xoa">Sửa giỏ</a>
+        </div>
+
+        <ul class="ds-tom-tat-sach">
+          {% for item in gio.muc %}
+            <li class="ds-tom-tat-sach__muc">
+              <div class="ds-tom-tat-sach__bia">{{ bia(item.sach, 'nho') }}</div>
+              <div class="ds-tom-tat-sach__thong-tin">
+                <div class="ds-tom-tat-sach__ten">{{ item.sach.tieu_de }}</div>
+                <div class="ds-tom-tat-sach__sl">Số lượng: {{ item.so_luong }} × {{ item.sach.gia | tien }}</div>
+              </div>
+              <strong class="ds-tom-tat-sach__tien">{{ item.thanh_tien | tien }}</strong>
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% if gio.ma_giam_gia %}
+          <div class="ma-dang-dung">
+            <div class="ma-dang-dung__thong-tin">
+              <strong>Mã {{ gio.ma_giam_gia.ma }}</strong>
+              <div class="ma-dang-dung__giam">Đang giảm {{ gio.giam_gia | tien }}</div>
+            </div>
+            <button type="submit" form="form-dat-hang" name="hanh_dong" value="bo_ma"
+                    class="nut nut--phu nut--nho ma-dang-dung__go" formnovalidate data-khong-khoa>Gỡ mã</button>
+          </div>
+        {% endif %}
+
+        <div class="bang-tien">
+          <div class="bang-tien__dong">
+            <span>Tạm tính</span>
+            <span class="bang-tien__so">{{ gio.tam_tinh | tien }}</span>
+          </div>
+          {% if gio.giam_gia > 0 %}
+            <div class="bang-tien__dong">
+              <span>Giảm giá{% if gio.ma_giam_gia %} ({{ gio.ma_giam_gia.ma }}){% endif %}</span>
+              <span class="bang-tien__so bang-tien__so--giam">-{{ gio.giam_gia | tien }}</span>
+            </div>
+          {% endif %}
+          <div class="bang-tien__dong">
+            <span>Phí giao hàng</span>
+            <span class="bang-tien__so">
+              {% if gio.phi_giao == 0 %}
+                <span class="bang-tien__so--giam">Miễn phí</span>
+              {% else %}
+                {{ gio.phi_giao | tien }}
+              {% endif %}
+            </span>
+          </div>
+        </div>
+
+        <div class="bang-tien__tong" style="margin-bottom: 0;">
+          <span>Tổng thanh toán</span>
+          <span class="bang-tien__tong-so">{{ gio.tong | tien }}</span>
+        </div>
+      </aside>
+    </div>
+  {% else %}
+    <div class="trang-thai-trong">
+      <h2 class="trang-thai-trong__tieu-de">Chưa có sách để đặt hàng</h2>
+      <p class="trang-thai-trong__mo-ta" style="margin-bottom: 16px;">Giỏ hàng của bạn đang trống.</p>
+      <a href="/sach" class="nut nut--chinh">Chọn sách ngay</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

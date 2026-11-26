@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản lý thể loại — Nhà Sách Tri Thức</title>
+  <link rel="stylesheet" href="../static/css/giao_dien.css">
+  
+</head>
+<body class="than-ql">
+  <a class="bo-qua-noi-dung" href="#noi-dung-chinh">Bỏ qua đến nội dung chính</a>
+  
+  <div class="bo-cuc-ql">
+    
+    <aside class="thanh-ben-ql" aria-label="Điều hướng quản lý">
+      <div class="thanh-ben-ql__dau">
+        <a href="/quan-ly/" class="logo">
+          <span class="logo__bieu-tuong" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
+              <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v17h5.5A2.5 2.5 0 0 1 20 22V5.5Z"/>
+            </svg>
+          </span>
+          <span class="logo__chu">
+            <span class="logo__ten">Tri Thức</span>
+            <span class="logo__phu">Khu quản lý</span>
+          </span>
+        </a>
+
+        <a href="/" class="ql-xem-cua-hang" title="Mở trang cửa hàng phía khách">
+          <span>Cửa hàng</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true">
+            <path d="M14 4h6v6M10 14 20 4M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/>
+          </svg>
+        </a>
+      </div>
+
+      <nav class="menu-ql" aria-label="Các mục quản lý">
+        <a href="/quan-ly/" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="9" rx="1.5"/>
+            <rect x="14" y="3" width="7" height="5" rx="1.5"/>
+            <rect x="14" y="12" width="7" height="9" rx="1.5"/>
+            <rect x="3" y="16" width="7" height="5" rx="1.5"/>
+          </svg>
+          <span>Tổng quan</span>
+        </a>
+
+        <a href="/quan-ly/sach" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>
+          </svg>
+          <span>Sách</span>
+        </a>
+
+        <a href="/quan-ly/danh-muc" class="menu-ql__muc menu-ql__muc--chon" aria-current="page">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h10"/>
+          </svg>
+          <span>Thể loại</span>
+        </a>
+
+        <a href="/quan-ly/don" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 8h12l-1 12H7L6 8Z"/>
+            <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+          </svg>
+          <span>Đơn hàng</span>
+        </a>
+
+        <a href="/quan-ly/khach-hang" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>Khách hàng</span>
+        </a>
+
+        <a href="/quan-ly/ma-giam-gia" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/>
+            <circle cx="7" cy="7" r="1.2"/>
+          </svg>
+          <span>Mã giảm giá</span>
+        </a>
+
+        <a href="/quan-ly/danh-gia" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span>Đánh giá</span>
+        </a>
+
+        <a href="/quan-ly/review" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          <span>Review</span>
+        </a>
+
+        <form class="menu-ql__form-thoat" method="post" action="/quan-ly/dang-xuat">
+          <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+          <button type="submit" class="menu-ql__muc menu-ql__muc--thoat">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span>Đăng xuất</span>
+          </button>
+        </form>
+      </nav>
+    </aside>
+
+    
+    <main id="noi-dung-chinh" class="vung-chinh-ql" tabindex="-1">
+      
+        
+        
+      
+
+      
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Quản lý thể loại</h1>
+    <p class="phu-de-trang">Thêm, chỉnh sửa tên / đường dẫn / thứ tự hiển thị. Chỉ xóa được thể loại khi không còn sách.</p>
+  </div>
+</div>
+
+
+<section class="hop-trang" style="margin-bottom: 20px;" aria-labelledby="tieu-de-them-dm">
+  <h2 id="tieu-de-them-dm" class="hop-trang__tieu-de">Thêm thể loại mới</h2>
+  <form method="post" action="/quan-ly/danh-muc" class="form-luoi-ngang">
+    <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+    <div class="truong" style="margin: 0;">
+      <label class="truong__nhan" for="dm-ten">Tên thể loại <span class="truong__bat-buoc">*</span></label>
+      <input id="dm-ten" class="o-nhap" type="text" name="ten" required placeholder="Ví dụ: Tâm lý học">
+    </div>
+    <div class="truong" style="margin: 0;">
+      <label class="truong__nhan" for="dm-slug">Đường dẫn (slug) <span class="truong__bat-buoc">*</span></label>
+      <input id="dm-slug" class="o-nhap" type="text" name="duong_dan" required placeholder="tam-ly-hoc">
+    </div>
+    <div class="truong" style="margin: 0;">
+      <label class="truong__nhan" for="dm-tt">Thứ tự</label>
+      <input id="dm-tt" class="o-nhap" type="number" name="thu_tu" value="17" min="0">
+    </div>
+    <div style="display: flex; align-items: flex-end;">
+      <button type="submit" class="nut nut--chinh nut--rong">+ Thêm thể loại</button>
+    </div>
+  </form>
+</section>
+
+
+<section class="hop-trang hop-bang" aria-label="Danh sách thể loại">
+  
+    <div class="bang-cuon">
+      <table class="bang-ql">
+        <thead>
+          <tr>
+            <th>Tên thể loại</th>
+            <th>Đường dẫn (slug)</th>
+            <th style="width: 100px;">Thứ tự</th>
+            <th style="width: 110px;">Số sách</th>
+            <th style="text-align: right;">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-1" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="1">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Văn học" required aria-label="Tên thể loại Văn học">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="van-hoc" required aria-label="Đường dẫn Văn học"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="1" min="0" aria-label="Thứ tự Văn học">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  6 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-1" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-2" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="2">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Kinh tế" required aria-label="Tên thể loại Kinh tế">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="kinh-te" required aria-label="Đường dẫn Kinh tế"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="2" min="0" aria-label="Thứ tự Kinh tế">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  6 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-2" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-3" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="3">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Kỹ năng sống" required aria-label="Tên thể loại Kỹ năng sống">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="ky-nang-song" required aria-label="Đường dẫn Kỹ năng sống"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="3" min="0" aria-label="Thứ tự Kỹ năng sống">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  5 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-3" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-4" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="4">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Thiếu nhi" required aria-label="Tên thể loại Thiếu nhi">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="thieu-nhi" required aria-label="Đường dẫn Thiếu nhi"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="4" min="0" aria-label="Thứ tự Thiếu nhi">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  5 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-4" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-5" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="5">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Khoa học" required aria-label="Tên thể loại Khoa học">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="khoa-hoc" required aria-label="Đường dẫn Khoa học"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="5" min="0" aria-label="Thứ tự Khoa học">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  2 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-5" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-6" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="6">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Lịch sử" required aria-label="Tên thể loại Lịch sử">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="lich-su" required aria-label="Đường dẫn Lịch sử"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="6" min="0" aria-label="Thứ tự Lịch sử">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  6 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-6" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-7" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="7">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Nuôi dạy con" required aria-label="Tên thể loại Nuôi dạy con">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="nuoi-day-con" required aria-label="Đường dẫn Nuôi dạy con"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="7" min="0" aria-label="Thứ tự Nuôi dạy con">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  3 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-7" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-8" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="8">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Tiểu thuyết" required aria-label="Tên thể loại Tiểu thuyết">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="tieu-thuyet" required aria-label="Đường dẫn Tiểu thuyết"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="8" min="0" aria-label="Thứ tự Tiểu thuyết">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  5 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-8" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-9" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="9">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Biên khảo" required aria-label="Tên thể loại Biên khảo">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="bien-khao" required aria-label="Đường dẫn Biên khảo"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="9" min="0" aria-label="Thứ tự Biên khảo">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  2 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-9" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-10" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="10">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Hồi ký" required aria-label="Tên thể loại Hồi ký">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="hoi-ky" required aria-label="Đường dẫn Hồi ký"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="10" min="0" aria-label="Thứ tự Hồi ký">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  2 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-10" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-11" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="11">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Trinh thám – Kinh dị" required aria-label="Tên thể loại Trinh thám – Kinh dị">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="trinh-tham-kinh-di" required aria-label="Đường dẫn Trinh thám – Kinh dị"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="11" min="0" aria-label="Thứ tự Trinh thám – Kinh dị">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  3 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-11" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-12" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="12">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Tham khảo" required aria-label="Tên thể loại Tham khảo">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="tham-khao" required aria-label="Đường dẫn Tham khảo"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="12" min="0" aria-label="Thứ tự Tham khảo">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  1 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-12" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-13" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="13">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Triết học" required aria-label="Tên thể loại Triết học">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="triet-hoc" required aria-label="Đường dẫn Triết học"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="13" min="0" aria-label="Thứ tự Triết học">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  2 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-13" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-14" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="14">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Văn hóa – Xã hội" required aria-label="Tên thể loại Văn hóa – Xã hội">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="van-hoa-xa-hoi" required aria-label="Đường dẫn Văn hóa – Xã hội"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="14" min="0" aria-label="Thứ tự Văn hóa – Xã hội">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  2 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-14" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Đang có sách</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-98" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="98">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Triết học" required aria-label="Tên thể loại Triết học">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="triet-hoc" required aria-label="Đường dẫn Triết học"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="9" min="0" aria-label="Thứ tự Triết học">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--thong-tin">
+                  1 đầu sách
+                </span>
+                
+                  <div class="truong__goi-y" style="margin-top: 4px;">
+                    0 đang bán • 1 ngừng bán
+                  </div>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-98" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <span class="truong__goi-y" style="padding-inline: 6px;">Còn sách ngừng bán</span>
+                  
+                </div>
+              </td>
+            </tr>
+          
+            
+            <tr>
+              <td colspan="3">
+                <form id="sua-dm-99" method="post" action="/quan-ly/danh-muc" class="form-sua-dm-dong">
+                  <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                  <input type="hidden" name="ma" value="99">
+                  <input class="o-nhap o-nhap--nho" type="text" name="ten" value="Tâm lý học" required aria-label="Tên thể loại Tâm lý học">
+                  <input class="o-nhap o-nhap--nho" type="text" name="duong_dan" value="tam-ly-hoc" required aria-label="Đường dẫn Tâm lý học"
+                         style="font-family: Consolas, 'Courier New', monospace;">
+                  <input class="o-nhap o-nhap--nho" type="number" name="thu_tu" value="10" min="0" aria-label="Thứ tự Tâm lý học">
+                </form>
+              </td>
+              <td>
+                
+                <span class="nhan nhan--trung-tinh">
+                  0 đầu sách
+                </span>
+                
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <button type="submit" form="sua-dm-99" class="nut nut--phu nut--nho">Lưu</button>
+                  
+                    <form class="form-inline" method="post" action="/quan-ly/danh-muc/99/xoa">
+                      <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+                      <button type="submit" class="nut nut--nhe nut--nho" style="color: var(--loi);">Xóa</button>
+                    </form>
+                  
+                </div>
+              </td>
+            </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  
+</section>
+
+    </main>
+  </div>
+  <script src="../static/js/bieu_mau.js" defer></script>
+</body>
+</html>

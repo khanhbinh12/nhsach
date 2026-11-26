@@ -1,0 +1,157 @@
+{% extends "quan_ly/_khung.html" %}
+{% from "_bia.html" import bia %}
+
+{% block tieu_de %}Sửa review #{{ bai_review.ma }} — Quản lý{% endblock %}
+{% block muc_dang_chon %}review{% endblock %}
+
+{% block noi_dung %}
+{% set f = form if (form is defined and form) else {} %}
+{% set lt = loi_truong if (loi_truong is defined and loi_truong) else {} %}
+{% set tt = bai_review.trang_thai.value if bai_review.trang_thai.value is defined else (bai_review.trang_thai|string) %}
+{% set sach_item = bai_review.sach if (bai_review.sach is defined and bai_review.sach) else none %}
+{% set v_tieu_de = f.get('tieu_de') if f.get('tieu_de') is not none else bai_review.tieu_de %}
+{% set v_noi_dung = f.get('noi_dung') if f.get('noi_dung') is not none else bai_review.noi_dung %}
+{% set v_tac_gia = f.get('tac_gia_review') if f.get('tac_gia_review') is not none else bai_review.tac_gia_review %}
+
+<div class="ql-dau-trang">
+  <div>
+    <nav class="duong-dan" style="margin-bottom: 6px;" aria-label="Đường dẫn">
+      <a href="/quan-ly/review">Review nhà sách</a>
+      <span class="duong-dan__ngan" aria-hidden="true">/</span>
+      <span class="duong-dan__hien-tai">Sửa bài #{{ bai_review.ma }}</span>
+    </nav>
+    <h1 class="tieu-de-trang">Biên tập bài review #{{ bai_review.ma }}</h1>
+  </div>
+  <a href="/quan-ly/review" class="nut nut--phu">&larr; Danh sách review</a>
+</div>
+
+<div class="bo-cuc-sua-sach">
+  {# Cột trái: Form biên tập nội dung #}
+  <form method="post" action="/quan-ly/review/{{ bai_review.ma }}/sua" class="hop-trang">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+
+    <h2 class="hop-trang__tieu-de">Nội dung bài review</h2>
+
+    {% if tt == 'da_duyet' %}
+      <div class="thong-bao thong-bao--thong-tin" style="margin-bottom: 16px;">
+        <span>Bài này đang hiển thị công khai. Sau khi bấm <strong>Lưu nháp</strong>, bài sẽ chuyển về trạng thái <strong>Nháp</strong> để bạn duyệt đăng lại.</span>
+      </div>
+    {% endif %}
+
+    <div class="truong">
+      <label class="truong__nhan" for="rv-tieu-de">Tiêu đề bài review <span class="truong__bat-buoc">*</span></label>
+      <input id="rv-tieu-de" class="o-nhap{% if lt.get('tieu_de') %} o-nhap--loi{% endif %}"
+             type="text" name="tieu_de" required value="{{ v_tieu_de }}"
+             placeholder="Nhập tiêu đề bài review..."
+             {% if lt.get('tieu_de') %}aria-invalid="true" aria-describedby="loi-rv-tieu-de"{% endif %}>
+      {% if lt.get('tieu_de') %}
+        <p id="loi-rv-tieu-de" class="truong__loi" role="alert">{{ lt['tieu_de'] }}</p>
+      {% endif %}
+    </div>
+
+    <div class="truong">
+      <label class="truong__nhan" for="rv-tac-gia">Tác giả bài review <span class="truong__bat-buoc">*</span></label>
+      <input id="rv-tac-gia" class="o-nhap{% if lt.get('tac_gia_review') %} o-nhap--loi{% endif %}"
+             type="text" name="tac_gia_review" required value="{{ v_tac_gia }}"
+             placeholder="Nhà Sách Tri Thức"
+             {% if lt.get('tac_gia_review') %}aria-invalid="true" aria-describedby="loi-rv-tac-gia"{% endif %}>
+      {% if lt.get('tac_gia_review') %}
+        <p id="loi-rv-tac-gia" class="truong__loi" role="alert">{{ lt['tac_gia_review'] }}</p>
+      {% endif %}
+    </div>
+
+    <div class="truong">
+      <label class="truong__nhan" for="rv-noi-dung">Nội dung bài viết <span class="truong__bat-buoc">*</span></label>
+      <textarea id="rv-noi-dung" class="o-van-ban o-van-ban--lon{% if lt.get('noi_dung') %} o-van-ban--loi{% endif %}"
+                name="noi_dung" rows="14" required
+                placeholder="Viết bài giới thiệu, cảm nhận và giá trị nổi bật của cuốn sách..."
+                {% if lt.get('noi_dung') %}aria-invalid="true" aria-describedby="loi-rv-noi-dung"{% endif %}>{{ v_noi_dung }}</textarea>
+      {% if lt.get('noi_dung') %}
+        <p id="loi-rv-noi-dung" class="truong__loi" role="alert">{{ lt['noi_dung'] }}</p>
+      {% else %}
+        <span class="truong__goi-y">Mẹo trình bày: để trống một dòng giữa các đoạn văn để trang chi tiết tự ngắt đoạn thoáng mắt.</span>
+      {% endif %}
+    </div>
+
+    <div class="ql-review-hanh-dong">
+      <button type="submit" class="nut nut--chinh nut--lon">Lưu nháp</button>
+      <a href="/quan-ly/review" class="nut nut--phu nut--lon">Hủy</a>
+    </div>
+  </form>
+
+  {# Cột phải: Trạng thái duyệt & thông tin sách #}
+  <aside class="ql-review-cot-phu">
+    <section class="hop-trang" aria-label="Trạng thái phê duyệt">
+      <h2 class="hop-trang__tieu-de">Trạng thái đăng</h2>
+
+      <div class="ql-review-trang-thai">
+        {% if tt == 'da_duyet' %}
+          <span class="nhan nhan--tot">Đã duyệt</span>
+        {% else %}
+          <span class="nhan nhan--canh-bao">Nháp</span>
+        {% endif %}
+      </div>
+
+      <div class="bang-ngan-hang" style="margin: 12px 0 18px;">
+        <div class="bang-ngan-hang__dong">
+          <span class="bang-ngan-hang__nhan">Mã bài</span>
+          <span class="bang-ngan-hang__gia-tri">#{{ bai_review.ma }}</span>
+        </div>
+        <div class="bang-ngan-hang__dong">
+          <span class="bang-ngan-hang__nhan">Tạo lúc</span>
+          <span class="bang-ngan-hang__gia-tri">{{ bai_review.tao_luc | ngay }}</span>
+        </div>
+        <div class="bang-ngan-hang__dong" style="border-bottom: 0; padding-bottom: 0;">
+          <span class="bang-ngan-hang__nhan">Duyệt lúc</span>
+          <span class="bang-ngan-hang__gia-tri">{{ (bai_review.duyet_luc | ngay) if bai_review.duyet_luc else 'Chưa duyệt' }}</span>
+        </div>
+      </div>
+
+      {% if tt == 'da_duyet' %}
+        <form method="post" action="/quan-ly/review/{{ bai_review.ma }}/bo-duyet">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <button type="submit" class="nut nut--phu nut--rong" style="color: var(--loi); border-color: var(--loi-vien);">
+            Bỏ duyệt (chuyển về Nháp)
+          </button>
+        </form>
+      {% else %}
+        <p class="phu-de-trang" style="margin-bottom: 12px;">
+          Sau khi lưu chỉnh sửa xong, bấm nút bên dưới để đăng công khai lên trang chi tiết sách.
+        </p>
+        <form method="post" action="/quan-ly/review/{{ bai_review.ma }}/duyet">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <button type="submit" class="nut nut--vien-nhan nut--rong">Duyệt và đăng công khai</button>
+        </form>
+      {% endif %}
+    </section>
+
+    <section class="hop-trang" aria-label="Sách được review">
+      <h2 class="hop-trang__tieu-de">Sách liên kết</h2>
+      <div class="o-sach-ql" style="min-width: 0; margin-bottom: 14px;">
+        {% if sach_item and sach_item.ma is defined %}
+          {% set bia_sach = sach_item %}
+        {% elif sach_item %}
+          {% set bia_sach = {'ma': bai_review.ma_sach, 'tieu_de': sach_item.tieu_de, 'tac_gia': sach_item.tac_gia, 'anh_bia': sach_item.anh_bia} %}
+        {% else %}
+          {% set bia_sach = {'ma': bai_review.ma_sach, 'tieu_de': 'Sách #' ~ bai_review.ma_sach} %}
+        {% endif %}
+        <a href="/sach/{{ bai_review.ma_sach }}" class="o-sach-ql__bia" aria-label="Xem trang sách">
+          {{ bia(bia_sach, 'nho') }}
+        </a>
+        <div style="min-width: 0;">
+          <a href="/sach/{{ bai_review.ma_sach }}" class="o-sach-ql__ten">
+            {{ sach_item.tieu_de if sach_item else ('Sách #' ~ bai_review.ma_sach) }}
+          </a>
+          <div class="o-sach-ql__phu">
+            {% if sach_item and sach_item.tac_gia is defined and sach_item.tac_gia %}
+              {{ sach_item.tac_gia }} •
+            {% endif %}
+            Mã sách #{{ bai_review.ma_sach }}
+          </div>
+        </div>
+      </div>
+      <a href="/sach/{{ bai_review.ma_sach }}" class="nut nut--phu nut--nho nut--rong">Xem trang chi tiết sách &rarr;</a>
+    </section>
+  </aside>
+</div>
+{% endblock %}

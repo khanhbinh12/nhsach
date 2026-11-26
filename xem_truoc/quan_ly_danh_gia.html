@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản lý đánh giá — Nhà Sách Tri Thức</title>
+  <link rel="stylesheet" href="../static/css/giao_dien.css">
+  
+</head>
+<body class="than-ql">
+  <a class="bo-qua-noi-dung" href="#noi-dung-chinh">Bỏ qua đến nội dung chính</a>
+  
+  <div class="bo-cuc-ql">
+    
+    <aside class="thanh-ben-ql" aria-label="Điều hướng quản lý">
+      <div class="thanh-ben-ql__dau">
+        <a href="/quan-ly/" class="logo">
+          <span class="logo__bieu-tuong" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z"/>
+              <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v17h5.5A2.5 2.5 0 0 1 20 22V5.5Z"/>
+            </svg>
+          </span>
+          <span class="logo__chu">
+            <span class="logo__ten">Tri Thức</span>
+            <span class="logo__phu">Khu quản lý</span>
+          </span>
+        </a>
+
+        <a href="/" class="ql-xem-cua-hang" title="Mở trang cửa hàng phía khách">
+          <span>Cửa hàng</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true">
+            <path d="M14 4h6v6M10 14 20 4M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/>
+          </svg>
+        </a>
+      </div>
+
+      <nav class="menu-ql" aria-label="Các mục quản lý">
+        <a href="/quan-ly/" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="9" rx="1.5"/>
+            <rect x="14" y="3" width="7" height="5" rx="1.5"/>
+            <rect x="14" y="12" width="7" height="9" rx="1.5"/>
+            <rect x="3" y="16" width="7" height="5" rx="1.5"/>
+          </svg>
+          <span>Tổng quan</span>
+        </a>
+
+        <a href="/quan-ly/sach" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>
+          </svg>
+          <span>Sách</span>
+        </a>
+
+        <a href="/quan-ly/danh-muc" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h10"/>
+          </svg>
+          <span>Thể loại</span>
+        </a>
+
+        <a href="/quan-ly/don" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 8h12l-1 12H7L6 8Z"/>
+            <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+          </svg>
+          <span>Đơn hàng</span>
+        </a>
+
+        <a href="/quan-ly/khach-hang" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>Khách hàng</span>
+        </a>
+
+        <a href="/quan-ly/ma-giam-gia" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z"/>
+            <circle cx="7" cy="7" r="1.2"/>
+          </svg>
+          <span>Mã giảm giá</span>
+        </a>
+
+        <a href="/quan-ly/danh-gia" class="menu-ql__muc menu-ql__muc--chon" aria-current="page">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <span>Đánh giá</span>
+        </a>
+
+        <a href="/quan-ly/review" class="menu-ql__muc">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          <span>Review</span>
+        </a>
+
+        <form class="menu-ql__form-thoat" method="post" action="/quan-ly/dang-xuat">
+          <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+          <button type="submit" class="menu-ql__muc menu-ql__muc--thoat">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span>Đăng xuất</span>
+          </button>
+        </form>
+      </nav>
+    </aside>
+
+    
+    <main id="noi-dung-chinh" class="vung-chinh-ql" tabindex="-1">
+      
+        
+        
+      
+
+      
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Quản lý đánh giá độc giả</h1>
+    <p class="phu-de-trang">Kiểm duyệt nhận xét của khách hàng — ẩn hoặc hiện lại ngay trên trang chi tiết sách.</p>
+  </div>
+</div>
+
+
+  <div class="ds-danh-gia">
+    
+      
+      <article class="hop-trang" style="padding: 18px 20px;">
+        <div class="muc-danh-gia__dau" style="margin-bottom: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+              <a href="/sach/1" style="font-weight: 800; color: var(--chu);">Dế Mèn phiêu lưu ký</a>
+              
+                <span class="nhan nhan--tot">Đang hiện</span>
+              
+            </div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.84rem; color: var(--chu-phu);">
+              <span><strong>Nguyễn Minh Anh</strong> (minhanh@example.com)</span>
+              <span>•</span>
+              <span class="sao-hang" aria-label="5 sao">
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+              </span>
+              <span>•</span>
+              <span>24/11/2026 12:00</span>
+            </div>
+          </div>
+
+          <form class="form-inline" method="post" action="/quan-ly/danh-gia/99/an">
+            <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+            <button type="submit" class="nut nut--phu nut--nho" style="color: var(--loi);">
+              Ẩn đánh giá
+            </button>
+          </form>
+        </div>
+
+        <p class="muc-danh-gia__noi-dung" style="margin-top: 4px;">Bản in rõ nét, giao hàng rất nhanh và đóng gói cẩn thận.</p>
+      </article>
+    
+      
+      <article class="hop-trang" style="padding: 18px 20px;">
+        <div class="muc-danh-gia__dau" style="margin-bottom: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+              <a href="/sach/2" style="font-weight: 800; color: var(--chu);">Cho tôi xin một vé đi tuổi thơ</a>
+              
+                <span class="nhan nhan--tot">Đang hiện</span>
+              
+            </div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.84rem; color: var(--chu-phu);">
+              <span><strong>Trần Gia Bảo</strong> (giabao@example.com)</span>
+              <span>•</span>
+              <span class="sao-hang" aria-label="4 sao">
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--rong" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+              </span>
+              <span>•</span>
+              <span>23/11/2026 18:00</span>
+            </div>
+          </div>
+
+          <form class="form-inline" method="post" action="/quan-ly/danh-gia/102/an">
+            <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+            <button type="submit" class="nut nut--phu nut--nho" style="color: var(--loi);">
+              Ẩn đánh giá
+            </button>
+          </form>
+        </div>
+
+        <p class="muc-danh-gia__noi-dung" style="margin-top: 4px;">Sách đẹp, giao hơi trễ 1 ngày nhưng vẫn hài lòng.</p>
+      </article>
+    
+      
+      <article class="hop-trang the-dg-an" style="padding: 18px 20px;">
+        <div class="muc-danh-gia__dau" style="margin-bottom: 10px;">
+          <div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+              <a href="/sach/3" style="font-weight: 800; color: var(--chu);">Mắt biếc</a>
+              
+                <span class="nhan nhan--loi">Đang ẩn</span>
+              
+            </div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.84rem; color: var(--chu-phu);">
+              <span><strong>Trần Gia Bảo</strong> (giabao@example.com)</span>
+              <span>•</span>
+              <span class="sao-hang" aria-label="2 sao">
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--day" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--rong" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--rong" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+                  <svg class="sao-svg sao-svg--rong" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+                  </svg>
+                
+              </span>
+              <span>•</span>
+              <span>22/11/2026 18:00</span>
+            </div>
+          </div>
+
+          <form class="form-inline" method="post" action="/quan-ly/danh-gia/103/an">
+            <input type="hidden" name="csrf" value="xem-truoc-csrf-token">
+            <button type="submit" class="nut nut--phu nut--nho" >
+              Hiện lại
+            </button>
+          </form>
+        </div>
+
+        <p class="muc-danh-gia__noi-dung" style="margin-top: 4px;">Bình luận spam quảng cáo đã bị quản lý ẩn.</p>
+      </article>
+    
+  </div>
+
+
+    </main>
+  </div>
+  <script src="../static/js/bieu_mau.js" defer></script>
+</body>
+</html>

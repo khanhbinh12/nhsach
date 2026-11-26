@@ -1,0 +1,121 @@
+{% extends "quan_ly/_khung.html" %}
+
+{% block tieu_de %}Viết review mới — Quản lý{% endblock %}
+{% block muc_dang_chon %}review{% endblock %}
+
+{% block noi_dung %}
+{% set f = form if (form is defined and form) else {} %}
+{% set lt = loi_truong if (loi_truong is defined and loi_truong) else {} %}
+{% set ma_sach_chon = (f.get('ma_sach') if f.get('ma_sach') is not none else '')|string %}
+{% set v_tieu_de = f.get('tieu_de') if f.get('tieu_de') is not none else '' %}
+{% set v_tac_gia = f.get('tac_gia_review') if f.get('tac_gia_review') is not none else '' %}
+{% set v_noi_dung = f.get('noi_dung') if f.get('noi_dung') is not none else '' %}
+
+<div class="ql-dau-trang">
+  <div>
+    <nav class="duong-dan" style="margin-bottom: 6px;" aria-label="Đường dẫn">
+      <a href="{{ url_for('quan_ly.danh_sach_review') }}">Review nhà sách</a>
+      <span class="duong-dan__ngan" aria-hidden="true">/</span>
+      <span class="duong-dan__hien-tai">Viết bài mới</span>
+    </nav>
+    <h1 class="tieu-de-trang">Viết bài review mới</h1>
+  </div>
+  <a href="{{ url_for('quan_ly.danh_sach_review') }}" class="nut nut--phu">&larr; Danh sách review</a>
+</div>
+
+{% if sach_chua_co_review or lt %}
+  <div class="bo-cuc-sua-sach">
+    {# Cột trái: Form tạo bài review nháp #}
+    <form method="post" action="{{ url_for('quan_ly.tao_review') }}" class="hop-trang">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+
+      <h2 class="hop-trang__tieu-de">Nội dung bài review</h2>
+
+      <div class="truong">
+        <label class="truong__nhan" for="rv-sach">Chọn sách <span class="truong__bat-buoc">*</span></label>
+        <select id="rv-sach" class="o-chon{% if lt.get('ma_sach') %} o-chon--loi{% endif %}" name="ma_sach" required
+                {% if lt.get('ma_sach') %}aria-invalid="true" aria-describedby="loi-ma-sach"{% endif %}>
+          <option value="">Chọn sách chưa có review</option>
+          {% for sach in sach_chua_co_review %}
+            <option value="{{ sach.ma }}"{% if (sach.ma|string) == ma_sach_chon %} selected{% endif %}>{{ sach.tieu_de }} — {{ sach.tac_gia }}</option>
+          {% endfor %}
+        </select>
+        {% if lt.get('ma_sach') %}
+          <p id="loi-ma-sach" class="truong__loi" role="alert">{{ lt['ma_sach'] }}</p>
+        {% endif %}
+      </div>
+
+      <div class="truong">
+        <label class="truong__nhan" for="rv-tieu_de">Tiêu đề bài review <span class="truong__bat-buoc">*</span></label>
+        <input id="rv-tieu_de" class="o-nhap{% if lt.get('tieu_de') %} o-nhap--loi{% endif %}"
+               type="text" name="tieu_de" maxlength="200" required value="{{ v_tieu_de }}"
+               placeholder="Nhập tiêu đề bài review..."
+               {% if lt.get('tieu_de') %}aria-invalid="true" aria-describedby="loi-tieu_de"{% endif %}>
+        {% if lt.get('tieu_de') %}
+          <p id="loi-tieu_de" class="truong__loi" role="alert">{{ lt['tieu_de'] }}</p>
+        {% endif %}
+      </div>
+
+      <div class="truong">
+        <label class="truong__nhan" for="rv-tac_gia_review">Tác giả bài review <span class="truong__bat-buoc">*</span></label>
+        <input id="rv-tac_gia_review" class="o-nhap{% if lt.get('tac_gia_review') %} o-nhap--loi{% endif %}"
+               type="text" name="tac_gia_review" maxlength="120" required value="{{ v_tac_gia }}"
+               placeholder="Nhà Sách Tri Thức"
+               {% if lt.get('tac_gia_review') %}aria-invalid="true" aria-describedby="loi-tac_gia_review"{% endif %}>
+        {% if lt.get('tac_gia_review') %}
+          <p id="loi-tac_gia_review" class="truong__loi" role="alert">{{ lt['tac_gia_review'] }}</p>
+        {% endif %}
+      </div>
+
+      <div class="truong">
+        <label class="truong__nhan" for="rv-noi_dung">Nội dung bài viết <span class="truong__bat-buoc">*</span></label>
+        <textarea id="rv-noi_dung" class="o-van-ban o-van-ban--lon{% if lt.get('noi_dung') %} o-van-ban--loi{% endif %}"
+                  name="noi_dung" rows="14" maxlength="20000" required
+                  placeholder="Viết bài giới thiệu, cảm nhận và giá trị nổi bật của cuốn sách..."
+                  {% if lt.get('noi_dung') %}aria-invalid="true" aria-describedby="loi-noi_dung"{% endif %}>{{ v_noi_dung }}</textarea>
+        {% if lt.get('noi_dung') %}
+          <p id="loi-noi_dung" class="truong__loi" role="alert">{{ lt['noi_dung'] }}</p>
+        {% else %}
+          <span class="truong__goi-y">Mẹo trình bày: để trống một dòng giữa các đoạn văn để trang chi tiết tự ngắt đoạn thoáng mắt.</span>
+        {% endif %}
+      </div>
+
+      <div class="ql-review-hanh-dong">
+        <button type="submit" class="nut nut--chinh nut--lon">Lưu nháp</button>
+        <a href="{{ url_for('quan_ly.danh_sach_review') }}" class="nut nut--phu nut--lon">Hủy</a>
+      </div>
+    </form>
+
+    {# Cột phải: Quy trình xuất bản & lưu ý #}
+    <aside class="ql-review-cot-phu">
+      <section class="hop-trang" aria-label="Quy trình xuất bản review">
+        <h2 class="hop-trang__tieu-de">Quy trình đăng bài</h2>
+        <div class="ql-review-trang-thai" style="margin-bottom: 12px;">
+          <span class="nhan nhan--canh-bao">Mới tạo: Nháp</span>
+        </div>
+        <p class="phu-de-trang" style="margin-bottom: 12px;">
+          Bài review mới sẽ được lưu ở trạng thái <strong>Nháp</strong> để bạn xem lại trước khi duyệt đăng công khai lên trang chi tiết sách.
+        </p>
+        <div class="bang-ngan-hang" style="margin: 0;">
+          <div class="bang-ngan-hang__dong">
+            <span class="bang-ngan-hang__nhan">Sách chưa có review</span>
+            <span class="bang-ngan-hang__gia-tri">{{ sach_chua_co_review|length }} cuốn</span>
+          </div>
+          <div class="bang-ngan-hang__dong" style="border-bottom: 0; padding-bottom: 0;">
+            <span class="bang-ngan-hang__nhan">Giới hạn nội dung</span>
+            <span class="bang-ngan-hang__gia-tri">Tối đa 20.000 ký tự</span>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
+{% else %}
+  <div class="trang-thai-trong">
+    <h2 class="trang-thai-trong__tieu-de">Tất cả sách đã có review</h2>
+    <p class="trang-thai-trong__mo-ta" style="margin-bottom: 16px;">
+      Mọi đầu sách hiện có trong kho đều đã được gắn bài review. Bạn có thể biên tập hoặc duyệt lại bài trong danh sách review.
+    </p>
+    <a class="nut nut--phu" href="{{ url_for('quan_ly.danh_sach_review') }}">Quay lại danh sách review</a>
+  </div>
+{% endif %}
+{% endblock %}

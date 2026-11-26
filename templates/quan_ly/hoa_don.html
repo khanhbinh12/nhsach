@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hóa đơn #{{ don.ma }} ({{ don.ma_tra_cuu }}) — {{ cua_hang.ten }}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 15px; }
+    body {
+      margin: 0;
+      padding: 20px 14px 40px;
+      background: #f3f2ee;
+      color: #181a20;
+      font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .thanh-in {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .nut-in {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      border: 1.5px solid #c92127;
+      background: #c92127;
+      color: #ffffff;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .nut-in--phu {
+      background: #ffffff;
+      color: #181a20;
+      border-color: #7e8594;
+    }
+
+    .to-hoa-don {
+      max-width: 720px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #e6e7ec;
+      border-radius: 12px;
+      padding: 32px 34px;
+      box-shadow: 0 6px 24px rgba(24, 26, 32, 0.08);
+    }
+
+    .hd-dau {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid #181a20;
+      margin-bottom: 20px;
+    }
+
+    .hd-cua-hang {
+      margin: 0 0 4px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #c92127;
+    }
+
+    .hd-thong-tin-ch {
+      margin: 0;
+      font-size: 0.86rem;
+      color: #525866;
+    }
+
+    .hd-tieu-de-khung {
+      text-align: right;
+    }
+
+    .hd-tieu-de {
+      margin: 0 0 4px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .hd-ma {
+      font-family: Consolas, "Courier New", monospace;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .hd-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: #faf9f7;
+      border: 1px solid #e6e7ec;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .hd-meta__nhan {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #626875;
+      margin-bottom: 4px;
+    }
+
+    .hd-meta p {
+      margin: 2px 0;
+    }
+
+    .hd-bang-boc {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 18px;
+    }
+
+    table.hd-bang {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .hd-bang th {
+      text-align: left;
+      padding: 9px 8px;
+      border-top: 1.5px solid #181a20;
+      border-bottom: 1.5px solid #181a20;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #525866;
+    }
+
+    .hd-bang td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #e6e7ec;
+      vertical-align: top;
+    }
+
+    .hd-bang th.so,
+    .hd-bang td.so,
+    .so {
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hd-tong-hop {
+      margin-left: auto;
+      max-width: 320px;
+      display: grid;
+      gap: 7px;
+      font-size: 0.92rem;
+    }
+
+    .hd-tong-hop__dong {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: #525866;
+    }
+
+    .hd-tong-hop__cuoi {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding-top: 10px;
+      margin-top: 4px;
+      border-top: 2px solid #181a20;
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: #181a20;
+    }
+
+    .hd-tong-hop__cuoi .tien-cuoi {
+      color: #c92127;
+    }
+
+    .hd-chan {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px dashed #d1d5de;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.84rem;
+      color: #525866;
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 12px 10px 28px; }
+      .nut-in { min-height: 44px; }
+      .to-hoa-don { padding: 18px 14px; }
+      .hd-tieu-de-khung { text-align: left; }
+      .hd-meta { grid-template-columns: 1fr; }
+      .hd-tong-hop { max-width: 100%; }
+    }
+
+    @page {
+      size: A5 portrait;
+      margin: 10mm;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+        font-size: 12px;
+      }
+      .thanh-in {
+        display: none !important;
+      }
+      .to-hoa-don {
+        max-width: none;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+      .hd-meta {
+        background: #ffffff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="thanh-in">
+    <a href="/quan-ly/don/{{ don.ma }}" class="nut-in nut-in--phu">&larr; Quay lại đơn #{{ don.ma }}</a>
+    <button type="button" class="nut-in" onclick="window.print()">In hóa đơn (A5 / A4)</button>
+  </div>
+
+  <article class="to-hoa-don">
+    <header class="hd-dau">
+      <div>
+        <h1 class="hd-cua-hang">{{ cua_hang.ten }}</h1>
+        <p class="hd-thong-tin-ch">{{ cua_hang.dia_chi }}</p>
+        <p class="hd-thong-tin-ch">Điện thoại: {{ cua_hang.dien_thoai }}</p>
+      </div>
+      <div class="hd-tieu-de-khung">
+        <div class="hd-tieu-de">HÓA ĐƠN BÁN HÀNG</div>
+        <div class="hd-ma">Đơn #{{ don.ma }} • Mã: {{ don.ma_tra_cuu }}</div>
+        <div class="hd-thong-tin-ch">Ngày đặt: {{ don.tao_luc | ngay }}</div>
+      </div>
+    </header>
+
+    <section class="hd-meta">
+      <div>
+        <div class="hd-meta__nhan">Khách hàng nhận sách</div>
+        <p><strong>{{ don.ho_ten }}</strong></p>
+        <p>ĐT: {{ don.dien_thoai }}</p>
+        <p>{{ don.dia_chi }}</p>
+        {% if don.ghi_chu %}
+          <p style="color: #525866;">Ghi chú: {{ don.ghi_chu }}</p>
+        {% endif %}
+      </div>
+      <div>
+        <div class="hd-meta__nhan">Thông tin thanh toán</div>
+        <p>Phương thức: <strong>{{ don.phuong_thuc.nhan }}</strong></p>
+        <p>
+          Thanh toán:
+          <strong>{{ 'Đã thanh toán' if don.da_thanh_toan else 'Chưa thanh toán' }}</strong>
+          {% if don.da_thanh_toan and don.trang_thai.value == 'da_huy' %}
+            ({{ 'Đã hoàn tiền' if don.da_hoan_tien else 'Đang chờ hoàn tiền' }})
+          {% endif %}
+        </p>
+        <p>Trạng thái: <strong>{{ don.trang_thai.nhan }}</strong></p>
+      </div>
+    </section>
+
+    <div class="hd-bang-boc">
+      <table class="hd-bang">
+        <thead>
+          <tr>
+            <th style="width: 36px;">#</th>
+            <th>Tên sách</th>
+            <th class="so">Đơn giá</th>
+            <th class="so" style="width: 48px;">SL</th>
+            <th class="so">Thành tiền</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in don.muc %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ m.tieu_de }}</td>
+              <td class="so">{{ m.don_gia | tien }}</td>
+              <td class="so">{{ m.so_luong }}</td>
+              <td class="so"><strong>{{ (m.don_gia * m.so_luong) | tien }}</strong></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="hd-tong-hop">
+      <div class="hd-tong-hop__dong">
+        <span>Tạm tính</span>
+        <span class="so">{{ don.tam_tinh | tien }}</span>
+      </div>
+      {% if don.giam_gia > 0 %}
+        <div class="hd-tong-hop__dong">
+          <span>Giảm giá{% if don.ma_giam_gia %} ({{ don.ma_giam_gia }}){% endif %}</span>
+          <span class="so">-{{ don.giam_gia | tien }}</span>
+        </div>
+      {% endif %}
+      <div class="hd-tong-hop__dong">
+        <span>Phí giao hàng</span>
+        <span class="so">{{ 'Miễn phí' if don.phi_giao == 0 else (don.phi_giao | tien) }}</span>
+      </div>
+      <div class="hd-tong-hop__cuoi">
+        <span>TỔNG CỘNG</span>
+        <span class="so tien-cuoi">{{ don.tong | tien }}</span>
+      </div>
+    </div>
+
+    <footer class="hd-chan">
+      <span>Cảm ơn quý khách đã mua sách tại {{ cua_hang.ten }}!</span>
+      <span>Mã tra cứu: <strong>{{ don.ma_tra_cuu }}</strong></span>
+    </footer>
+  </article>
+</body>
+</html>

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block tieu_de %}Tra cứu đơn hàng — Nhà Sách Tri Thức{% endblock %}
+
+{% block noi_dung %}
+{% set f = form or {} %}
+{% set lt = loi_truong or {} %}
+{% set ma_tu_url = request.args.get('ma', '') if request is defined and request.args is defined else '' %}
+<div class="khung trang-con">
+  <div class="khung-giua">
+    <section class="the-xac-thuc" aria-labelledby="tieu-de-tra-cuu">
+      <div class="the-xac-thuc__dau">
+        <div class="the-xac-thuc__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7.5"/>
+            <path d="m20 20-3.8-3.8"/>
+          </svg>
+        </div>
+        <h1 id="tieu-de-tra-cuu" class="tieu-de-trang" style="font-size: 1.55rem;">Tra cứu đơn hàng</h1>
+        <p class="phu-de-trang">Nhập mã tra cứu 8 ký tự và số điện thoại đặt hàng để xác minh quyền xem đơn.</p>
+      </div>
+
+      {% if ma_tu_url and not loi %}
+        <div class="thong-bao thong-bao--thong-tin" role="status" style="margin-bottom: 18px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 11v5M12 8h.01"/>
+          </svg>
+          <span>Để bảo vệ thông tin đơn hàng <strong>#{{ f.get('ma') or ma_tu_url }}</strong>, hãy nhập số điện thoại đã dùng khi đặt đơn để xác minh quyền xem.</span>
+        </div>
+      {% endif %}
+
+      {% if loi %}
+        <div class="thong-bao thong-bao--loi" role="alert" style="margin-bottom: 18px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 8v5M12 16h.01"/>
+          </svg>
+          <span>{{ loi }}</span>
+        </div>
+      {% endif %}
+
+      <form method="post" action="/tra-cuu">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+
+        <div class="truong">
+          <label class="truong__nhan" for="ma-tra-cuu">Mã tra cứu đơn hàng <span class="truong__bat-buoc">*</span></label>
+          <input id="ma-tra-cuu" class="o-nhap{% if lt.get('ma') %} o-nhap--loi{% endif %}" type="text" name="ma" required
+                 value="{{ f.get('ma') or '' }}"
+                 placeholder="Ví dụ: K8M2P9Q4"
+                 {% if lt.get('ma') %}aria-invalid="true" aria-describedby="loi-ma-tra-cuu"{% endif %}
+                 style="text-transform: uppercase; font-family: Consolas, 'Courier New', monospace; font-weight: 700; letter-spacing: 0.08em;">
+          {% if lt.get('ma') %}
+            <p id="loi-ma-tra-cuu" class="truong__loi" role="alert">{{ lt['ma'] }}</p>
+          {% else %}
+            <span class="truong__goi-y">Không phân biệt chữ hoa hay chữ thường.</span>
+          {% endif %}
+        </div>
+
+        <div class="truong" style="margin-bottom: 20px;">
+          <label class="truong__nhan" for="tra-cuu-dt">Số điện thoại nhận hàng <span class="truong__bat-buoc">*</span></label>
+          <input id="tra-cuu-dt" class="o-nhap{% if lt.get('dien_thoai') %} o-nhap--loi{% endif %}" type="tel" name="dien_thoai" required autocomplete="tel" inputmode="tel"
+                 value="{{ f.get('dien_thoai') or '' }}"
+                 placeholder="Nhập số điện thoại bạn đã dùng khi đặt đơn"
+                 {% if lt.get('dien_thoai') %}aria-invalid="true" aria-describedby="loi-tra-cuu-dt"{% endif %}>
+          {% if lt.get('dien_thoai') %}
+            <p id="loi-tra-cuu-dt" class="truong__loi" role="alert">{{ lt['dien_thoai'] }}</p>
+          {% endif %}
+        </div>
+
+        <button type="submit" class="nut nut--chinh nut--lon nut--rong">Tra cứu đơn hàng</button>
+      </form>
+
+      <div class="the-xac-thuc__chan">
+        {% if khach %}
+          Hoặc xem nhanh toàn bộ đơn tại <a href="/tai-khoan">Đơn hàng của tôi</a>.
+        {% else %}
+          Đã có tài khoản? <a href="/dang-nhap">Đăng nhập</a> để xem toàn bộ lịch sử mua sách.
+        {% endif %}
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

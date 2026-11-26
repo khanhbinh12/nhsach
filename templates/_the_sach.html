@@ -1,0 +1,91 @@
+{% from "_bia.html" import bia %}
+
+{# Macro thẻ sách dùng chung cho trang chủ, danh sách, sách liên quan #}
+{% macro the_sach(sach, csrf='', tiep='/', hang=None) %}
+{%- set het_hang = (sach.ton_kho or 0) <= 0 -%}
+{%- set co_giam = sach.gia_bia and sach.gia_bia > sach.gia -%}
+{%- set phan_tram = ((sach.gia_bia - sach.gia) * 100 // sach.gia_bia) if co_giam else 0 -%}
+{%- set diem = sach.diem_tb or 0 -%}
+{%- set so_dg = sach.so_danh_gia or 0 -%}
+{%- set so_ban = (sach.so_ban_that if sach.so_ban_that is defined else 0) or 0 -%}
+{%- set co_rv = (sach.co_review if sach.co_review is defined else False) -%}
+<article class="the-sach{% if het_hang %} the-sach--het-hang{% endif %}">
+  <div class="the-sach__khung-bia">
+    {%- if (co_giam and phan_tram > 0) or co_rv -%}
+      <div class="the-sach__huy-hieu">
+        {%- if co_giam and phan_tram > 0 -%}
+          <span class="the-giam-gia">-{{ phan_tram }}%</span>
+        {%- endif -%}
+        {%- if co_rv -%}
+          <span class="nhan-review">Có review</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if hang -%}
+      <span class="the-sach__hang the-sach__hang--{{ hang }}" title="Top {{ hang }} bán chạy">#{{ hang }}</span>
+    {%- endif -%}
+
+    <a href="/sach/{{ sach.ma }}" class="the-sach__bia-link" aria-label="Xem chi tiết {{ sach.tieu_de }}">
+      {{ bia(sach, 'vua') }}
+    </a>
+  </div>
+
+  <div class="the-sach__than">
+    <h3 class="the-sach__tieu-de">
+      <a href="/sach/{{ sach.ma }}" title="{{ sach.tieu_de }}">{{ sach.tieu_de }}</a>
+    </h3>
+    <p class="the-sach__tac-gia">{{ sach.tac_gia }}</p>
+
+    {%- if so_dg > 0 or so_ban > 0 -%}
+      <div class="danh-gia-tom-tat">
+        {%- if so_dg > 0 -%}
+          <div class="sao-hang" aria-label="{{ '%.1f'|format(diem) }} trên 5 sao">
+            {%- for i in range(1, 6) -%}
+              <svg class="sao-svg {{ 'sao-svg--day' if diem >= (i - 0.35) else 'sao-svg--rong' }}" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.28 3.94a1 1 0 0 0 .95.69h4.14c.97 0 1.37 1.24.59 1.81l-3.35 2.43a1 1 0 0 0-.36 1.12l1.28 3.94c.3.92-.75 1.69-1.54 1.12l-3.35-2.43a1 1 0 0 0-1.18 0l-3.35 2.43c-.79.57-1.84-.2-1.54-1.12l1.28-3.94a1 1 0 0 0-.36-1.12L2.09 9.37c-.78-.57-.38-1.81.59-1.81h4.14a1 1 0 0 0 .95-.69l1.28-3.94Z"/>
+              </svg>
+            {%- endfor -%}
+            <span class="sao-diem">{{ '%.1f'|format(diem) }}</span>
+            <span>({{ so_dg }})</span>
+          </div>
+        {%- endif -%}
+        {%- if so_ban > 0 -%}
+          <span class="da-ban">Đã bán {{ so_ban }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="the-sach__chan">
+      <div class="the-sach__gia-cum">
+        <span class="the-sach__gia">{{ sach.gia | tien }}</span>
+        {%- if co_giam -%}
+          <span class="the-sach__gia-bia">{{ sach.gia_bia | tien }}</span>
+        {%- endif -%}
+        {%- if het_hang -%}
+          <span class="nhan-het-hang">Tạm hết hàng</span>
+        {%- endif -%}
+      </div>
+
+      <form class="the-sach__form" method="post" action="/gio/them" data-gio-them>
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <input type="hidden" name="ma" value="{{ sach.ma }}">
+        <input type="hidden" name="so_luong" value="1">
+        <input type="hidden" name="tiep" value="{{ tiep }}">
+        {%- if het_hang -%}
+          <button type="submit" class="nut nut--phu nut--nho nut--rong" disabled>Tạm hết hàng</button>
+        {%- else -%}
+          <button type="submit" class="nut nut--vien-nhan nut--nho nut--rong">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="20" r="1.5"/>
+              <circle cx="18" cy="20" r="1.5"/>
+              <path d="M2.5 3.5h2.7l2.2 11.2a1.8 1.8 0 0 0 1.8 1.5h8.8a1.8 1.8 0 0 0 1.7-1.3l1.6-6.9H6.2"/>
+            </svg>
+            <span>Thêm vào giỏ</span>
+          </button>
+        {%- endif -%}
+      </form>
+    </div>
+  </div>
+</article>
+{% endmacro %}

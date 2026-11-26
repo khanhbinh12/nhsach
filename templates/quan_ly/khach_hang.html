@@ -1,0 +1,60 @@
+{% extends "quan_ly/_khung.html" %}
+
+{% block tieu_de %}Quản lý khách hàng — Nhà Sách Tri Thức{% endblock %}
+{% block muc_dang_chon %}khach_hang{% endblock %}
+
+{% block noi_dung %}
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Danh sách khách hàng</h1>
+    <p class="phu-de-trang">Tổng <strong>{{ khach_hang|length }}</strong> tài khoản khách hàng đã đăng ký.</p>
+  </div>
+</div>
+
+{% if khach_hang %}
+  <div class="hop-trang hop-bang">
+    <div class="bang-cuon">
+      <table class="bang-ql">
+        <thead>
+          <tr>
+            <th>Khách hàng</th>
+            <th>Liên hệ</th>
+            <th>Ngày tạo</th>
+            <th style="text-align: right;">Số đơn</th>
+            <th style="text-align: right;">Tổng chi tiêu</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in khach_hang %}
+            {% set kh = item.khach %}
+            <tr>
+              <td>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span class="muc-danh-gia__avt" aria-hidden="true">{{ kh.ho_ten[:1]|upper }}</span>
+                  <div style="font-weight: 700;">{{ kh.ho_ten }}</div>
+                </div>
+              </td>
+              <td>
+                <div>{{ kh.email }}</div>
+                {% if kh.dien_thoai %}
+                  <div style="font-size: 0.82rem; color: var(--chu-phu);">{{ kh.dien_thoai }}</div>
+                {% endif %}
+              </td>
+              <td style="white-space: nowrap; font-size: 0.86rem; color: var(--chu-phu);">{{ kh.ngay_tao | ngay }}</td>
+              <td style="text-align: right; font-weight: 700; font-variant-numeric: tabular-nums;">{{ item.so_don }}</td>
+              <td style="text-align: right; font-weight: 800; color: var(--nhan); white-space: nowrap; font-variant-numeric: tabular-nums;">
+                {{ item.tong_chi | tien }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+  <div class="trang-thai-trong">
+    <h2 class="trang-thai-trong__tieu-de">Chưa có khách hàng đăng ký</h2>
+    <p class="trang-thai-trong__mo-ta">Khách hàng tạo tài khoản sẽ hiển thị kèm thống kê đơn hàng tại đây.</p>
+  </div>
+{% endif %}
+{% endblock %}

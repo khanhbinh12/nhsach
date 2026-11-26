@@ -1,0 +1,867 @@
+{
+  "danh_muc": [
+    {
+      "ten": "Văn học",
+      "duong_dan": "van-hoc"
+    },
+    {
+      "ten": "Kinh tế",
+      "duong_dan": "kinh-te"
+    },
+    {
+      "ten": "Kỹ năng sống",
+      "duong_dan": "ky-nang-song"
+    },
+    {
+      "ten": "Thiếu nhi",
+      "duong_dan": "thieu-nhi"
+    },
+    {
+      "ten": "Khoa học",
+      "duong_dan": "khoa-hoc"
+    },
+    {
+      "ten": "Lịch sử",
+      "duong_dan": "lich-su"
+    },
+    {
+      "ten": "Nuôi dạy con",
+      "duong_dan": "nuoi-day-con"
+    },
+    {
+      "ten": "Tiểu thuyết",
+      "duong_dan": "tieu-thuyet"
+    },
+    {
+      "ten": "Biên khảo",
+      "duong_dan": "bien-khao"
+    },
+    {
+      "ten": "Hồi ký",
+      "duong_dan": "hoi-ky"
+    },
+    {
+      "ten": "Trinh thám – Kinh dị",
+      "duong_dan": "trinh-tham-kinh-di"
+    },
+    {
+      "ten": "Tham khảo",
+      "duong_dan": "tham-khao"
+    },
+    {
+      "ten": "Triết học",
+      "duong_dan": "triet-hoc"
+    },
+    {
+      "ten": "Văn hóa – Xã hội",
+      "duong_dan": "van-hoa-xa-hoi"
+    }
+  ],
+  "sach": [
+    {
+      "tieu_de": "Dế Mèn phiêu lưu ký",
+      "tac_gia": "Tô Hoài",
+      "nha_xuat_ban": "Nhà xuất bản Kim Đồng",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 55000,
+      "gia_bia": 68000,
+      "ton_kho": 45,
+      "mo_ta": "Hành trình khám phá thế giới đầy màu sắc và bài học nhân văn sâu sắc của chú dế trẻ tuổi qua ngòi bút tài hoa của nhà văn Tô Hoài.",
+      "danh_muc": "thieu-nhi",
+      "mau_bia": "#2e7d32"
+    },
+    {
+      "tieu_de": "Cho tôi xin một vé đi tuổi thơ",
+      "tac_gia": "Nguyễn Nhật Ánh",
+      "nha_xuat_ban": "Nhà xuất bản Trẻ",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 75000,
+      "gia_bia": 90000,
+      "ton_kho": 30,
+      "mo_ta": "Tác phẩm đưa người đọc ngược dòng thời gian trở về những năm tháng tuổi thơ trong trẻo, hồn nhiên với biết bao trò đùa nghịch ngợm đáng yêu.",
+      "danh_muc": "van-hoc",
+      "mau_bia": "#1565c0"
+    },
+    {
+      "tieu_de": "Mắt biếc",
+      "tac_gia": "Nguyễn Nhật Ánh",
+      "nha_xuat_ban": "Nhà xuất bản Trẻ",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 95000,
+      "gia_bia": 110000,
+      "ton_kho": 12,
+      "mo_ta": "Câu chuyện tình yêu đơn phương đầy day dứt và hoài niệm của Ngạn dành cho Hà Lan, cô bạn có đôi mắt biếc ở làng Đo Đo.",
+      "danh_muc": "tieu-thuyet",
+      "mau_bia": "#00838f"
+    },
+    {
+      "tieu_de": "Nhà giả kim",
+      "tac_gia": "Paulo Coelho",
+      "nha_xuat_ban": "Nhà xuất bản Hội Nhà Văn",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 69000,
+      "gia_bia": 79000,
+      "ton_kho": 50,
+      "mo_ta": "Hành trình đi tìm kho báu và thực hiện vận mệnh của chàng chăn cừu Santiago, qua đó truyền cảm hứng theo đuổi ước mơ.",
+      "danh_muc": "ky-nang-song",
+      "mau_bia": "#d84315"
+    },
+    {
+      "tieu_de": "Đắc nhân tâm",
+      "tac_gia": "Dale Carnegie",
+      "nha_xuat_ban": "Nhà xuất bản Tổng hợp TP.HCM",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 85000,
+      "gia_bia": 100000,
+      "ton_kho": 40,
+      "mo_ta": "Cẩm nang kinh điển về nghệ thuật ứng xử, giao tiếp và thu phục lòng người để thành công hơn trong cuộc sống.",
+      "danh_muc": "ky-nang-song",
+      "mau_bia": "#4527a0"
+    },
+    {
+      "tieu_de": "Quẳng gánh lo đi mà vui sống",
+      "tac_gia": "Dale Carnegie",
+      "nha_xuat_ban": "Nhà xuất bản Tổng hợp TP.HCM",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 78000,
+      "gia_bia": 89000,
+      "ton_kho": 25,
+      "mo_ta": "Những phương pháp thực tế và hữu ích giúp bạn vượt qua lo âu, tận hưởng cuộc sống bình yên và tích cực hơn mỗi ngày.",
+      "danh_muc": "ky-nang-song",
+      "mau_bia": "#558b2f"
+    },
+    {
+      "tieu_de": "Sapiens: Lược sử loài người",
+      "tac_gia": "Yuval Noah Harari",
+      "nha_xuat_ban": "Nhà xuất bản Thế Giới",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 185000,
+      "gia_bia": 220000,
+      "ton_kho": 15,
+      "mo_ta": "Cuốn sách góc nhìn rộng lớn về hành trình tiến hóa của loài người từ những vượn người hoang dã đến khi thống trị thế giới.",
+      "danh_muc": "lich-su",
+      "mau_bia": "#37474f"
+    },
+    {
+      "tieu_de": "Cây cam ngọt của tôi",
+      "tac_gia": "José Mauro de Vasconcelos",
+      "nha_xuat_ban": "Nhà xuất bản Hội Nhà Văn",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 82000,
+      "gia_bia": 98000,
+      "ton_kho": 8,
+      "mo_ta": "Câu chuyện cảm động về cậu bé Zezé thông minh, nhạy cảm và tình bạn đặc biệt với cây cam ngọt sau nhà.",
+      "danh_muc": "van-hoc",
+      "mau_bia": "#ad1457"
+    },
+    {
+      "tieu_de": "Không gia đình",
+      "tac_gia": "Hector Malot",
+      "nha_xuat_ban": "Nhà xuất bản Kim Đồng",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 125000,
+      "gia_bia": 150000,
+      "ton_kho": 18,
+      "mo_ta": "Cuộc phiêu lưu gian khổ nhưng đầy nghị lực của cậu bé mồ côi Rémi đi khắp nước Pháp cùng gánh xiếc rong.",
+      "danh_muc": "thieu-nhi",
+      "mau_bia": "#0277bd"
+    },
+    {
+      "tieu_de": "Hoàng tử bé",
+      "tac_gia": "Antoine de Saint-Exupéry",
+      "nha_xuat_ban": "Nhà xuất bản Văn Học",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 52000,
+      "gia_bia": 60000,
+      "ton_kho": 35,
+      "mo_ta": "Câu chuyện ngụ ngôn tuyệt đẹp về tình yêu, sự cô đơn và những giá trị đích thực chỉ có thể nhìn thấy bằng trái tim.",
+      "danh_muc": "tieu-thuyet",
+      "mau_bia": "#f57f17"
+    },
+    {
+      "tieu_de": "Tư duy nhanh và chậm",
+      "tac_gia": "Daniel Kahneman",
+      "nha_xuat_ban": null,
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 165000,
+      "gia_bia": 165000,
+      "ton_kho": 20,
+      "mo_ta": "Khám phá cách bộ não con người đưa ra quyết định thông qua hai hệ thống tư duy trực giác và lý trí.",
+      "danh_muc": "khoa-hoc",
+      "mau_bia": "#4e342e"
+    },
+    {
+      "tieu_de": "Nghĩ giàu và làm giàu",
+      "tac_gia": "Napoleon Hill",
+      "nha_xuat_ban": "Nhà xuất bản Tổng hợp TP.HCM",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 89000,
+      "gia_bia": 89000,
+      "ton_kho": 22,
+      "mo_ta": "Những nguyên tắc cốt lõi giúp hàng triệu người đạt được sự thịnh vượng tài chính và thành công viên mãn.",
+      "danh_muc": "kinh-te",
+      "mau_bia": "#e65100"
+    },
+    {
+      "tieu_de": "Cha giàu cha nghèo",
+      "tac_gia": "Robert T. Kiyosaki",
+      "nha_xuat_ban": "Nhà xuất bản Trẻ",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 79000,
+      "gia_bia": 79000,
+      "ton_kho": 38,
+      "mo_ta": "Thay đổi hoàn toàn tư duy về tiền bạc và cách quản lý tài chính cá nhân để tiền làm việc cho bạn.",
+      "danh_muc": "kinh-te",
+      "mau_bia": "#283593"
+    },
+    {
+      "tieu_de": "Lược sử thời gian",
+      "tac_gia": "Stephen Hawking",
+      "nha_xuat_ban": "Nhà xuất bản Trẻ",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 98000,
+      "gia_bia": 98000,
+      "ton_kho": 10,
+      "mo_ta": "Hành trình khám phá các bí ẩn vĩ đại của vũ trụ từ Big Bang cho đến hố đen dưới góc nhìn vật lý hiện đại.",
+      "danh_muc": "khoa-hoc",
+      "mau_bia": "#311b92"
+    },
+    {
+      "tieu_de": "Đại Việt sử ký toàn thư",
+      "tac_gia": "Ngô Sĩ Liên",
+      "nha_xuat_ban": "Nhà xuất bản Khoa học Xã hội",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 240000,
+      "gia_bia": 240000,
+      "ton_kho": 5,
+      "mo_ta": "Bộ sử liệu quý giá ghi lại toàn bộ dòng chảy lịch sử Việt Nam từ thời Hồng Bàng đến thời nhà Lê.",
+      "danh_muc": "lich-su",
+      "mau_bia": "#b71c1c"
+    },
+    {
+      "tieu_de": "Bắt trẻ đồng xanh",
+      "tac_gia": "J.D. Salinger",
+      "nha_xuat_ban": "Nhà xuất bản Văn Học",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 88000,
+      "gia_bia": 88000,
+      "ton_kho": 14,
+      "mo_ta": "Tiếng lòng nổi loạn và nỗi cô đơn sâu sắc của tuổi thiếu niên qua góc nhìn của cậu thanh niên Holden Caulfield.",
+      "danh_muc": "tieu-thuyet",
+      "mau_bia": "#004d40"
+    },
+    {
+      "tieu_de": "Những người khốn khổ",
+      "tac_gia": "Victor Hugo",
+      "nha_xuat_ban": "Nhà xuất bản Văn Học",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 195000,
+      "gia_bia": 195000,
+      "ton_kho": 7,
+      "mo_ta": "Kiệt tác văn học Pháp ca ngợi tình người, lòng trắc ẩn và sự đấu tranh cho công lý trong hoàn cảnh ngặt nghèo.",
+      "danh_muc": "van-hoc",
+      "mau_bia": "#1b5e20"
+    },
+    {
+      "tieu_de": "Khuyến học",
+      "tac_gia": "Fukuzawa Yukichi",
+      "nha_xuat_ban": null,
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 62000,
+      "gia_bia": 62000,
+      "ton_kho": 28,
+      "mo_ta": "Cuốn sách đặt nền móng cho tinh thần tự lập và tầm quan trọng của giáo dục đối với sự hưng thịnh của quốc gia.",
+      "danh_muc": "ky-nang-song",
+      "mau_bia": "#006064"
+    },
+    {
+      "tieu_de": "Kinh tế học vạn vật",
+      "tac_gia": "Tim Harford",
+      "nha_xuat_ban": null,
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 110000,
+      "gia_bia": 110000,
+      "ton_kho": 16,
+      "mo_ta": "Giải mã các hiện tượng kinh tế ẩn giấu trong cuộc sống hàng ngày bằng lối viết hóm hỉnh và dễ hiểu.",
+      "danh_muc": "kinh-te",
+      "mau_bia": "#880e4f"
+    },
+    {
+      "tieu_de": "Vô cùng tàn nhẫn vô cùng yêu thương",
+      "tac_gia": "Sara Imas",
+      "nha_xuat_ban": "Nhà xuất bản Dân Trí",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 110000,
+      "gia_bia": 110000,
+      "ton_kho": 15,
+      "mo_ta": "Bí quyết kết hợp giữa tình yêu thương và sự rèn luyện nghiêm khắc của người mẹ Do Thái nhằm giúp con cái trưởng thành tự lập.",
+      "danh_muc": "nuoi-day-con",
+      "mau_bia": "#827717"
+    },
+    {
+      "tieu_de": "Chờ đến mẫu giáo thì đã muộn",
+      "tac_gia": "Ibuka Masaru",
+      "nha_xuat_ban": "Nhà xuất bản Phụ Nữ",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 65000,
+      "gia_bia": 65000,
+      "ton_kho": 0,
+      "mo_ta": "Tầm quan trọng của việc giáo dục sớm từ giai đoạn sơ sinh để phát huy tối đa tiềm năng của não bộ trẻ.",
+      "danh_muc": "nuoi-day-con",
+      "mau_bia": "#e91e63"
+    },
+    {
+      "tieu_de": "Nuôi con không phải là cuộc chiến",
+      "tac_gia": "Hachun Lyonnet",
+      "nha_xuat_ban": "Nhà xuất bản Lao Động",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 99000,
+      "gia_bia": 99000,
+      "ton_kho": 20,
+      "mo_ta": "Bộ sách chia sẻ các phương pháp nuôi dạy trẻ tự lập, khoa học và giúp cha mẹ giảm bớt áp lực trong hành trình chăm sóc con.",
+      "danh_muc": "nuoi-day-con",
+      "mau_bia": "#3f51b5"
+    },
+    {
+      "tieu_de": "Gió lạnh đầu mùa",
+      "tac_gia": "Thạch Lam",
+      "nha_xuat_ban": "Nhà xuất bản Văn Học",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 48000,
+      "gia_bia": 48000,
+      "ton_kho": 26,
+      "mo_ta": "Những trang văn nhẹ nhàng, đượm buồn nhưng thấm đẫm tình người về cuộc sống nghèo khó ở phố huyện ngoại ô.",
+      "danh_muc": "van-hoc",
+      "mau_bia": "#00acc1"
+    },
+    {
+      "tieu_de": "Số đỏ",
+      "tac_gia": "Vũ Trọng Phụng",
+      "nha_xuat_ban": "Nhà xuất bản Văn Học",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 72000,
+      "gia_bia": 72000,
+      "ton_kho": 21,
+      "mo_ta": "Kiệt tác trào phúng châm biếm sâu cay xã hội tư sản thành thị Việt Nam trước Cách mạng tháng Tám.",
+      "danh_muc": "van-hoc",
+      "mau_bia": "#d32f2f"
+    },
+    {
+      "tieu_de": "Tắt đèn",
+      "tac_gia": "Ngô Tất Tố",
+      "nha_xuat_ban": "Nhà xuất bản Văn Học",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 68000,
+      "gia_bia": 68000,
+      "ton_kho": 0,
+      "mo_ta": "Bức tranh chân thực và bi thảm về cuộc sống khốn khổ của người nông dân dưới ách áp bức của chế độ cũ.",
+      "danh_muc": "van-hoc",
+      "mau_bia": "#616161"
+    },
+    {
+      "tieu_de": "Bàn về tự do",
+      "tac_gia": "John Stuart Mill",
+      "nha_xuat_ban": "Nhà xuất bản Tri Thức",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 85000,
+      "gia_bia": 85000,
+      "ton_kho": 11,
+      "mo_ta": "Luận bàn nền tảng triết học về ranh giới giữa quyền lực xã hội và quyền tự do cá nhân.",
+      "danh_muc": "lich-su",
+      "mau_bia": "#263238"
+    },
+    {
+      "tieu_de": "Súng, vi trùng và thép",
+      "tac_gia": "Jared Diamond",
+      "nha_xuat_ban": null,
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 190000,
+      "gia_bia": 190000,
+      "ton_kho": 4,
+      "mo_ta": "Lý giải nguyên nhân vì sao các xã hội loài người lại phát triển theo những con đường khác nhau qua hàng ngàn năm.",
+      "danh_muc": "lich-su",
+      "mau_bia": "#5d4037"
+    },
+    {
+      "tieu_de": "Từ tốt đến vĩ đại",
+      "tac_gia": "Jim Collins",
+      "nha_xuat_ban": "Nhà xuất bản Trẻ",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 145000,
+      "gia_bia": 145000,
+      "ton_kho": 17,
+      "mo_ta": "Nghiên cứu đúc kết những yếu tố cốt lõi giúp các doanh nghiệp bình thường vươn lên thành công trường tồn.",
+      "danh_muc": "kinh-te",
+      "mau_bia": "#33691e"
+    },
+    {
+      "tieu_de": "Bảy thói quen của người thành đạt",
+      "tac_gia": "Stephen R. Covey",
+      "nha_xuat_ban": "Nhà xuất bản Tổng hợp TP.HCM",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 135000,
+      "gia_bia": 135000,
+      "ton_kho": 29,
+      "mo_ta": "Kim chỉ nam toàn diện giúp phát triển cá nhân và nâng cao hiệu quả làm việc, lãnh đạo bản thân.",
+      "danh_muc": "ky-nang-song",
+      "mau_bia": "#01579b"
+    },
+    {
+      "tieu_de": "Góc sân và khoảng trời",
+      "tac_gia": "Trần Đăng Khoa",
+      "nha_xuat_ban": "Nhà xuất bản Kim Đồng",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 45000,
+      "gia_bia": 45000,
+      "ton_kho": 30,
+      "mo_ta": "Tập thơ thiếu nhi hồn nhiên, trong trẻo vẽ nên bức tranh làng quê Việt Nam thanh bình qua góc nhìn thần đồng thơ Trần Đăng Khoa.",
+      "danh_muc": "thieu-nhi",
+      "mau_bia": "#f57c00"
+    },
+    {
+      "tieu_de": "Nietzsche - Cuộc Đời Và Triết Lý",
+      "tac_gia": "Felicien Challaye",
+      "nha_xuat_ban": "Văn Nghệ TP HCM",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 79000,
+      "gia_bia": 89000,
+      "ton_kho": 8,
+      "mo_ta": "Nietzsche: \"Một tâm hồn lớn nhất mà nước Đức và cả châu Âu đã sinh sản được từ sau Goethe đến nay.\" Đó là lời của một trong những nhà văn nổi tiếng nhất hiện nay của Đức, ông Emil Ludwig. Trước tiên, chúng ta tìm hiểu cuộc đời của Nietzsche, điều hết sức quan trọng nếu ta muốn làm quen với tâm hồn vĩ đại kia. Bởi con người nọ không phải là nhà triết học lạnh lùng khô khan, ở trong phòng kín lo kết hợp toàn những ý niệm theo quy luật của một thứ lý luận trừu tượng, mà là một người suy tư cuồng…",
+      "danh_muc": "bien-khao",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/nietzsche-cuoc-doi-va-triet-ly.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Hơn Cả Tin Tức - Tương Lai Của Báo Chí",
+      "tac_gia": "Mitchell Stephens",
+      "nha_xuat_ban": "Trẻ",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 89000,
+      "gia_bia": 99000,
+      "ton_kho": 10,
+      "mo_ta": "Mitchell Stephens nhìn lại vai trò của báo chí khi tin tức tức thời đã trở nên phổ biến. Ông đề xuất một lối làm báo chú trọng phân tích, giải thích bối cảnh và giúp người đọc hiểu ý nghĩa của sự kiện.",
+      "danh_muc": "bien-khao",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/hon-ca-tin-tuc-tuong-lai-cua-bao-chi.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Cuộc Đời Thơ Ấu Của Vua Hề Sạt Lô",
+      "tac_gia": "Charlie Chaplin; Vũ Hạnh (dịch)",
+      "nha_xuat_ban": null,
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 99000,
+      "gia_bia": 109000,
+      "ton_kho": 12,
+      "mo_ta": "Ngày nay không ai là không biết đến vua hề Sạc-Lô (Charlot) với những dáng vẻ đặc biệt khôi hài, với những kiểu cách độc đáo trong mọi cử điệu, với những phim câm có thể gây những trận cười giòn giã, nhưng đồng thời cũng làm cho người xem chua xót, bùi ngùi. Từ xưa vai hề được xem như kẻ phụ thuộc, cốt để làm vui khán giả hầu giúp đổi thay không khí trong các màn lớp của một vở tuồng. Nhưng với Sạc-Lô, vai hề đã được nâng cao lên đến tột đỉnh vinh quang của một vai trò chủ yếu bằng một nghệ…",
+      "danh_muc": "hoi-ky",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/cuoc-doi-tho-au-cua-vua-he-sat-lo.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Chất Michelle",
+      "tac_gia": "Michelle Obama",
+      "nha_xuat_ban": "NXB Tổng hợp TP.HCM",
+      "nam_xuat_ban": null,
+      "so_trang": 520,
+      "gia": 109000,
+      "gia_bia": 119000,
+      "ton_kho": 8,
+      "mo_ta": "Michelle Obama kể về tuổi thơ ở Chicago, con đường học tập và làm việc, rồi những năm sống tại Nhà Trắng. Cuốn hồi ký đan xen trải nghiệm gia đình với những suy ngẫm về bản sắc và trách nhiệm công chúng.",
+      "danh_muc": "hoi-ky",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/chat-michelle.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "100 Ý Tưởng Tiếp Thị Tuyệt Hay",
+      "tac_gia": "Jim Blythe",
+      "nha_xuat_ban": "Trẻ",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 119000,
+      "gia_bia": 129000,
+      "ton_kho": 10,
+      "mo_ta": "Jim Blythe giới thiệu một trăm ý tưởng tiếp thị qua các ví dụ từ doanh nghiệp. Mỗi ý tưởng giúp người đọc xem xét một cách tiếp cận thực tế để hiểu khách hàng hoặc đưa sản phẩm đến với thị trường.",
+      "danh_muc": "kinh-te",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/100-y-tuong-tiep-thi-tuyet-hay.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Đam Mê Khám Phá",
+      "tac_gia": "Gary Vaynerchuk",
+      "nha_xuat_ban": "NXB Lao Động Xã Hội",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 129000,
+      "gia_bia": 139000,
+      "ton_kho": 12,
+      "mo_ta": "Gary Vaynerchuk trình bày cách biến một niềm đam mê thành công việc bằng nội dung trực tuyến và mạng xã hội. Cuốn sách bàn về việc xây dựng thương hiệu cá nhân và duy trì quan hệ với cộng đồng người theo dõi.",
+      "danh_muc": "kinh-te",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/dam-me-kham-pha.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Chuộc Chồng",
+      "tac_gia": "Mary Higgins Clark",
+      "nha_xuat_ban": "NXB Công An Nhân Dân",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 139000,
+      "gia_bia": 149000,
+      "ton_kho": 8,
+      "mo_ta": "Chuộc Chồng và các truyện ngắn khác lần đầu tiên mang đến cho bạn một loạt những câu truyện cực kỳ cuốn hút qua bút pháp của tác giả truyện trinh thám tâm lý ăn khách bậc nhất thế giới: Mary Higgins Clark.",
+      "danh_muc": "trinh-tham-kinh-di",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/chuoc-chong.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Đêm Vô Tận",
+      "tac_gia": "Agatha Christie; Trần Hữu Kham (dịch)",
+      "nha_xuat_ban": "ketromsach",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 79000,
+      "gia_bia": 89000,
+      "ton_kho": 10,
+      "mo_ta": "Đất Digan là một điểm trên cao tuyệt đẹp có tầm nhìn trông ra biển – và nó khuấy động trong lòng Michael Rogers trò chơi tưởng tượng kiểu trẻ con. Ở đó, dưới bóng cây linh sam, anh lên kế hoạch xây một ngôi nhà, tìm một cô gái và sống hạnh phúc mãi về sau. Nhưng, lúc anh rời làng, một cái bóng đe dọa treo lơ lửng trên vùng đất này. Vì đây là nơi tai nạn thường xảy ra. Đáng lẽ Michael nên lưu ý đến những lời cảnh báo của dân địa phương: ‘Không có may mắn cho những ai dính líu tới Đất Digan đâu.’…",
+      "danh_muc": "trinh-tham-kinh-di",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/dem-vo-tan.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "10 Ngày Cuối Cùng Của Hitler",
+      "tac_gia": "Gerhard Boldt",
+      "nha_xuat_ban": null,
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 89000,
+      "gia_bia": 99000,
+      "ton_kho": 12,
+      "mo_ta": "Lúc đó là đầu tháng hai năm 1945. Công trường Wilhelmplatz vắng tanh và lạnh lẽo. Khắp nơi mà mắt có thế nhìn thấy được, những bức tường, những cửa sổ bể tan hoang, đằng sau đó những đống gạch ngói đổ nát điêu tàn chất cao. Từ dinh Tể Tướng cũ, một công thự kiểu trung cổ đẹp mê hồn, tượng trưng cho thời đại Wilhelmie, nay chỉ còn lại mặt tiền bị hư hại nặng. Khu vườn hoa trước dinh bị gạch ngói chôn vùi. Chỉ còn tiền điện của Dinh Tể Tướng mới là còn đứng vững với chiếc bao lơn có góc cạnh, nơi…",
+      "danh_muc": "lich-su",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/10-ngay-cuoi-cung-cua-hitler.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Những Mối Tình Vĩ Đại Trong Lịch Sử",
+      "tac_gia": "André Castelot",
+      "nha_xuat_ban": "CADAO 1973",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 99000,
+      "gia_bia": 109000,
+      "ton_kho": 8,
+      "mo_ta": "Lương Dinh dịch",
+      "danh_muc": "lich-su",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/nhung-moi-tinh-vi-dai-trong-lich-su.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Giả Thuyết Poincare - Cuộc Tìm Kiếm Hình Dạng Vũ Trụ",
+      "tac_gia": "Donal O'Shea",
+      "nha_xuat_ban": "Tri Thức",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 109000,
+      "gia_bia": 119000,
+      "ton_kho": 10,
+      "mo_ta": "Donal O’Shea kể lịch sử của giả thuyết Poincaré và hành trình đi đến lời giải. Cuốn sách giới thiệu những ý tưởng hình học và tô pô đứng sau bài toán, đồng thời khắc họa các nhà toán học góp sức giải quyết nó.",
+      "danh_muc": "tham-khao",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/gia-thuyet-poincare-cuoc-tim-kiem-hinh-dang-vu-tru.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Công Chúa Cá",
+      "tac_gia": "Hans Christian Andersen",
+      "nha_xuat_ban": "Viet Messenger",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 119000,
+      "gia_bia": 129000,
+      "ton_kho": 12,
+      "mo_ta": "Mặt biển rộng mênh mông, nước biển trong suốt và xanh biếc. Dưới đáy biển trong suốt và xanh-biếc ấy, có cung điện rất đẹp: Cung điện Thủy Tinh. Những bức tường bao xung quanh cung điện đều xây bằng ngọc san-hô màu hồng. Các cửa sổ đều làm bằng thứ hổ-phách trong sáng nhất. Mái nhà lợp bằng những con trai biển; vỏ trai theo chiều nước biển chuyển động, cứ tự nhiên mở ra khép lại, những hạt ngọc- trai bên trong tỏa ra những tia sáng chói nhấp-nhánh, trông thật vui mắt. Trong cung điện Thủy Tinh,…",
+      "danh_muc": "thieu-nhi",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/cong-chua-ca.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Sau Lưng Gió Bấc",
+      "tac_gia": "George MacDonald; Nguyễn Như Quỳnh (dịch)",
+      "nha_xuat_ban": "tve-4u, NYT",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 129000,
+      "gia_bia": 139000,
+      "ton_kho": 8,
+      "mo_ta": "Nếu bạn năm tuổi, bạn sẽ thấy đây là một cuốn truyện đáng yêu và mê hoặc. Bạn sẽ cảm mến cậu bé Kim Cương với nụ cười ngọt ngào, khuôn mặt tĩnh tại như mặt hồ và tâm hồn của một thiên thần. Bạn sẽ choáng ngợp trước Bà Gió cao lớn tuyệt đẹp, làn tóc đen bay lồng lộng ẩn chứa bí mật của màn đêm. Bạn sẽ mê mải cuốn theo những chuyến phiêu lưu của Kim Cương và Gió Bấc, lướt trên đồng cỏ nước Anh, cuộn quanh những ống khói thành London thế kỷ 19, quét dọc ngang bầu trời mênh mông, vù vù trên mặt…",
+      "danh_muc": "thieu-nhi",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/sau-lung-gio-bac.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Âm Điệu Bóng Đêm",
+      "tac_gia": "Julie Garwood",
+      "nha_xuat_ban": "Thanh Niên",
+      "nam_xuat_ban": 2019,
+      "so_trang": null,
+      "gia": 139000,
+      "gia_bia": 149000,
+      "ton_kho": 10,
+      "mo_ta": "Julie Garwood kết hợp câu chuyện tình cảm với những tình tiết hồi hộp và bí ẩn. Diễn biến xoay quanh những mối quan hệ mà lòng tin liên tục bị thử thách trước các nguy cơ khó lường.",
+      "danh_muc": "tieu-thuyet",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/am-dieu-bong-dem.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Cuộc Tình Buồn",
+      "tac_gia": "François Mauriac; Nguyễn Bích Như (dịch); Thu Uyên (dịch)",
+      "nha_xuat_ban": "Tổng hợp Bình Định",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 79000,
+      "gia_bia": 89000,
+      "ton_kho": 12,
+      "mo_ta": "François Mauriac khắc họa Thérèse Desqueyroux trong một cuộc hôn nhân ngột ngạt ở miền quê nước Pháp. Qua những ký ức của Thérèse, tác phẩm lần theo xung đột giữa khát vọng tự do và sức ép của gia đình.",
+      "danh_muc": "tieu-thuyet",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/cuoc-tinh-buon.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Phân Tâm Học",
+      "tac_gia": "J. P. Charrier",
+      "nha_xuat_ban": "TRẺ 1972",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 89000,
+      "gia_bia": 99000,
+      "ton_kho": 8,
+      "mo_ta": "LÊ THANH HOÀNG DÂN",
+      "danh_muc": "triet-hoc",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/phan-tam-hoc.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Bản Đồ Tâm Hồn Con Người Của Jung",
+      "tac_gia": "Murray Stein",
+      "nha_xuat_ban": "Tri Thức",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 99000,
+      "gia_bia": 109000,
+      "ton_kho": 10,
+      "mo_ta": "Murray Stein giới thiệu những khái niệm quan trọng trong tâm lý học phân tích của Carl Gustav Jung. Cuốn sách kết nối các ý niệm về vô thức, nguyên mẫu và tiến trình cá thể hóa thành một bức tranh chung về đời sống nội tâm.",
+      "danh_muc": "triet-hoc",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/ban-do-tam-hon-con-nguoi-cua-jung.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Bàn Cờ Lớn",
+      "tac_gia": "Zbigniew Brzezinski",
+      "nha_xuat_ban": "Hà Nội",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 109000,
+      "gia_bia": 119000,
+      "ton_kho": 12,
+      "mo_ta": "Soát 1: Karry Kane Soát 2: Songuyento",
+      "danh_muc": "van-hoa-xa-hoi",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/ban-co-lon.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Vật Lý Và Triết Học",
+      "tac_gia": "Werner Heisenberg",
+      "nha_xuat_ban": "Tri Thức",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 119000,
+      "gia_bia": 129000,
+      "ton_kho": 8,
+      "mo_ta": "Werner Heisenberg bàn về những thay đổi trong cách hiểu tự nhiên mà cơ học lượng tử đem lại. Ông xem xét vai trò của phép đo, ngôn ngữ và giới hạn của các khái niệm cổ điển khi mô tả thế giới vi mô.",
+      "danh_muc": "van-hoa-xa-hoi",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/vat-ly-va-triet-hoc.jpg",
+      "ebook_mau": true
+    },
+    {
+      "tieu_de": "Mùi Vàng",
+      "tac_gia": "James Hadley Chase",
+      "nha_xuat_ban": "NXB Hội Nhà Văn",
+      "nam_xuat_ban": null,
+      "so_trang": null,
+      "gia": 129000,
+      "gia_bia": 139000,
+      "ton_kho": 10,
+      "mo_ta": "Đặc vụ Mark Girland đến Bavaria để thu hồi ba cuộn phim có thể gây ra một vụ bê bối chính trị. Anh phải lần theo nơi cất giấu chúng trong khi điệp viên Malik và tay sát thủ Lu Silk cũng đang truy tìm.",
+      "danh_muc": "trinh-tham-kinh-di",
+      "mau_bia": "#2b4c7e",
+      "anh_bia": "/bia-ebook/mui-vang.jpg",
+      "ebook_mau": true
+    }
+  ],
+  "ma_giam_gia": [
+    {
+      "ma": "CHAOHE",
+      "kieu": "phan_tram",
+      "gia_tri": 10,
+      "don_toi_thieu": 100000,
+      "mo_ta": "Giảm 10% cho đơn hàng từ 100.000đ chào mừng bạn đến với nhà sách."
+    },
+    {
+      "ma": "GIAM50K",
+      "kieu": "tien",
+      "gia_tri": 50000,
+      "don_toi_thieu": 300000,
+      "mo_ta": "Giảm trực tiếp 50.000đ cho đơn hàng có giá trị từ 300.000đ trở lên."
+    },
+    {
+      "ma": "KHUYENMAI5",
+      "kieu": "phan_tram",
+      "gia_tri": 5,
+      "don_toi_thieu": 50000,
+      "mo_ta": "Ưu đãi giảm 5% cho đơn hàng có giá trị từ 50.000đ trở lên."
+    }
+  ],
+  "danh_gia": [
+    {
+      "tieu_de_sach": "Cho tôi xin một vé đi tuổi thơ",
+      "ten_khach": "Nguyễn Văn An",
+      "so_sao": 5,
+      "noi_dung": "Sách rất hay, gói hàng cẩn thận và giao nhanh lắm. Đọc xong thấy nhớ tuổi thơ ghê!"
+    },
+    {
+      "tieu_de_sach": "Nhà giả kim",
+      "ten_khach": "Trần Thị Mai",
+      "so_sao": 5,
+      "noi_dung": "Cuốn sách thay đổi suy nghĩ của mình rất nhiều. Bìa sách đẹp, giấy in sáng sủa."
+    },
+    {
+      "tieu_de_sach": "Đắc nhân tâm",
+      "ten_khach": "Lê Hoàng Long",
+      "so_sao": 4,
+      "noi_dung": "Sách chuẩn, nội dung hữu ích cho công việc. Giao hàng hơi lâu hơn dự kiến một chút."
+    },
+    {
+      "tieu_de_sach": "Cây cam ngọt của tôi",
+      "ten_khach": "Phạm Thu Trang",
+      "so_sao": 5,
+      "noi_dung": "Đọc khóc ngất với câu chuyện này. Shop đóng gói bọc chống sốc kỹ càng không bị móp góc."
+    },
+    {
+      "tieu_de_sach": "Sapiens: Lược sử loài người",
+      "ten_khach": "Hoàng Minh Tuấn",
+      "so_sao": 4,
+      "noi_dung": "Sách dày dặn, kiến thức thú vị. Tạm thời cho 4 sao, sẽ ủng hộ shop tiếp."
+    },
+    {
+      "tieu_de_sach": "Dế Mèn phiêu lưu ký",
+      "ten_khach": "Vũ Đình Nam",
+      "so_sao": 5,
+      "noi_dung": "Mua cho con đọc mà bố mẹ đọc ké thấy cuốn luôn. Hình thức sách rất đẹp."
+    },
+    {
+      "tieu_de_sach": "Mắt biếc",
+      "ten_khach": "Ngô Thanh Hằng",
+      "so_sao": 4,
+      "noi_dung": "Truyện buồn man mác. Sách mới tinh, thơm mùi giấy mới."
+    },
+    {
+      "tieu_de_sach": "Cha giàu cha nghèo",
+      "ten_khach": "Bùi Văn Hùng",
+      "so_sao": 3,
+      "noi_dung": "Sách tạm ổn, tư duy hay nhưng hơi lặp ý ở nhiều chương."
+    },
+    {
+      "tieu_de_sach": "Tư duy nhanh và chậm",
+      "ten_khach": "Đỗ Quang Vinh",
+      "so_sao": 4,
+      "noi_dung": "Sách chuyên ngành đọc hơi khô khan nhưng rất đáng suy ngẫm."
+    },
+    {
+      "tieu_de_sach": "Hoàng tử bé",
+      "ten_khach": "Lý Thanh Vân",
+      "so_sao": 5,
+      "noi_dung": "Ấn bản trình bày xinh xắn, giao hàng nhanh chóng, rất hài lòng."
+    },
+    {
+      "tieu_de_sach": "Nghĩ giàu và làm giàu",
+      "ten_khach": "Phan Quốc Bảo",
+      "so_sao": 3,
+      "noi_dung": "Sách kinh điển nhưng phong cách dịch hơi cũ, đọc cần kiên nhẫn."
+    },
+    {
+      "tieu_de_sach": "Quẳng gánh lo đi mà vui sống",
+      "ten_khach": "Đinh Thị Lan",
+      "so_sao": 5,
+      "noi_dung": "Rất thích các đầu sách của Dale Carnegie. Shop tư vấn nhiệt tình."
+    },
+    {
+      "tieu_de_sach": "Không gia đình",
+      "ten_khach": "Mai Quốc Việt",
+      "so_sao": 5,
+      "noi_dung": "Truyện cảm động kinh điển. Bản in của Kim Đồng chất lượng tốt."
+    },
+    {
+      "tieu_de_sach": "Lược sử thời gian",
+      "ten_khach": "Trương Hồng Sơn",
+      "so_sao": 4,
+      "noi_dung": "Sách vật lý thiên văn hay nhưng cần tư duy logic cao để ngấm."
+    },
+    {
+      "tieu_de_sach": "Số đỏ",
+      "ten_khach": "Cao Văn Đức",
+      "so_sao": 5,
+      "noi_dung": "Văn phong châm biếm xuất sắc mọi thời đại. Giao hàng cực nhanh."
+    }
+  ]
+}

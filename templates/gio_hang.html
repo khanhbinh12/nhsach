@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% from "_bia.html" import bia %}
+
+{% block tieu_de %}Giỏ hàng — Nhà Sách Tri Thức{% endblock %}
+
+{% block noi_dung %}
+<div class="khung trang-con">
+  <nav class="duong-dan" aria-label="Đường dẫn">
+    <a href="/">Trang chủ</a>
+    <span class="duong-dan__ngan" aria-hidden="true">/</span>
+    <span class="duong-dan__hien-tai">Giỏ hàng</span>
+  </nav>
+
+  <h1 class="tieu-de-trang" style="margin-bottom: 18px;">Giỏ hàng của bạn</h1>
+
+  {% if gio.canh_bao %}
+    <div class="canh-bao-hop" role="alert">
+      <strong>Lưu ý về giỏ hàng:</strong>
+      <ul>
+        {% for cb in gio.canh_bao %}
+          <li>{{ cb }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {% if gio.muc %}
+    {% set ns_gio = namespace(co_vuot_ton=False) %}
+    {% for item in gio.muc %}
+      {% if (item.sach.ton_kho or 0) <= 0 or item.so_luong > (item.sach.ton_kho or 0) %}
+        {% set ns_gio.co_vuot_ton = True %}
+      {% endif %}
+    {% endfor %}
+
+    {% if gio.phi_giao == 0 %}
+      <div class="thanh-mien-ship thanh-mien-ship--dat">
+        <span>✓</span>
+        <span>Chúc mừng! Đơn hàng của bạn được <strong>miễn phí giao hàng</strong>.</span>
+      </div>
+    {% elif gio.con_thieu_mien_phi > 0 %}
+      <div class="thanh-mien-ship thanh-mien-ship--chua">
+        <span>ℹ</span>
+        <span>Mua thêm <strong>{{ gio.con_thieu_mien_phi | tien }}</strong> để được <strong>miễn phí giao hàng</strong>.</span>
+      </div>
+    {% endif %}
+
+    <div class="bo-cuc-2-cot">
+      {# Danh sách sách trong giỏ #}
+      <section class="ds-gio" aria-label="Sách trong giỏ hàng">
+        {% for item in gio.muc %}
+          {% set ton = item.sach.ton_kho or 0 %}
+          {% set het_hang = ton <= 0 %}
+          {% set vuot_ton = het_hang or item.so_luong > ton %}
+          <article class="dong-gio{% if vuot_ton %} dong-gio--loi{% endif %}">
+            <a href="/sach/{{ item.sach.ma }}" aria-label="{{ item.sach.tieu_de }}">
+              {{ bia(item.sach, 'nho') }}
+            </a>
+
+            <div class="dong-gio__thong-tin">
+              <h2 class="dong-gio__ten">
+                <a href="/sach/{{ item.sach.ma }}">{{ item.sach.tieu_de }}</a>
+              </h2>
+              <p class="dong-gio__tac-gia">{{ item.sach.tac_gia }}</p>
+              <div class="dong-gio__gia-le">{{ item.sach.gia | tien }} / cuốn</div>
+              {% if het_hang %}
+                <p class="dong-gio__canh-bao" role="alert">Sách đã tạm hết hàng — hãy xóa khỏi giỏ để tiếp tục đặt hàng.</p>
+              {% elif vuot_ton %}
+                <p class="dong-gio__canh-bao" role="alert">Số lượng vượt tồn kho (chỉ còn {{ ton }} cuốn) — hãy giảm số lượng.</p>
+              {% endif %}
+            </div>
+
+            <div class="dong-gio__dieu-khien">
+              <div class="dong-gio__thanh-tien">{{ item.thanh_tien | tien }}</div>
+              <div class="dong-gio__hanh-dong">
+                <form class="form-inline form-sl-gio" method="post" action="/gio/sua" data-stepper data-stepper-tu-gui>
+                  <input type="hidden" name="csrf" value="{{ csrf }}">
+                  <input type="hidden" name="ma" value="{{ item.sach.ma }}">
+                  <label class="sr-only" for="sl-{{ item.sach.ma }}">Số lượng {{ item.sach.tieu_de }}</label>
+                  <div class="stepper stepper--gio">
+                    <button type="button" class="stepper__nut" data-stepper-giam
+                            aria-label="Giảm số lượng {{ item.sach.tieu_de }}"
+                            {% if het_hang or item.so_luong <= 1 %}disabled{% endif %}>−</button>
+                    <input id="sl-{{ item.sach.ma }}" class="stepper__o dong-gio__sl-input" type="number" name="so_luong"
+                           value="{{ item.so_luong }}" min="1" max="{{ ton if ton > 0 else 1 }}" inputmode="numeric"
+                           {% if het_hang %}disabled{% endif %}>
+                    <button type="button" class="stepper__nut" data-stepper-tang
+                            aria-label="Tăng số lượng {{ item.sach.tieu_de }}"
+                            {% if het_hang or item.so_luong >= ton %}disabled{% endif %}>+</button>
+                  </div>
+                  <button type="submit" class="nut nut--phu nut--nho stepper__gui-du-phong"{% if het_hang %} disabled{% endif %}>Cập nhật</button>
+                </form>
+                <form class="form-inline" method="post" action="/gio/sua">
+                  <input type="hidden" name="csrf" value="{{ csrf }}">
+                  <input type="hidden" name="ma" value="{{ item.sach.ma }}">
+                  <input type="hidden" name="so_luong" value="0">
+                  <button type="submit" class="nut nut--nhe nut--nho" style="color: var(--loi);">Xóa</button>
+                </form>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </section>
+
+      {# Khối tóm tắt đơn hàng & mã giảm giá #}
+      <aside class="cot-tom-tat hop-trang" aria-label="Tóm tắt thanh toán">
+        <h2 class="hop-trang__tieu-de">Tóm tắt đơn hàng</h2>
+
+        {% if gio.ma_giam_gia %}
+          {% set mgg = gio.ma_giam_gia %}
+          {% set hsd_raw = (mgg.het_han|string) if mgg.het_han else '' %}
+          {% set hsd_dep = (hsd_raw[8:10] ~ '/' ~ hsd_raw[5:7] ~ '/' ~ hsd_raw[0:4]) if (hsd_raw|length == 10 and hsd_raw[4] == '-' and hsd_raw[7] == '-') else hsd_raw %}
+          <div class="ma-dang-dung">
+            <div class="ma-dang-dung__thong-tin">
+              <strong>Mã {{ mgg.ma }}</strong>
+              <div class="ma-dang-dung__giam">Đang giảm {{ gio.giam_gia | tien }}</div>
+              <div class="ma-dang-dung__dieu-kien">
+                {% if mgg.kieu == 'phan_tram' %}Giảm {{ mgg.gia_tri }}%{% else %}Giảm {{ mgg.gia_tri | tien }}{% endif %}
+                {% if mgg.don_toi_thieu and mgg.don_toi_thieu > 0 %} • Đơn từ {{ mgg.don_toi_thieu | tien }}{% endif %}
+                {% if hsd_dep %} • <span class="ma-dang-dung__hsd">HSD {{ hsd_dep }}</span>{% endif %}
+              </div>
+            </div>
+            <form class="form-inline" method="post" action="/gio/bo-ma">
+              <input type="hidden" name="csrf" value="{{ csrf }}">
+              <button type="submit" class="nut nut--phu nut--nho ma-dang-dung__go">Gỡ mã</button>
+            </form>
+          </div>
+        {% else %}
+          <form class="form-ma-giam" method="post" action="/gio/ma-giam-gia">
+            <input type="hidden" name="csrf" value="{{ csrf }}">
+            <label class="sr-only" for="o-ma-giam">Mã giảm giá</label>
+            <input id="o-ma-giam" class="o-nhap" type="text" name="ma_giam_gia" placeholder="Nhập mã giảm giá...">
+            <button type="submit" class="nut nut--phu">Áp dụng</button>
+          </form>
+        {% endif %}
+
+        <div class="bang-tien">
+          <div class="bang-tien__dong">
+            <span>Tạm tính</span>
+            <span class="bang-tien__so">{{ gio.tam_tinh | tien }}</span>
+          </div>
+          {% if gio.giam_gia > 0 %}
+            <div class="bang-tien__dong">
+              <span>Giảm giá</span>
+              <span class="bang-tien__so bang-tien__so--giam">-{{ gio.giam_gia | tien }}</span>
+            </div>
+          {% endif %}
+          <div class="bang-tien__dong">
+            <span>Phí giao hàng</span>
+            <span class="bang-tien__so">
+              {% if gio.phi_giao == 0 %}
+                <span class="bang-tien__so--giam">Miễn phí</span>
+              {% else %}
+                {{ gio.phi_giao | tien }}
+              {% endif %}
+            </span>
+          </div>
+        </div>
+
+        <div class="bang-tien__tong">
+          <span>Tổng cộng</span>
+          <span class="bang-tien__tong-so">{{ gio.tong | tien }}</span>
+        </div>
+
+        {% if ns_gio.co_vuot_ton %}
+          <div class="thong-bao thong-bao--loi" role="alert" style="margin-bottom: 12px;">
+            <span>Giỏ hàng có sách hết hàng hoặc vượt tồn kho. Hãy điều chỉnh số lượng hoặc xóa sách trước khi đặt hàng.</span>
+          </div>
+          <button type="button" class="nut nut--chinh nut--lon nut--rong" disabled aria-disabled="true" style="margin-bottom: 10px;">
+            Tiến hành đặt hàng &rarr;
+          </button>
+        {% else %}
+          <a href="/dat-hang" class="nut nut--chinh nut--lon nut--rong" style="margin-bottom: 10px;">
+            Tiến hành đặt hàng &rarr;
+          </a>
+        {% endif %}
+        <a href="/sach" class="nut nut--phu nut--rong">Tiếp tục chọn sách</a>
+      </aside>
+    </div>
+  {% else %}
+    <div class="trang-thai-trong" style="padding-block: 56px;">
+      <div class="trang-thai-trong__hinh" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 18h40l-4 32a4 4 0 0 1-4 3.5H20a4 4 0 0 1-4-3.5L12 18Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M23 18v-3a9 9 0 0 1 18 0v3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M25 34h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2 class="trang-thai-trong__tieu-de" style="font-size: var(--c-lg);">Giỏ hàng của bạn đang trống</h2>
+      <p class="trang-thai-trong__mo-ta" style="margin-bottom: 20px;">
+        Hãy khám phá kho sách với hàng chục tựa sách hay đang chờ bạn.
+      </p>
+      <a href="/sach" class="nut nut--chinh nut--lon">Khám phá kho sách</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

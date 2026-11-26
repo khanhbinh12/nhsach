@@ -1,0 +1,206 @@
+{% extends "quan_ly/_khung.html" %}
+{% from "_bia.html" import bia %}
+
+{% block tieu_de %}{{ ('Sửa sách: ' ~ sach.tieu_de) if sach else 'Thêm sách mới' }} — Quản lý{% endblock %}
+{% block muc_dang_chon %}sach{% endblock %}
+
+{% block noi_dung %}
+{% set f = form or {} %}
+{% set lt = loi_truong or {} %}
+{% set v_tieu_de = f.get('tieu_de') if f.get('tieu_de') is not none else (sach.tieu_de if sach else '') %}
+{% set v_tac_gia = f.get('tac_gia') if f.get('tac_gia') is not none else (sach.tac_gia if sach else '') %}
+{% set v_ma_dm = f.get('ma_danh_muc') if f.get('ma_danh_muc') is not none else (sach.ma_danh_muc if sach else '') %}
+{% set v_nxb = f.get('nha_xuat_ban') if f.get('nha_xuat_ban') is not none else (sach.nha_xuat_ban if sach and sach.nha_xuat_ban else '') %}
+{% set v_nam = f.get('nam_xuat_ban') if f.get('nam_xuat_ban') is not none else (sach.nam_xuat_ban if sach and sach.nam_xuat_ban is not none else '') %}
+{% set v_trang = f.get('so_trang') if f.get('so_trang') is not none else (sach.so_trang if sach and sach.so_trang is not none else '') %}
+{% set v_gia = f.get('gia') if f.get('gia') is not none else (sach.gia if sach else '') %}
+{% set v_gia_bia = f.get('gia_bia') if f.get('gia_bia') is not none else (sach.gia_bia if sach else '') %}
+{% set v_ton = f.get('ton_kho') if f.get('ton_kho') is not none else (sach.ton_kho if sach else 10) %}
+{% set v_ton_goc = f.get('ton_kho_goc') if f.get('ton_kho_goc') is not none else (sach.ton_kho if sach else 0) %}
+{% set v_mau = f.get('mau_bia') if f.get('mau_bia') is not none else (sach.mau_bia if sach and sach.mau_bia else '#2b4c7e') %}
+{% set v_mo_ta = f.get('mo_ta') if f.get('mo_ta') is not none else (sach.mo_ta if sach else '') %}
+{% if f %}
+  {% if f.getlist is defined %}
+    {% set ds_db = f.getlist('dang_ban') %}
+    {% set v_dang_ban = ('1' in ds_db) or ('on' in ds_db) or ('true' in ds_db) %}
+  {% else %}
+    {% set v_dang_ban = f.get('dang_ban') in [True, '1', 'on', 'true', 1] %}
+  {% endif %}
+{% else %}
+  {% set v_dang_ban = sach.dang_ban if sach else True %}
+{% endif %}
+
+<div class="ql-dau-trang">
+  <div>
+    <nav class="duong-dan" style="margin-bottom: 6px;" aria-label="Đường dẫn">
+      <a href="/quan-ly/sach">Quản lý sách</a>
+      <span class="duong-dan__ngan" aria-hidden="true">/</span>
+      <span class="duong-dan__hien-tai">{{ 'Chỉnh sửa' if sach else 'Thêm sách mới' }}</span>
+    </nav>
+    <h1 class="tieu-de-trang">{{ ('Sửa sách #' ~ sach.ma) if sach else 'Thêm sách mới' }}</h1>
+  </div>
+  <a href="/quan-ly/sach" class="nut nut--phu">&larr; Danh sách sách</a>
+</div>
+
+<form method="post" action="{{ ('/quan-ly/sach/' ~ sach.ma ~ '/sua') if sach else '/quan-ly/sach/moi' }}"
+      enctype="multipart/form-data" class="bo-cuc-sua-sach">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <input type="hidden" name="ma_thao_tac" value="{{ ma_thao_tac }}">
+  <input type="hidden" name="ton_kho_goc" value="{{ v_ton_goc }}">
+
+  {# Cột form chính #}
+  <div class="hop-trang">
+    <h2 class="hop-trang__tieu-de">Thông tin đầu sách</h2>
+
+    <div class="truong">
+      <label class="truong__nhan" for="s-tieu-de">Tiêu đề sách <span class="truong__bat-buoc">*</span></label>
+      <input id="s-tieu-de" class="o-nhap{% if lt.get('tieu_de') %} o-nhap--loi{% endif %}" type="text" name="tieu_de" required value="{{ v_tieu_de }}" placeholder="Nhập tên sách..."
+             {% if lt.get('tieu_de') %}aria-invalid="true" aria-describedby="loi-s-tieu-de"{% endif %}>
+      {% if lt.get('tieu_de') %}
+        <p id="loi-s-tieu-de" class="truong__loi" role="alert">{{ lt['tieu_de'] }}</p>
+      {% endif %}
+    </div>
+
+    <div class="luoi-form-2">
+      <div class="truong">
+        <label class="truong__nhan" for="s-tac-gia">Tác giả <span class="truong__bat-buoc">*</span></label>
+        <input id="s-tac-gia" class="o-nhap{% if lt.get('tac_gia') %} o-nhap--loi{% endif %}" type="text" name="tac_gia" required value="{{ v_tac_gia }}" placeholder="Tên tác giả"
+               {% if lt.get('tac_gia') %}aria-invalid="true" aria-describedby="loi-s-tac-gia"{% endif %}>
+        {% if lt.get('tac_gia') %}
+          <p id="loi-s-tac-gia" class="truong__loi" role="alert">{{ lt['tac_gia'] }}</p>
+        {% endif %}
+      </div>
+      <div class="truong">
+        <label class="truong__nhan" for="s-dm">Thể loại <span class="truong__bat-buoc">*</span></label>
+        <select id="s-dm" class="o-chon{% if lt.get('ma_danh_muc') %} o-chon--loi{% endif %}" name="ma_danh_muc" required
+                {% if lt.get('ma_danh_muc') %}aria-invalid="true" aria-describedby="loi-s-dm"{% endif %}>
+          <option value="">— Chọn thể loại —</option>
+          {% for dm in danh_muc or [] %}
+            <option value="{{ dm.ma }}" {% if (v_ma_dm|string) == (dm.ma|string) %}selected{% endif %}>{{ dm.ten }}</option>
+          {% endfor %}
+        </select>
+        {% if lt.get('ma_danh_muc') %}
+          <p id="loi-s-dm" class="truong__loi" role="alert">{{ lt['ma_danh_muc'] }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="luoi-form-3">
+      <div class="truong">
+        <label class="truong__nhan" for="s-nxb">Nhà xuất bản</label>
+        <input id="s-nxb" class="o-nhap" type="text" name="nha_xuat_ban" value="{{ v_nxb }}" placeholder="NXB Trẻ, Kim Đồng...">
+      </div>
+      <div class="truong">
+        <label class="truong__nhan" for="s-nam">Năm xuất bản</label>
+        <input id="s-nam" class="o-nhap{% if lt.get('nam_xuat_ban') %} o-nhap--loi{% endif %}" type="number" name="nam_xuat_ban" min="1900" max="2100" value="{{ v_nam }}" placeholder="2026"
+               {% if lt.get('nam_xuat_ban') %}aria-invalid="true" aria-describedby="loi-s-nam"{% endif %}>
+        {% if lt.get('nam_xuat_ban') %}
+          <p id="loi-s-nam" class="truong__loi" role="alert">{{ lt['nam_xuat_ban'] }}</p>
+        {% endif %}
+      </div>
+      <div class="truong">
+        <label class="truong__nhan" for="s-trang">Số trang</label>
+        <input id="s-trang" class="o-nhap{% if lt.get('so_trang') %} o-nhap--loi{% endif %}" type="number" name="so_trang" min="1" value="{{ v_trang }}" placeholder="320"
+               {% if lt.get('so_trang') %}aria-invalid="true" aria-describedby="loi-s-trang"{% endif %}>
+        {% if lt.get('so_trang') %}
+          <p id="loi-s-trang" class="truong__loi" role="alert">{{ lt['so_trang'] }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="luoi-form-3">
+      <div class="truong">
+        <label class="truong__nhan" for="s-gia">Giá bán (đ) <span class="truong__bat-buoc">*</span></label>
+        <input id="s-gia" class="o-nhap{% if lt.get('gia') %} o-nhap--loi{% endif %}" type="number" name="gia" min="0" step="1" required value="{{ v_gia }}" placeholder="85000"
+               {% if lt.get('gia') %}aria-invalid="true" aria-describedby="loi-s-gia"{% endif %}>
+        {% if lt.get('gia') %}
+          <p id="loi-s-gia" class="truong__loi" role="alert">{{ lt['gia'] }}</p>
+        {% endif %}
+      </div>
+      <div class="truong">
+        <label class="truong__nhan" for="s-gia-bia">Giá bìa (đ) <span class="truong__bat-buoc">*</span></label>
+        <input id="s-gia-bia" class="o-nhap{% if lt.get('gia_bia') %} o-nhap--loi{% endif %}" type="number" name="gia_bia" min="0" step="1" required value="{{ v_gia_bia }}" placeholder="100000"
+               {% if lt.get('gia_bia') %}aria-invalid="true" aria-describedby="loi-s-gia-bia"{% endif %}>
+        {% if lt.get('gia_bia') %}
+          <p id="loi-s-gia-bia" class="truong__loi" role="alert">{{ lt['gia_bia'] }}</p>
+        {% else %}
+          <span class="truong__goi-y">Phải lớn hơn hoặc bằng giá bán.</span>
+        {% endif %}
+      </div>
+      <div class="truong">
+        <label class="truong__nhan" for="s-ton">Tồn kho <span class="truong__bat-buoc">*</span></label>
+        <input id="s-ton" class="o-nhap{% if lt.get('ton_kho') %} o-nhap--loi{% endif %}" type="number" name="ton_kho" min="0" required value="{{ v_ton }}"
+               {% if lt.get('ton_kho') %}aria-invalid="true" aria-describedby="loi-s-ton"{% endif %}>
+        {% if lt.get('ton_kho') %}
+          <p id="loi-s-ton" class="truong__loi" role="alert">{{ lt['ton_kho'] }}</p>
+        {% elif sach %}
+          <span class="truong__goi-y">Tồn gốc lúc mở form: {{ v_ton_goc }} (cập nhật theo chênh lệch).</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="truong">
+      <label class="truong__nhan" for="s-mo-ta">Giới thiệu nội dung</label>
+      <textarea id="s-mo-ta" class="o-van-ban" name="mo_ta" rows="4" placeholder="Tóm tắt nội dung nổi bật của cuốn sách...">{{ v_mo_ta }}</textarea>
+    </div>
+
+    <div class="truong" style="margin-top: 14px;">
+      <input type="hidden" name="dang_ban" value="0">
+      <label class="hop-kiem-ql">
+        <input type="checkbox" name="dang_ban" value="1" {% if v_dang_ban %}checked{% endif %}>
+        <span><strong>Đang mở bán</strong> trên cửa hàng (bỏ chọn để tạm ẩn khỏi khách)</span>
+      </label>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px;">
+      <button type="submit" class="nut nut--chinh nut--lon">
+        {{ 'Lưu thay đổi' if sach else 'Tạo sách mới' }}
+      </button>
+      <a href="/quan-ly/sach" class="nut nut--phu nut--lon">Hủy</a>
+    </div>
+  </div>
+
+  {# Cột ảnh bìa & màu bìa SVG #}
+  <aside class="hop-trang">
+    <h2 class="hop-trang__tieu-de">Ảnh bìa sách</h2>
+
+    <div class="xem-truoc-bia-ql">
+      {% if sach %}
+        <div style="width: 170px; margin: 0 auto;">
+          {{ bia(sach, 'vua') }}
+        </div>
+        <p class="truong__goi-y" style="text-align: center; margin: 10px 0 0;">
+          {% if sach.anh_bia %}
+            Đang dùng ảnh tải lên ({{ sach.anh_bia }})
+          {% else %}
+            Đang dùng bìa minh họa SVG tự vẽ
+          {% endif %}
+        </p>
+      {% else %}
+        <div class="trang-thai-trong" style="padding: 24px 16px;">
+          <p class="trang-thai-trong__tieu-de">Chưa có ảnh tải lên</p>
+          <p class="trang-thai-trong__mo-ta">Nếu để trống ảnh bìa, hệ thống sẽ tự vẽ bìa SVG theo màu bên dưới.</p>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="truong" style="margin-top: 16px;">
+      <label class="truong__nhan" for="s-anh">Tải ảnh bìa mới</label>
+      <input id="s-anh" class="o-nhap" type="file" name="anh_bia" accept="image/png,image/jpeg,image/webp" style="padding: 8px;">
+      <span class="truong__goi-y">Định dạng hỗ trợ: PNG, JPEG hoặc WebP (khuyến nghị tỉ lệ dọc 2:3).</span>
+    </div>
+
+    <div class="truong">
+      <label class="truong__nhan" for="s-mau">Màu bìa tự vẽ (SVG)</label>
+      <div class="chon-mau-ql">
+        <input id="s-mau" type="color" name="mau_bia" value="{{ v_mau }}"
+               {% if lt.get('mau_bia') %}aria-invalid="true" aria-describedby="loi-s-mau"{% endif %}>
+        <span class="truong__goi-y">Mã màu hiện tại: <code>{{ v_mau }}</code></span>
+      </div>
+      {% if lt.get('mau_bia') %}
+        <p id="loi-s-mau" class="truong__loi" role="alert">{{ lt['mau_bia'] }}</p>
+      {% endif %}
+    </div>
+  </aside>
+</form>
+{% endblock %}

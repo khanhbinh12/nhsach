@@ -1,0 +1,159 @@
+{% extends "quan_ly/_khung.html" %}
+{% from "_bia.html" import bia %}
+
+{% block tieu_de %}Quản lý sách — Nhà Sách Tri Thức{% endblock %}
+{% block muc_dang_chon %}sach{% endblock %}
+
+{% set q_val = bo_loc.get('q') or '' %}
+{% set dm_val = bo_loc.get('danh_muc') or '' %}
+{% set loc_val = bo_loc.get('loc') or (loc if loc is defined and loc else '') %}
+
+{% macro url_ql_sach(q=q_val, danh_muc=dm_val, loc_param=loc_val, trang=1) -%}
+{%- set ts = [] -%}
+{%- if q %}{% set _ = ts.append('q=' ~ (q|urlencode)) %}{% endif -%}
+{%- if danh_muc %}{% set _ = ts.append('danh_muc=' ~ (danh_muc|urlencode)) %}{% endif -%}
+{%- if loc_param %}{% set _ = ts.append('loc=' ~ (loc_param|urlencode)) %}{% endif -%}
+{%- if trang and trang > 1 %}{% set _ = ts.append('trang=' ~ trang) %}{% endif -%}
+/quan-ly/sach{% if ts %}?{{ ts|join('&') }}{% endif %}
+{%- endmacro %}
+
+{% block noi_dung %}
+<div class="ql-dau-trang">
+  <div>
+    <h1 class="tieu-de-trang">Quản lý sách</h1>
+    <p class="phu-de-trang">Tổng cộng <strong>{{ ket_qua.tong }}</strong> đầu sách trong kết quả hiện tại.</p>
+  </div>
+  <div class="ql-dau-trang__nut">
+    <a href="/quan-ly/sach/moi" class="nut nut--chinh">+ Thêm sách mới</a>
+  </div>
+</div>
+
+{# Bộ lọc sách #}
+<form class="ql-thanh-loc" method="get" action="/quan-ly/sach">
+  <div class="ql-thanh-loc__o-tim">
+    <label class="sr-only" for="ql-q">Tìm sách</label>
+    <input id="ql-q" class="o-nhap" type="search" name="q" value="{{ q_val }}" placeholder="Tìm theo tên sách, tác giả, nhà xuất bản...">
+  </div>
+  <div class="ql-thanh-loc__chon">
+    <label class="sr-only" for="ql-dm">Thể loại</label>
+    <select id="ql-dm" class="o-chon" name="danh_muc">
+      <option value="">Tất cả thể loại</option>
+      {% for dm in danh_muc or [] %}
+        <option value="{{ dm.duong_dan }}" {% if dm_val == dm.duong_dan %}selected{% endif %}>{{ dm.ten }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="ql-thanh-loc__chon">
+    <label class="sr-only" for="ql-loc">Trạng thái bán &amp; tồn kho</label>
+    <select id="ql-loc" class="o-chon" name="loc">
+      <option value="">Tất cả trạng thái</option>
+      <option value="sap_het" {% if loc_val == 'sap_het' %}selected{% endif %}>Sắp hết hàng (tồn ≤ 5)</option>
+      <option value="ngung_ban" {% if loc_val == 'ngung_ban' %}selected{% endif %}>Đang ngừng bán</option>
+    </select>
+  </div>
+  <div class="ql-thanh-loc__nut">
+    <button type="submit" class="nut nut--chinh">Lọc</button>
+    {% if q_val or dm_val or loc_val %}
+      <a href="/quan-ly/sach" class="nut nut--phu">Xóa lọc</a>
+    {% endif %}
+  </div>
+</form>
+
+{% if ket_qua.muc %}
+  <div class="hop-trang hop-bang">
+    <div class="bang-cuon">
+      <table class="bang-ql">
+        <thead>
+          <tr>
+            <th>Sách</th>
+            <th>Giá bán</th>
+            <th>Tồn kho</th>
+            <th>Trạng thái</th>
+            <th style="text-align: right;">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in ket_qua.muc %}
+            <tr>
+              <td>
+                <div class="o-sach-ql">
+                  <div class="o-sach-ql__bia">{{ bia(s, 'nho') }}</div>
+                  <div style="min-width: 0;">
+                    <a href="/quan-ly/sach/{{ s.ma }}/sua" class="o-sach-ql__ten">{{ s.tieu_de }}</a>
+                    <div class="o-sach-ql__phu">{{ s.tac_gia }}{% if s.nha_xuat_ban %} • {{ s.nha_xuat_ban }}{% endif %}</div>
+                  </div>
+                </div>
+              </td>
+              <td style="white-space: nowrap; font-variant-numeric: tabular-nums;">
+                <strong style="color: var(--nhan);">{{ s.gia | tien }}</strong>
+                {% if s.gia_bia and s.gia_bia > s.gia %}
+                  <div style="font-size: 0.78rem; color: var(--chu-nhat); text-decoration: line-through;">{{ s.gia_bia | tien }}</div>
+                {% endif %}
+              </td>
+              <td>
+                {% if s.ton_kho <= 0 %}
+                  <span class="nhan nhan--loi">0 • Hết</span>
+                {% elif s.ton_kho <= 5 %}
+                  <span class="nhan nhan--canh-bao">{{ s.ton_kho }} • Sắp hết</span>
+                {% else %}
+                  <span class="nhan nhan--tot">{{ s.ton_kho }} cuốn</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if s.dang_ban %}
+                  <span class="nhan nhan--tot">Đang bán</span>
+                {% else %}
+                  <span class="nhan nhan--trung-tinh">Ngừng bán</span>
+                {% endif %}
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <div class="cum-thao-tac-bang">
+                  <a href="/quan-ly/sach/{{ s.ma }}/sua" class="nut nut--phu nut--nho">Sửa</a>
+                  {% if s.dang_ban %}
+                    <form class="form-inline" method="post" action="/quan-ly/sach/{{ s.ma }}/ngung-ban"
+                          data-xac-nhan="Ngừng bán cuốn «{{ s.tieu_de }}»? Sách sẽ tạm ẩn khỏi cửa hàng.">
+                      <input type="hidden" name="csrf" value="{{ csrf }}">
+                      <button type="submit" class="nut nut--nhe nut--nho" style="color: var(--loi);">Ngừng bán</button>
+                    </form>
+                  {% else %}
+                    <form class="form-inline" method="post" action="/quan-ly/sach/{{ s.ma }}/mo-ban">
+                      <input type="hidden" name="csrf" value="{{ csrf }}">
+                      <button type="submit" class="nut nut--nhe nut--nho" style="color: var(--tot);">Mở bán lại</button>
+                    </form>
+                  {% endif %}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% if ket_qua.so_trang > 1 %}
+    <nav class="phan-trang" aria-label="Phân trang sách">
+      {% if ket_qua.trang > 1 %}
+        <a href="{{ url_ql_sach(trang=ket_qua.trang - 1) }}" class="phan-trang__nut">&larr; Trước</a>
+      {% else %}
+        <span class="phan-trang__nut phan-trang__nut--tat" aria-disabled="true">&larr; Trước</span>
+      {% endif %}
+      {% for so in range(1, ket_qua.so_trang + 1) %}
+        <a href="{{ url_ql_sach(trang=so) }}"
+           class="phan-trang__nut{% if so == ket_qua.trang %} phan-trang__nut--chon{% endif %}"
+           {% if so == ket_qua.trang %}aria-current="page"{% endif %}>{{ so }}</a>
+      {% endfor %}
+      {% if ket_qua.trang < ket_qua.so_trang %}
+        <a href="{{ url_ql_sach(trang=ket_qua.trang + 1) }}" class="phan-trang__nut">Sau &rarr;</a>
+      {% else %}
+        <span class="phan-trang__nut phan-trang__nut--tat" aria-disabled="true">Sau &rarr;</span>
+      {% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <div class="trang-thai-trong">
+    <h2 class="trang-thai-trong__tieu-de">Không có cuốn sách nào khớp bộ lọc</h2>
+    <p class="trang-thai-trong__mo-ta" style="margin-bottom: 16px;">Thử xóa bộ lọc hoặc thêm đầu sách mới vào kho.</p>
+    <a href="/quan-ly/sach/moi" class="nut nut--chinh">+ Thêm sách mới</a>
+  </div>
+{% endif %}
+{% endblock %}
